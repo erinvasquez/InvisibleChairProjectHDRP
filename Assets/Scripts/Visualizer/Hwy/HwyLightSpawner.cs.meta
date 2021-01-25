@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d033df48f074e49459d8debf09a32757
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hwyLightPrefab: {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b,
+      type: 3}
+  - masterMusic: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

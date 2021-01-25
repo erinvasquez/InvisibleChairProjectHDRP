@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: d461dfe2a9b89cb459d325badf66decc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - introProfileMenuPrefab: {fileID: 6387870330195565215, guid: 3bf668a6032cf43439839ffb5e809c2e,
+      type: 3}
+  - mainMenuPrefab: {fileID: 4753933984220553681, guid: dc507f2d80142ca488923105a76b2343,
+      type: 3}
+  - gameMenuPrefab: {fileID: 4993005098412329643, guid: fa51e6bc6748a304bb40cc3220f74208,
+      type: 3}
+  - pauseMenuPrefab: {fileID: 3461046528279523014, guid: 49af016642fc7ee468ab3d0bb8e4e571,
+      type: 3}
+  - settingsMenuPrefab: {instanceID: 0}
+  - gameSettingsMenuPrefab: {instanceID: 0}
+  - audioSettingsMenuPrefab: {instanceID: 0}
+  - videoSettingsMenuPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
