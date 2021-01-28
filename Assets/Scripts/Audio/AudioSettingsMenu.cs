@@ -29,7 +29,7 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
         //musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", defaultMusicVolume); // This won't work in awake apparently
     }
 
-    public void setMasterSliderValue(string value) {
+    public void SetMasterSliderValue(string value) {
         float x = float.Parse(value);
 
         Mathf.Clamp(x, 0.0001f, 1f);
@@ -41,10 +41,10 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
     /// <summary>
     /// Set value of our Input Field
     /// </summary>
-    public void setMasterInputFieldValue(float sliderValue) {
+    public void SetMasterInputFieldValue(float sliderValue) {
 
-        float newMasterVolume = Mathf.Log10(sliderValue) * 20;
-        masterVolumeInputField.text = "" + (newMasterVolume * 100);
+        //float newMasterVolume = Mathf.Log10(sliderValue) * 20;
+        //masterVolumeInputField.text = "" + (newMasterVolume * 100);
 
     }
 

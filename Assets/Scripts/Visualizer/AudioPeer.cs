@@ -5,7 +5,7 @@ public class AudioPeer : MonoBehaviour {
     AudioSource musicSource;
     AudioClip audioClip;
 
-    public static float[] _samples = new float[512];
+    public static float[] _averageSamples = new float[512];
     float[] _leftSamples = new float[512];
     float[] _rightSamples = new float[512];
 
@@ -108,7 +108,7 @@ public class AudioPeer : MonoBehaviour {
 
         // Average left and right samples into one
         for (int a = 0; a < 512; a++) {
-            _samples[a] = (_leftSamples[a] + _rightSamples[a]) / 2;
+            _averageSamples[a] = (_leftSamples[a] + _rightSamples[a]) / 2;
         }
 
 
@@ -146,7 +146,7 @@ public class AudioPeer : MonoBehaviour {
             }
 
             for (int j = 0; j < sampleCount; j++) {
-                average += _samples[count] * (count + 1);
+                average += _averageSamples[count] * (count + 1);
                 count++;
             }
 

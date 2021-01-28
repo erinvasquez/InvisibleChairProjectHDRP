@@ -54,7 +54,7 @@ public class Conductor : MonoBehaviour {
     /// Depends on the song, and is manual so far.
     /// </summary>
     [Header("Custom Variables")]
-    public float firstBeatOffset = 0.026f; // 0.026f for 150 AM, 1.296 for humble
+    public float firstBeatOffset = 0;//0.026f; // 0.026f for 150 AM, 1.296 for humble
     /// <summary>
     /// The number of beats before starting music and visualizer interactions
     /// Default 1 measure/bar.

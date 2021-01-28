@@ -41,7 +41,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
             if (_sampleCube != null) {
 
-                float currentSample = AudioPeer._samples[i];
+                float currentSample = AudioPeer._averageSamples[i];
 
 
                 float output = Mathf.Clamp(currentSample * _scaleMultiplier, _startingScale, _maxScale);

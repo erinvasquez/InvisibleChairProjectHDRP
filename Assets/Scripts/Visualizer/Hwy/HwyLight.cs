@@ -5,21 +5,11 @@ public class HwyLight : MonoBehaviour {
 
     HwyLightSpawner spawner;
 
-    GameObject leftCylinderLight;
-    GameObject rightCylinderLight;
-    GameObject leftPointLight;
-    GameObject rightPointLight;
-
 
     Vector3 startPos;
     Vector3 endPos;
     Vector3 direction;
     public bool moving = false;
-    public float intensity = 0.1f;
-
-    int sampleCount;
-    Color hwyLightColor;
-    Material cylinderMaterial;
 
 
 
@@ -43,20 +33,6 @@ public class HwyLight : MonoBehaviour {
         // If this is the first time we update, make sure we're in the right spot first
         // DO THIS HERE
 
-        // Control our light's intensity
-        // Get an average of all samples to figure out how intense we gotta be
-        /*
-        sampleCount = AudioPeer._samples.Length;
-        intensity = 0;
-
-        for (int a = 0; a < sampleCount; a++) {
-            intensity += AudioPeer._samples[a];
-        }
-
-        intensity /= sampleCount;
-        intensity = Mathf.Clamp(intensity * 100000, 1f, 100f);
-        */
-
         // If we've passed the player,
         // Place our light at the back of the line again, and stop it from moving
         if (transform.position.z >= endPos.z) {
@@ -76,8 +52,8 @@ public class HwyLight : MonoBehaviour {
     public void Initialize() {
         spawner = GameObject.Find("HwyLightSpawner").GetComponent<HwyLightSpawner>();
 
-        startPos = spawner.transform.position;
-        endPos = new Vector3(0,0,500);
+        startPos = spawner.sender.transform.position;
+        endPos = spawner.sender.transform.position; 
         direction = Vector3.forward;
 
         transform.parent = spawner.transform;

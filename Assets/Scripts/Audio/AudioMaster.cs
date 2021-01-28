@@ -4,6 +4,7 @@ using System.Collections;
 
 /// <summary>
 /// Takes care of our Main and Music Volumes
+/// Instantiated by our AudioSettingsMenu Prefab
 /// </summary>
 public class AudioMaster : MonoBehaviour {
 
@@ -32,7 +33,7 @@ public class AudioMaster : MonoBehaviour {
         mixer.SetFloat("MasterVolume", newMasterVolume);
         PlayerPrefs.SetFloat("MasterVolume", newMasterVolume); // save it for our settings to
 
-        AudioSettingsMenu.Instance.setMasterInputFieldValue(sliderValue);
+        //AudioSettingsMenu.Instance.setMasterInputFieldValue(sliderValue);
 
     }
 

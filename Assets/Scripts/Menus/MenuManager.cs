@@ -9,7 +9,6 @@ using System.Reflection;
 /// </summary>
 public class MenuManager : MonoBehaviour {
 
-    public IntroProfileMenu introProfileMenuPrefab;
     public MainMenu mainMenuPrefab;
     public GameMenu gameMenuPrefab;
     public PauseMenu pauseMenuPrefab;
@@ -18,7 +17,7 @@ public class MenuManager : MonoBehaviour {
     public AudioSettingsMenu audioSettingsMenuPrefab;
     public VideoSettingsMenu videoSettingsMenuPrefab;
 
-    private Stack<Menu> menuStack = new Stack<Menu>();
+    private Stack<Menu> MenuStack = new Stack<Menu>();
 
     public static MenuManager Instance { get; private set; }
 
@@ -57,11 +56,11 @@ public class MenuManager : MonoBehaviour {
     public void OpenMenu(Menu instance) {
 
         // Deactivate top menu
-        if (menuStack.Count > 0) {
+        if (MenuStack.Count > 0) {
 
             if (instance.DisableMenusUnderneath) {
 
-                foreach (var menu in menuStack) {
+                foreach (var menu in MenuStack) {
                     menu.gameObject.SetActive(false);
 
                     if (menu.DisableMenusUnderneath)
@@ -71,12 +70,12 @@ public class MenuManager : MonoBehaviour {
             }
 
             var topCanvas = instance.GetComponent<Canvas>();
-            var previousCanvas = menuStack.Peek().GetComponent<Canvas>();
+            var previousCanvas = MenuStack.Peek().GetComponent<Canvas>();
             topCanvas.sortingOrder = previousCanvas.sortingOrder + 1;
 
         }
 
-        menuStack.Push(instance);
+        MenuStack.Push(instance);
 
     }
 
@@ -84,12 +83,12 @@ public class MenuManager : MonoBehaviour {
     /// Closes the current menu and remove it from the stack
     /// </summary>
     public void CloseMenu() {
-        var instance = menuStack.Pop();
+        var instance = MenuStack.Pop();
         Destroy(instance.gameObject);
 
         // Re-activate top mneu
-        if (menuStack.Count > 0) {
-            menuStack.Peek().gameObject.SetActive(true);
+        if (MenuStack.Count > 0) {
+            MenuStack.Peek().gameObject.SetActive(true);
         }
 
     }
@@ -120,9 +119,6 @@ public class MenuManager : MonoBehaviour {
         if (typeof(T) == typeof(PauseMenu))
             return pauseMenuPrefab as T;
 
-        if (typeof(T) == typeof(IntroProfileMenu))
-            return introProfileMenuPrefab as T;
-
         if (typeof(T) == typeof(SettingsMenu))
             return settingsMenuPrefab as T;
 
@@ -147,12 +143,12 @@ public class MenuManager : MonoBehaviour {
     /// <param name="menu">Our menu object</param>
     public void CloseMenu(Menu menu) {
 
-        if (menuStack.Count == 0) {
+        if (MenuStack.Count == 0) {
             Debug.LogErrorFormat(menu, "{0} cannot be closed because menu stack is empty", menu.GetType());
             return;
         }
 
-        if (menuStack.Peek() != menu) {
+        if (MenuStack.Peek() != menu) {
             Debug.LogErrorFormat(menu, "{0} cannot be closed because it is not on top of stack", menu.GetType());
             return;
         }
@@ -164,7 +160,7 @@ public class MenuManager : MonoBehaviour {
     /// Closes menu at the top of our stack
     /// </summary>
     public void CloseTopMenu() {
-        var instance = menuStack.Pop();
+        var instance = MenuStack.Pop();
 
         if (instance.DestroyWhenClosed)
             Destroy(instance.gameObject);
@@ -174,7 +170,7 @@ public class MenuManager : MonoBehaviour {
         // Reactivate top menu
         // If reactivated menu is an overlay, we need to activate the menu under it
         // AVOID USING FOREACH
-        foreach (var menu in menuStack) {
+        foreach (var menu in MenuStack) {
             menu.gameObject.SetActive(true);
 
             if (menu.DisableMenusUnderneath)
@@ -188,8 +184,8 @@ public class MenuManager : MonoBehaviour {
     /// </summary>
     private void Update() {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && menuStack.Count > 0) {
-            menuStack.Peek().OnBackPressed();
+        if (Input.GetKeyDown(KeyCode.Escape) && MenuStack.Count > 0) {
+            MenuStack.Peek().OnBackPressed();
         }
 
     }
