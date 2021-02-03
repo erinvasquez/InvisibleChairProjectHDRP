@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   display: {fileID: 8813987523805842412}
   displayMode: 0
-  sampleDuration: 0.33
+  sampleDuration: 0.617
 --- !u!1 &8813987523908009595
 GameObject:
   m_ObjectHideFlags: 0

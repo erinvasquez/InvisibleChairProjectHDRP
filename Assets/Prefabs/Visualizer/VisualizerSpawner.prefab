@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 820435176932308355}
   - component: {fileID: 820435176932308352}
   m_Layer: 0
-  m_Name: HwyLightSpawner
+  m_Name: VisualizerSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,15 +55,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 0}
-  sender: {fileID: 994594080149283232}
-  receiver: {fileID: 7293819325817985974}
-  hwyLightPrefab: {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b,
+  sender: {fileID: 6806813442790443697}
+  receiver: {fileID: 4395920508260196553}
+  HwyLightPrefab: {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b,
+    type: 3}
+  SphereLightPrefab: {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306,
     type: 3}
   speed: 0
   distance: 0
   beat: 1
-  lightQueue: []
-  currentLight: 0
 --- !u!1 &994594080149283232
 GameObject:
   m_ObjectHideFlags: 0

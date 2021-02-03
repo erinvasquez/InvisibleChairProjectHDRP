@@ -5,9 +5,9 @@
 /// Works in conjunction with AudioPeer and Conductor to spawn
 /// lights every beat
 /// </summary>
-public class HwyLightSpawner : MonoBehaviour {
+public class VisualizerSpawner : MonoBehaviour {
 
-    public static HwyLightSpawner instance;
+    public static VisualizerSpawner instance;
     public AudioSource musicSource;
 
     // Sender and Receiver transforms for 2 GameObjects in the
@@ -16,17 +16,18 @@ public class HwyLightSpawner : MonoBehaviour {
     public Transform receiver;
 
     [Header("Prefabs")]
-    public GameObject hwyLightPrefab;
+    public GameObject HwyLightPrefab;
+    public GameObject SphereLightPrefab;
 
-    [Header("Factors")]
-    public float speed = 0f;
-    public float distance = 0f;
 
 
     public int beat = 1;
+    public float speed = 0f;
 
-    public HwyLight[] ABLightQueue; // An array of HwyLights we use to visualize
-    public int currentABLight = 0; // Current HwyLight
+
+    GameObject currentPrefab;
+    HwyLight[] HwyLights; // An array of HwyLights we use to visualize
+    int currentHwyLight = 0; // Current HwyLight
 
     /// <summary>
     /// Called once script instance is loaded
@@ -38,28 +39,29 @@ public class HwyLightSpawner : MonoBehaviour {
         receiver = GameObject.Find("Receiver").transform;
         musicSource = GameObject.Find("Main Menu Music").GetComponent<AudioSource>();
 
+        
+
+
+        
+
+
     }
 
     /// <summary>
     /// Called before first frame update
     /// 
     /// Find our music and main camera
-    /// Instantiate enough HWYLights to loop queue round
+    /// Instantiate the lights we'll use
     /// If Conductor is ready, then AudioPeer is ready, then Visualize
     /// HwyLights
     /// </summary>
     void Start() {
 
         // Instantiate a queue of HwyLights (beats per measure + 1)
-        ABLightQueue = new HwyLight[Conductor.beatsPerMeasure + 1];
-
-        // Our actual spawning algorithm
-        // Start by spawning one more than necessary (in most cases beatsPerMeasure + 1)
-        // That way we can just initialize [5], have them "spawn in" and move back around
-        // the queue to be teleported to the beginning again
-        for (int a = 0; a < ABLightQueue.Length; a++) {
-            ABLightQueue[a] = Object.Instantiate(hwyLightPrefab, Vector3.zero, Quaternion.identity).GetComponent<HwyLight>();
-            ABLightQueue[a].Initialize(this);
+        HwyLights = new HwyLight[Conductor.beatsPerMeasure + 1];
+        for (int a = 0; a < HwyLights.Length; a++) {
+            HwyLights[a] = Object.Instantiate(HwyLightPrefab, Vector3.zero, Quaternion.identity).GetComponent<HwyLight>();
+            HwyLights[a].Initialize(this, sender.transform.position, receiver.transform.position);
         }
 
     }
@@ -77,21 +79,16 @@ public class HwyLightSpawner : MonoBehaviour {
             return;
         }
 
-
-        // Since Conductor is ready and has analyzed the song,
-        // we can calculate speed
+        // POST SET-UP ----------------------------------------------------------------------
         if (speed == 0f) {
-            distance = receiver.position.z - sender.position.z;
-            Debug.Log("Visualizer ready, calculating speed... ");
-
-            speed = distance / (Conductor.secondsPerBeat * Conductor.beatsPerMeasure);
-
-            Debug.Log("HwyLight speed calculated: " + speed);
-
-            return;
+            // Speed calculated as our distance traveled over time
+            // (distance between sender and receiver, time spent is one beat
+            float distance = (receiver.position.z - sender.position.z);
+            speed = distance / ((float) Conductor.secondsPerBeat);
+            Debug.Log("Distance: " + distance);
         }
 
-        // POST SET-UP --------------------------------------------------------------------------
+
         if (beat <= (int)Conductor.songPositionInBeats) {
             // Trigger moving flags for ALL our lights
             SendLights();
@@ -109,22 +106,22 @@ public class HwyLightSpawner : MonoBehaviour {
         beat++;
 
         // Increment and loop our light indeces
-        currentABLight++;
+        currentHwyLight++;
 
-        if (currentABLight >= ABLightQueue.Length) {
-            currentABLight = 0;
+        if (currentHwyLight >= HwyLights.Length) {
+            currentHwyLight = 0;
         }
 
         // Send each type of light
-        SendABLights();
+        SendHwyLights();
     }
 
     /// <summary>
-    /// Set "moving" flags on all AB lights
+    /// Set "moving" flags on all HwyLights
     /// </summary>
-    void SendABLights() {
-        Debug.Log("Sending AB light " + currentABLight);
-        ABLightQueue[currentABLight].GetComponent<HwyLight>().moving = true;
+    void SendHwyLights() {
+        Debug.Log("Sending HwyLight " + currentHwyLight);
+        HwyLights[currentHwyLight].GetComponent<HwyLight>().moving = true;
     }
 
 }

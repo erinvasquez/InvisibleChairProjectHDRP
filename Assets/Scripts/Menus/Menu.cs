@@ -2,6 +2,8 @@
 
 /// <summary>
 /// Lessons taken from: https://github.com/YousicianGit/UnityMenuSystem/blob/master/Assets/Scripts/MenuSystem/Menu.cs
+/// 
+/// Base Menu Abstract Class that defines some default methodds
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class Menu<T> : Menu where T : Menu<T> {
@@ -35,7 +37,7 @@ public abstract class Menu<T> : Menu where T : Menu<T> {
     }
 
     /// <summary>
-    /// Closes our menu if the instance exists
+    /// Closes our menu, but only if our instance isn't null
     /// </summary>
     protected static void Close() {
         if (Instance == null) {
@@ -55,10 +57,12 @@ public abstract class Menu<T> : Menu where T : Menu<T> {
 
 }
 
-
+/// <summary>
+/// Menu as a MonoBehaviour GameObject
+/// </summary>
 public abstract class Menu : MonoBehaviour {
 
-    [Tooltip("Destroy the GameObject when menu is closed reduces memory usage)")]
+    [Tooltip("Destroying the GameObject when the menu is closed reduces memory usage)")]
     public bool DestroyWhenClosed = true;
 
     [Tooltip("Disable menus that are under this one in the stack")]

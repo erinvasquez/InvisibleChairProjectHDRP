@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// Base menu class that implements paramaterless Show and Hide Methods
+/// Menu class that implements paramaterless Show and Hide Methods
 /// Lessons taken from https://github.com/YousicianGit/UnityMenuSystem/blob/master/Assets/Scripts/MenuSystem/SimpleMenu.cs
 /// </summary>
 public abstract class SimpleMenu<T> : Menu<T> where T : SimpleMenu<T> {

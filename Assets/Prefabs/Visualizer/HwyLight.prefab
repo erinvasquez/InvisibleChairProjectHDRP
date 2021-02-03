@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1720311756858916791}
-  - component: {fileID: 4479876004794099112}
+  - component: {fileID: 3360196697758418711}
   m_Layer: 0
-  m_Name: Hwy Lights
+  m_Name: HwyLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,12 +28,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3619662139869999180}
-  - {fileID: 5390607090556669458}
+  - {fileID: 7548984081703195117}
+  - {fileID: 8469674584557647666}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4479876004794099112
+--- !u!114 &3360196697758418711
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,23 +46,84 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moving: 0
-  intensity: 0.1
+--- !u!1 &2474541895685265724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7548984081703195117}
+  m_Layer: 0
+  m_Name: LeftLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7548984081703195117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2474541895685265724}
+  m_LocalRotation: {x: -0, y: -0, z: -0.5, w: 0.8660254}
+  m_LocalPosition: {x: -5, y: 9, z: 0}
+  m_LocalScale: {x: 0.1, y: 1.4999999, z: 0.1}
+  m_Children:
+  - {fileID: 3619662139869999180}
+  m_Father: {fileID: 1720311756858916791}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
+--- !u!1 &2752982952340134142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8469674584557647666}
+  m_Layer: 0
+  m_Name: RightLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8469674584557647666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2752982952340134142}
+  m_LocalRotation: {x: -0, y: -0, z: 0.5, w: 0.8660254}
+  m_LocalPosition: {x: 5, y: 9, z: 0}
+  m_LocalScale: {x: 0.1, y: 1.4999999, z: 0.1}
+  m_Children:
+  - {fileID: 5390607090556669458}
+  m_Father: {fileID: 1720311756858916791}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
 --- !u!1001 &499765440229346305
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1720311756858916791}
+    m_TransformParent: {fileID: 7548984081703195117}
     m_Modifications:
     - target: {fileID: 3806695677510204464, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204465, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_Name
-      value: Capsule Light
+      value: Left Capsule Light
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -72,27 +133,27 @@ PrefabInstance:
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -102,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8660254
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -117,7 +178,7 @@ PrefabInstance:
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -147,47 +208,47 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1720311756858916791}
+    m_TransformParent: {fileID: 8469674584557647666}
     m_Modifications:
     - target: {fileID: 3806695677510204464, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204465, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_Name
-      value: Capsule Light (1)
+      value: Right Capsule Light
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -197,7 +258,7 @@ PrefabInstance:
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8660254
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
@@ -212,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3806695677510204493, guid: f6d0afddea641544d9d2840b4c691c01,
         type: 3}
