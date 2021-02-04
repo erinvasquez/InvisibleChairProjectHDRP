@@ -17,10 +17,8 @@ public class MusicDisplay : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        // Get the current average samples from AudioPeer
-        averageSamples = AudioPeer._averageSamples;
-
-        intensity = getIntensity();
+        // Get the current intensity from AudioPeer
+        intensity = AudioPeer.intensity;
 
         if (intensity < minIntensity) {
             minIntensity = intensity;
@@ -31,24 +29,7 @@ public class MusicDisplay : MonoBehaviour {
         }
 
 
-        display.SetText("Intensity\n{0}\n{1}\n{2}", intensity * 10000f, maxIntensity * 10000f, minIntensity * 10000f);
+        display.SetText("Intensity\n{0}\n{1}\n{2}", intensity, maxIntensity, minIntensity);
 
-    }
-
-    private float getIntensity() {
-        // Average all of our current samples
-        // and output it as our music's "intensity"
-
-        float average = 0f;
-
-        for (int a = 0; a < averageSamples.Length; a++) {
-            average += averageSamples[a];
-        }
-
-        average /= averageSamples.Length; 
-
-
-
-        return average;
     }
 }

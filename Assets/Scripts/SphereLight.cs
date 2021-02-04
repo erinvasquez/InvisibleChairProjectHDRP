@@ -7,11 +7,6 @@ public class SphereLight : MonoBehaviour {
     VisualizerSpawner spawner;
     Vector3 startPos;
 
-    [SerializeField, Range(0.1f,1f)]
-    public float intensity = .5f;
-
-    
-
     /// <summary>
     /// Called once per frame
     /// </summary>
@@ -22,10 +17,8 @@ public class SphereLight : MonoBehaviour {
             return;
         }
 
-        intensity = 0f;
-
         // Do our visualizing
-        //Visualize();
+        Visualize();
 
     }
 
@@ -60,6 +53,13 @@ public class SphereLight : MonoBehaviour {
     /// Called in Update(), does our actual visualizer work
     /// </summary>
     public void Visualize() {
+
+        // lets get the intensity and apply it to our scale;
+
+        Vector3 scaleChange = new Vector3(1000f * AudioPeer.intensity, 1000f * AudioPeer.intensity, 1000f * AudioPeer.intensity);
+
+        transform.localScale = scaleChange;
+        
     }
 
 }

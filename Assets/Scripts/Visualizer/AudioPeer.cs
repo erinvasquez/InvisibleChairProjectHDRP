@@ -14,6 +14,7 @@ public class AudioPeer : MonoBehaviour {
     [Header("Status")]
     public static int BPM = 0; // Default 0 BPM, must analyze for stuff to work
     public static float trackLength;
+    public static float intensity; // average value of all samples
     public static bool audioPeerReady = false; // True when BPM is analyzed
 
     /// <summary>
@@ -94,7 +95,13 @@ public class AudioPeer : MonoBehaviour {
 
         // Get spectrum data from each channel
         GetSpectrumAudioSource();
+
+        // Old visualizer code
         //MakeFrequencyBands();
+
+        // Set our intensity
+        intensity = GetIntensity();
+
     }
 
     /// <summary>
@@ -156,6 +163,21 @@ public class AudioPeer : MonoBehaviour {
         }
 
 
+    }
+
+    public float GetIntensity() {
+        // Average all of our current samples
+        // output it as our music's "intensity"
+        float average = 0f;
+
+        for (int a = 0; a < _averageSamples.Length; a++) {
+            average += _averageSamples[a];
+        }
+
+        average /= _averageSamples.Length;
+
+
+        return average;
     }
 
 }
