@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// From Jasper Flick's Unity Movement Tutorials
@@ -296,30 +295,3 @@ public class MovingSphere : MonoBehaviour {
     }
 
 }
-=======
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
-/// 
-/// </summary>
-public class MovingSphere : MonoBehaviour {
-
-    [SerializeField]
-
-
-    // Start is called before the first frame update
-    void Awake() {
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void Update() {
-        
-    }
-
-}
->>>>>>> 20476f587dcd35c836191caa992fe6f5fc069044
