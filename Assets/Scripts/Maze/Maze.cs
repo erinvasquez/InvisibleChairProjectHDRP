@@ -14,12 +14,28 @@ public class Maze : MonoBehaviour {
     public MazeWall[] wallPrefabs;
     public MazeDoor doorPrefab;
 
-    [SerializeField, Range(0f, 1f)]
+    [Range(0f, 1f)]
     public float doorProbability;
 
+    /// <summary>
+    /// An array of our maze cells
+    /// </summary>
     private MazeCell[,] cells;
 
+    /// <summary>
+    /// The amount of seconds to delay the next step in maze generation
+    /// </summary>
     public float generationStepDelay;
+
+    /// <summary>
+    /// True if the maze is already done being generated
+    /// </summary>
+    public bool MazeGenerated = false;
+
+    private void Awake() {
+        size = new IntVector2(20, 20);   
+    }
+
 
     /// <summary>
     /// A property that returns a random IntVector2 coordinate
@@ -51,16 +67,25 @@ public class Maze : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called by the MazeManager,
+    /// Called by the MazeManager after Conductor
+    /// signals the visualizer being ready,
     /// a Coroutine that generates our maze by
     /// creating the cells and the edges
     /// </summary>
     /// <returns></returns>
     public IEnumerator Generate() {
+        
+        // Set to...
+        generationStepDelay = Conductor.secondsPerBeat / 32f;
+
+        // Suspend our coroutine for this long
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+
+        // Make our MazeCell array
         cells = new MazeCell[size.x, size.z];
 
-        // ActiveCells lists all cells that are "active"
+        // ActiveCells lists all maze cells that are "active"
+        // Think Prim's algorithm. This is how we can manipulate the algorithm
         // Active meaning we've stepped on them and we're gonna
         // try backtracking to it
         List<MazeCell> activeCells = new List<MazeCell>();
@@ -72,6 +97,8 @@ public class Maze : MonoBehaviour {
 
             DoNextGenerationStep(activeCells);
         }
+
+        MazeGenerated = true;
 
     }
 

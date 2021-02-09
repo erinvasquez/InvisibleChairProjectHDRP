@@ -14,7 +14,7 @@ public class MazeManager : MonoBehaviour {
     /// Called before Update()
     /// </summary>
     void Start() {
-        GenerateMaze();
+        //GenerateMaze();
     }
 
     /// <summary>
@@ -23,8 +23,37 @@ public class MazeManager : MonoBehaviour {
     /// </summary>
     void Update() {
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            RestartGame();
+        // Make sure visualizer is ready
+        if (!Conductor.visualizerReady) {
+            return;
+        }
+
+        // Check if our visualizer is ready
+        if (Conductor.visualizerReady) {
+
+            
+            Visualize();
+        }
+
+    }
+
+    /// <summary>
+    /// Called in update
+    /// 
+    /// Start generating a maze if it isn't already being generated,
+    /// </summary>
+    public void Visualize() {
+
+        // Don't start generating a new maze one already exists
+        if (!mazeInstance) {
+            GenerateMaze();
+        } else {
+
+            // We already have a mazeInstance, so re-generate if it's done
+            if (mazeInstance.MazeGenerated) {
+                RestartGeneration();
+            }
+
         }
 
     }
@@ -34,13 +63,16 @@ public class MazeManager : MonoBehaviour {
     /// </summary>
     private void GenerateMaze() {
         mazeInstance = Instantiate(mazePrefab) as Maze;
+
+        mazeInstance.transform.parent = transform;
+
         StartCoroutine(mazeInstance.Generate());
     }
 
     /// <summary>
     /// Set up our environment to re-generate our maze
     /// </summary>
-    private void RestartGame() {
+    private void RestartGeneration() {
         StopAllCoroutines();
         Destroy(mazeInstance.gameObject);
         GenerateMaze();

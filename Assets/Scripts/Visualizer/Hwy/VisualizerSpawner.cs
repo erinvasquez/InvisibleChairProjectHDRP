@@ -20,12 +20,9 @@ public class VisualizerSpawner : MonoBehaviour {
     public GameObject SphereLightPrefab;
 
 
-
     public int beat = 1;
     public float speed = 0f;
 
-
-    GameObject currentPrefab;
     HwyLight[] HwyLights; // An array of HwyLights we use to visualize
     int currentHwyLight = 0; // Current HwyLight
 
@@ -39,12 +36,6 @@ public class VisualizerSpawner : MonoBehaviour {
         receiver = GameObject.Find("Receiver").transform;
         musicSource = GameObject.Find("Main Menu Music").GetComponent<AudioSource>();
 
-        
-
-
-        
-
-
     }
 
     /// <summary>
@@ -53,7 +44,8 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Find our music and main camera
     /// Instantiate the lights we'll use
     /// If Conductor is ready, then AudioPeer is ready, then Visualize
-    /// HwyLights
+    /// HwyLights, our maze
+    /// 
     /// </summary>
     void Start() {
 
@@ -88,7 +80,7 @@ public class VisualizerSpawner : MonoBehaviour {
             Debug.Log("Distance: " + distance);
         }
 
-
+        // If we're in the next beat
         if (beat <= (int)Conductor.songPositionInBeats) {
             // Trigger moving flags for ALL our lights
             SendLights();
@@ -120,7 +112,7 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Set "moving" flags on all HwyLights
     /// </summary>
     void SendHwyLights() {
-        Debug.Log("Sending HwyLight " + currentHwyLight);
+        // Debug.Log("Sending HwyLight " + currentHwyLight);
         HwyLights[currentHwyLight].GetComponent<HwyLight>().moving = true;
     }
 
