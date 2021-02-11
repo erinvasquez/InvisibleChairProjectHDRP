@@ -179,6 +179,7 @@ public class Maze : MonoBehaviour {
         newCell.coordinates = coordinates;
         newCell.name = "Maze Cell " + coordinates.x + ", " + coordinates.z;
         newCell.transform.parent = transform;
+        newCell.transform.Rotate(transform.localRotation.eulerAngles);
         newCell.transform.localPosition = new Vector3(coordinates.x - size.x * 0.5f + 0.5f, 0f, coordinates.z - size.z * 0.5f + 0.5f);
 
         return newCell;

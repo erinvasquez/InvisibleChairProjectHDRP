@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 55ae0be8ef8f594468fc081297e03ce3
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Big Shoulders Inline Display
+  fontNames:
+  - Big Shoulders Inline Display
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 011b7f104680fcd44816c1d133e1d7c1, type: 3}
+  - {fileID: 12800000, guid: f203697117d83674eaf060e651993933, type: 3}
+  - {fileID: 12800000, guid: c191a0546a7a982428b1f931e5d99f4f, type: 3}
+  - {fileID: 12800000, guid: 41e63e49670c80743b088aae51e9d65e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

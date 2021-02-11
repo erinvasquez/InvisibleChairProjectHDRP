@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 328a315484f7ca2409c93526bc0582aa
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Big Shoulders Inline Text
+  fontNames:
+  - Big Shoulders Inline Text
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b0b558b47484a684888809965ad7cb5b, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

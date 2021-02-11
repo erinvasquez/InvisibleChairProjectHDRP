@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class AudioPeer : MonoBehaviour {
 
     AudioSource musicSource;
@@ -39,7 +42,7 @@ public class AudioPeer : MonoBehaviour {
         BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
         trackLength = audioClip.length;
 
-        Debug.Log("AudioPeer awake, BPM: " + BPM);
+        //Debug.Log("AudioPeer awake, BPM: " + BPM);
     }
 
     /// <summary>
@@ -50,16 +53,15 @@ public class AudioPeer : MonoBehaviour {
     /// </summary>
     private void Start() {
 
-        //
         // If by now we haven't successfully anyalyzed BPM, try analyzing
         // If we have analyzed BPM, stop the AudioSource from playing before
         // everyone else (Conductor) is ready to visualize
         if (BPM != 0) {
-            Debug.Log("AudioPeer: BPM already analyzed before Update(), Stopping AudioSource");
+            //Debug.Log("AudioPeer: BPM already analyzed before Update(), Stopping AudioSource");
             audioPeerReady = true;
             musicSource.Stop();
         } else {
-            Debug.Log("AudioPeer: BPM 0, re-analyzing BPM before Update()");
+            //Debug.Log("AudioPeer: BPM 0, re-analyzing BPM before Update()");
             BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
         }
 
@@ -74,56 +76,63 @@ public class AudioPeer : MonoBehaviour {
     private void Update() {
 
         // If by now we haven't successfully analyzed BPM, try analyzing
-        //  If we HAVE analyzed BPM, stop the AudioSource from playing before
-        // everyone else (Conductor) is ready to visualize
-
+        //    If we HAVE analyzed BPM (in this case that means it's 0),
+        //    stop the AudioSource from playing before
+        //    the Conductor is ready
         if (!audioPeerReady) {
             
             if (BPM == 0) {
-                Debug.Log("AudioPeer: BPM 0, Attempting to re-analyze BPM in Update()");
+                // Debug.Log("AudioPeer: BPM 0, Attempting to re-analyze BPM in Update()");
                 BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
                 return;
             }
 
-            Debug.Log("AudioPeer wasn't ready, but BPM non 0, Stopping AudioSource in Update()");
+            // Debug.Log("AudioPeer wasn't ready, but BPM non 0, Stopping AudioSource in Update()");
             audioPeerReady = true;
             musicSource.Stop();
 
-            return;
+            //return;
         }
 
 
         // Get spectrum data from each channel
-        GetSpectrumAudioSource();
-
-        // Old visualizer code
-        //MakeFrequencyBands();
+        GetSpectrumAudioSourceStereo(_leftSamples, _rightSamples, _averageSamples);
 
         // Set our intensity
-        intensity = GetIntensity();
+        GetIntensity();
 
     }
 
     /// <summary>
-    /// Pumps FFT spectrum data into our _samples array, which can be accessed publicly
-    /// Currently averages both channel's data
+    /// Get our music's spectrum data and pump into left and right
+    /// channel sampes, as well as averaging them into _averageSamples[]
     /// </summary>
-    void GetSpectrumAudioSource() {
-        musicSource.GetSpectrumData(_leftSamples, 0, FFTWindow.Blackman); // 0 is left channel
-        musicSource.GetSpectrumData(_rightSamples, 1, FFTWindow.Blackman); // 1 is right channel
+    /// <param name="leftSamples">Channel 0, or the left side of our audio</param>
+    /// <param name="rightSamples">Channel 1, or the right side of our audio</param>
+    void GetSpectrumAudioSourceStereo(float[] leftSamples, float[] rightSamples, float[] averageSamples) {
+        musicSource.GetSpectrumData(leftSamples, 0, FFTWindow.Blackman); // 0 is left channel
+        musicSource.GetSpectrumData(rightSamples, 1, FFTWindow.Blackman); // 1 is right channel
 
 
-        // Average left and right samples into one
+        // Average left and right samples into one average mono-sample
         for (int a = 0; a < 512; a++) {
-            _averageSamples[a] = (_leftSamples[a] + _rightSamples[a]) / 2;
+            averageSamples[a] = (_leftSamples[a] + _rightSamples[a]) / 2;
         }
 
-
-        //_audioSource.GetSpectrumData(_samples, 0, FFTWindow.Blackman); // original code, which only got from left channel
     }
 
     /// <summary>
     /// 
+    /// </summary>
+    /// <param name="samples"></param>
+    void GetSpectrumAudioSourceMono(float[] samples) {
+
+        musicSource.GetSpectrumData(samples, 0, FFTWindow.Blackman); // 0 is left or mono channel
+
+    }
+
+    /// <summary>
+    /// Old method used to make frequency bands...?
     /// </summary>
     void MakeFrequencyBands() {
         /* 48000 hz frequency for 1/50 AM
@@ -165,7 +174,12 @@ public class AudioPeer : MonoBehaviour {
 
     }
 
-    public float GetIntensity() {
+    /// <summary>
+    /// Takes our average samples' average, and
+    /// save it as our intensity variable
+    /// </summary>
+    /// <returns></returns>
+    void GetIntensity() {
         // Average all of our current samples
         // output it as our music's "intensity"
         float average = 0f;
@@ -177,7 +191,7 @@ public class AudioPeer : MonoBehaviour {
         average /= _averageSamples.Length;
 
 
-        return average;
+        intensity =  average;
     }
 
 }
