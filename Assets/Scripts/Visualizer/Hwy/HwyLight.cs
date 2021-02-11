@@ -1,13 +1,32 @@
 ﻿using UnityEditor;
 using UnityEngine;
-public class HwyLight : MonoBehaviour {
 
-    VisualizerSpawner spawner;
-    Vector3 startPos;
-    Vector3 endPos;
+/// <summary>
+/// A type of Visualizer Unit
+/// 
+/// Instantiated and Initialized by our Visualizer Spawner
+/// </summary>
+public class HwyLight : VisualizerUnit {
+    Vector3 startPosition;
+    Vector3 endPosition;
     Vector3 direction;
+    
     public bool moving = false;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Spawner">Our Visualizer Spawning GameObject</param>
+    /// <param name="startPosition"></param>
+    public void Initialize(VisualizerSpawner visualizer, Vector3 startPos, Vector3 endPos, Vector3 dir) {
+        startPosition = startPos;
+        endPosition = endPos;
+        direction = dir;
+
+
+        transform.position = startPosition;
+        transform.parent = visualizer.transform;
+    }
 
     /// <summary>
     /// Called once per frame
@@ -19,67 +38,18 @@ public class HwyLight : MonoBehaviour {
             return;
         }
 
-        // If this is the first time we update, make sure we're in the right spot first
-        // DO THIS HERE
-
         // Do our visualizing
         Visualize();
 
     }
 
-
-    public void Initialize() {
-        spawner = GameObject.Find("VisualizerSpawner").GetComponent<VisualizerSpawner>();
-
-        startPos = spawner.sender.transform.position;
-        endPos = spawner.sender.transform.position;
-        direction = Vector3.forward;
-
-        transform.parent = spawner.transform;
-        transform.position = spawner.transform.position;
-    }
-
-    public void Initialize(VisualizerSpawner Spawner) {
-        spawner = Spawner;
-
-        startPos = spawner.transform.position + new Vector3(0, 0, -30);
-        endPos = new Vector3(0, 0, 530);
-        direction = Vector3.forward;
-
-        transform.parent = spawner.transform;
-        transform.position = startPos;
-    }
-
-    public void Initialize(VisualizerSpawner Spawner, Vector3 Start, Vector3 End) {
-        spawner = Spawner;
-
-        startPos = Start;
-        endPos = End;
-        direction = Vector3.forward;
-
-        transform.parent = Spawner.transform;
-        transform.position = startPos;
-    }
-
-    public void Initialize(VisualizerSpawner Spawner, Vector3 Start, Vector3 End, Vector3 Direction) {
-        spawner = Spawner;
-
-        startPos = Start;
-        endPos = End;
-        direction = Direction;
-
-        transform.parent = Spawner.transform;
-        transform.position = startPos;
-    }
-
     /// <summary>
     /// Called in Update(), does our actual visualizer work
     /// </summary>
-    public void Visualize() {
-
+    public override void Visualize() {
         // If we've passed our endpoint,
         // Place our light at the back of the line again, and stop it from moving
-        if (transform.position.z >= endPos.z) {
+        if (transform.position.z >= endPosition.z) {
             StopLight();
         }
 
@@ -88,13 +58,19 @@ public class HwyLight : MonoBehaviour {
             // Move it forward enough for 1 update
             MoveLight();
         }
+
     }
 
     /// <summary>
     /// Called by Visualize, moves the light forward [one frame?]
+    /// 
+    /// CHANGE THIS to calculate speed inside here, rather than on the visualizer
     /// </summary>
     public void MoveLight() {
-        transform.Translate(direction * spawner.speed * Time.deltaTime);
+
+        float speed = Vector3.Distance(startPosition, endPosition) / (float)Conductor.secondsPerBeat;
+
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
     /// <summary>
@@ -102,6 +78,6 @@ public class HwyLight : MonoBehaviour {
     /// </summary>
     public void StopLight() {
         moving = false;
-        transform.position = startPos;
+        transform.position = startPosition;
     }
 }

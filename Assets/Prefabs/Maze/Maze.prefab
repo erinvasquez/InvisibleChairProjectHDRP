@@ -54,5 +54,6 @@ MonoBehaviour:
   - {fileID: 3537349753883839565, guid: 014c0bfb4043ca14f94f734216f3e881, type: 3}
   doorPrefab: {fileID: 6128793525992377175, guid: f3b585644e298d84aa4be4358137a231,
     type: 3}
-  doorProbability: 0.003
+  doorProbability: 0
   generationStepDelay: 0.07
+  MazeGenerated: 0

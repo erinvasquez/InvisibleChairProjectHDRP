@@ -8,33 +8,55 @@
 public class VisualizerSpawner : MonoBehaviour {
 
     public static VisualizerSpawner instance;
-    public AudioSource musicSource;
 
     // Sender and Receiver transforms for 2 GameObjects in the
     // spawner prefab that can be set in the editor
+    [SerializeField]
     public Transform sender;
+    [SerializeField]
     public Transform receiver;
 
-    [Header("Prefabs")]
-    public GameObject HwyLightPrefab;
-    public GameObject SphereLightPrefab;
+
+    public GameObject[] VisualizerUnitPrefabs = new GameObject[4];
+
+    [Header("Highway Lights")]
+    public bool UseHwyLight = true;
+    [Range(1, 16)]
+    public int HwyLightsPerBeat = 2;
+    [SerializeField]
+    int HwyLightIndex = 0; // Current HwyLight
+    private Transform[] HwyLights;
+    
+
+    [Header("Sphere Light")]
+    public bool UseSphere = true;
+    [Range(1, 1000)]
+    public int SphereIntensityMultiplier = 1000;
+    private SphereLight sphereLight;
+
+    [Header("Maze")]
+    public bool UseMaze = true;
+    [Range(2, 20)]
+    int mazeSize = 20;
+    private VisualizerMaze[] mazes;
+    private VisualizerMaze maze;
+
+    [Header ("Clock")]
+    public bool UseClock = true;
+    private Clock clock;
 
 
+    [Header("Visualizer Stuff")]
     public int beat = 1;
     public float speed = 0f;
 
-    HwyLight[] HwyLights; // An array of HwyLights we use to visualize
-    int currentHwyLight = 0; // Current HwyLight
+    
 
     /// <summary>
     /// Called once script instance is loaded
     /// </summary>
     private void Awake() {
         instance = this;
-
-        sender = GameObject.Find("Sender").transform;
-        receiver = GameObject.Find("Receiver").transform;
-        musicSource = GameObject.Find("Main Menu Music").GetComponent<AudioSource>();
 
     }
 
@@ -50,11 +72,47 @@ public class VisualizerSpawner : MonoBehaviour {
     void Start() {
 
         // Instantiate a queue of HwyLights (beats per measure + 1)
-        HwyLights = new HwyLight[Conductor.beatsPerMeasure + 1];
+        /*HwyLights = new HwyLight[Conductor.beatsPerMeasure + 1];
         for (int a = 0; a < HwyLights.Length; a++) {
             HwyLights[a] = Object.Instantiate(HwyLightPrefab, Vector3.zero, Quaternion.identity).GetComponent<HwyLight>();
-            HwyLights[a].Initialize(this, sender.transform.position, receiver.transform.position);
+            HwyLights[a].Initialize(this, senderPosition, receiverPosition, Vector3.forward);
+        }*/
+
+        // Instantiate all of our Visualizer Units
+        for (int a = 0; a < VisualizerUnitPrefabs.Length; a++) {
+
+
+            if (VisualizerUnitPrefabs[a].GetType() == typeof(VisualizerMaze)) {
+
+                //maze = Instantiate(maze, Vector3.zero, Quaternion.identity) as VisualizerMaze;
+
+            } else if (VisualizerUnitPrefabs[a].GetType() == typeof(SphereLight)) {
+
+                //sphereLight = Instantiate(sphereLight, Vector3.zero, Quaternion.identity) as SphereLight;
+
+
+            } else if (VisualizerUnitPrefabs[a].GetType() == typeof(HwyLight)) {
+
+                HwyLights = new Transform[Conductor.beatsPerMeasure + 1];
+
+                for (int b = 0; b < HwyLights.Length; b++) {
+                    HwyLights[b] = Instantiate(VisualizerUnitPrefabs[a], Vector3.zero, Quaternion.identity).transform;
+                    HwyLights[b].GetComponent<HwyLight>().Initialize(this, sender.position, receiver.position, Vector3.forward);
+                }
+
+
+            } else if (VisualizerUnitPrefabs[a].GetType() == typeof(Clock)) {
+
+                //clock = Instantiate(clock, Vector3.zero, Quaternion.identity) as Clock;
+
+            }
+
+
         }
+
+
+
+
 
     }
 
@@ -98,10 +156,10 @@ public class VisualizerSpawner : MonoBehaviour {
         beat++;
 
         // Increment and loop our light indeces
-        currentHwyLight++;
+        HwyLightIndex++;
 
-        if (currentHwyLight >= HwyLights.Length) {
-            currentHwyLight = 0;
+        if (HwyLightIndex >= HwyLights.Length) {
+            HwyLightIndex = 0;
         }
 
         // Send each type of light
@@ -113,7 +171,7 @@ public class VisualizerSpawner : MonoBehaviour {
     /// </summary>
     void SendHwyLights() {
         // Debug.Log("Sending HwyLight " + currentHwyLight);
-        HwyLights[currentHwyLight].GetComponent<HwyLight>().moving = true;
+        HwyLights[HwyLightIndex].GetComponent<HwyLight>().moving = true;
     }
 
 }

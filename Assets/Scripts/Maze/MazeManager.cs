@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class MazeManager : MonoBehaviour {
 
-    public Maze mazePrefab;
-    private Maze mazeInstance;
+    public VisualizerMaze mazePrefab;
+    private VisualizerMaze mazeInstance;
 
     /// <summary>
     /// Called before Update()
@@ -32,7 +32,7 @@ public class MazeManager : MonoBehaviour {
         if (Conductor.visualizerReady) {
 
             
-            Visualize();
+            //Visualize();
         }
 
     }
@@ -62,7 +62,7 @@ public class MazeManager : MonoBehaviour {
     /// Generates our maze via coroutines
     /// </summary>
     private void GenerateMaze() {
-        mazeInstance = Instantiate(mazePrefab) as Maze;
+        mazeInstance = Instantiate(mazePrefab) as VisualizerMaze;
 
         mazeInstance.transform.parent = transform;
 

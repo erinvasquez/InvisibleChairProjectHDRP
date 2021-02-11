@@ -6,7 +6,7 @@ using UnityEngine;
 /// Script assembled from https://catlikecoding.com/unity/tutorials/maze/
 /// 
 /// </summary>
-public class Maze : MonoBehaviour {
+public class VisualizerMaze : VisualizerUnit {
     public IntVector2 size;
 
     public MazeCell cellPrefab;
@@ -222,6 +222,32 @@ public class Maze : MonoBehaviour {
             wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
             wall.Initialize(otherCell, cell, direction.GetOpposite());
         }
+
+    }
+
+    /// <summary>
+    /// move our maze generation coroutines originally in maze manager to here?
+    /// </summary>
+    private void GenerateMaze() {
+
+    }
+
+    /// <summary>
+    /// Called in Update() by our VisualizerSpawner
+    /// 
+    /// This method is only called if Conductor.visualizerReady
+    /// 
+    /// Decide what to do during this frame as if it were its own Update()
+    /// </summary>
+    public override void Visualize() {
+
+        // If we don't have a maze generating yet, star generating it this frame
+
+
+        if (!MazeGenerated) {
+
+        }
+
 
     }
 

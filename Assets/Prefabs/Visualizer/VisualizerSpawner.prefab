@@ -54,16 +54,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d033df48f074e49459d8debf09a32757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
   sender: {fileID: 6806813442790443697}
   receiver: {fileID: 4395920508260196553}
-  HwyLightPrefab: {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b,
-    type: 3}
-  SphereLightPrefab: {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306,
-    type: 3}
-  speed: 0
-  distance: 0
+  VisualizerUnitPrefabs:
+  - {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3, type: 3}
+  - {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b, type: 3}
+  - {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306, type: 3}
+  - {fileID: 635934200550363531, guid: 69cb0630b057a0e4b951fd94a22483d5, type: 3}
+  UseHwyLight: 1
+  HwyLightsPerBeat: 1
+  HwyLightIndex: 0
+  UseSphere: 1
+  SphereIntensityMultiplier: 1000
+  UseMaze: 1
+  UseClock: 1
   beat: 1
+  speed: 0
 --- !u!1 &994594080149283232
 GameObject:
   m_ObjectHideFlags: 0

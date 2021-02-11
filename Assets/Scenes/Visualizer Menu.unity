@@ -129,11 +129,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1309789070}
     m_Modifications:
-    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 820435176932308358, guid: 08da954a2ec07534ba4cb1b090bec8dc,
         type: 3}
       propertyPath: m_Name
@@ -866,6 +861,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere
       objectReference: {fileID: 0}
+    - target: {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2395720701476452002, guid: bd9d01a631377a94bb3b3b47c85d8306,
         type: 3}
       propertyPath: m_RootOrder
@@ -989,6 +989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Maze Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8045073123430784876, guid: cb8c7469b6a969341a7f4fc74c394411,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8c7469b6a969341a7f4fc74c394411, type: 3}
@@ -1503,7 +1508,7 @@ PrefabInstance:
     - target: {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bbf258da898702429a2641564ffa5f3, type: 3}
