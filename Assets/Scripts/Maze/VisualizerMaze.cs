@@ -33,7 +33,7 @@ public class VisualizerMaze : VisualizerUnit {
     public bool MazeGenerated = false;
 
     private void Awake() {
-        size = new IntVector2(20, 20);   
+        //size = new IntVector2(20, 20);   
     }
 
 
@@ -67,14 +67,16 @@ public class VisualizerMaze : VisualizerUnit {
     }
 
     /// <summary>
-    /// Called by the MazeManager after Conductor
-    /// signals the visualizer being ready,
-    /// a Coroutine that generates our maze by
+    /// Called by our VisualizerSpawner after Conductor
+    /// signals the visualizer being ready.
+    /// 
+    /// A Coroutine that generates our maze by
     /// creating the cells and the edges
     /// </summary>
+    /// 
     /// <returns></returns>
-    public IEnumerator Generate() {
-        
+    public IEnumerator Generate(IntVector2 mazeSize) {
+
         // Set to...
         generationStepDelay = Conductor.secondsPerBeat / 32f;
 
@@ -82,7 +84,7 @@ public class VisualizerMaze : VisualizerUnit {
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
 
         // Make our MazeCell array
-        cells = new MazeCell[size.x, size.z];
+        cells = new MazeCell[mazeSize.x, mazeSize.z];
 
         // ActiveCells lists all maze cells that are "active"
         // Think Prim's algorithm. This is how we can manipulate the algorithm
@@ -225,12 +227,6 @@ public class VisualizerMaze : VisualizerUnit {
 
     }
 
-    /// <summary>
-    /// move our maze generation coroutines originally in maze manager to here?
-    /// </summary>
-    private void GenerateMaze() {
-
-    }
 
     /// <summary>
     /// Called in Update() by our VisualizerSpawner
@@ -241,12 +237,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// </summary>
     public override void Visualize() {
 
-        // If we don't have a maze generating yet, star generating it this frame
-
-
-        if (!MazeGenerated) {
-
-        }
+        
 
 
     }

@@ -22,6 +22,12 @@ public class SphereLight : VisualizerUnit {
 
     }
 
+    public override void Initialize(VisualizerSpawner visualizer, Vector3 position) {
+        spawner = visualizer;
+        transform.parent = visualizer.transform;
+        transform.position = position;
+    }
+
     /// <summary>
     /// Called in Update(), does our actual visualizer work
     /// </summary>
@@ -33,5 +39,7 @@ public class SphereLight : VisualizerUnit {
         transform.localScale = new Vector3(SphereIntensity, SphereIntensity, SphereIntensity);
         
     }
+
+
 
 }

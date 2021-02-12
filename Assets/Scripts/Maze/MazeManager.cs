@@ -69,7 +69,7 @@ public class MazeManager : MonoBehaviour {
         mazeInstance.transform.position = new Vector3(0f, 10f, 30f);
         mazeInstance.transform.Rotate(new Vector3(30f, 0f, 0f));
 
-        StartCoroutine(mazeInstance.Generate());
+        //StartCoroutine(mazeInstance.Generate(20));
     }
 
     /// <summary>

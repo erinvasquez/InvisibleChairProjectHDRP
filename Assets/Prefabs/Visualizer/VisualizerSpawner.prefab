@@ -56,20 +56,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sender: {fileID: 6806813442790443697}
   receiver: {fileID: 4395920508260196553}
-  VisualizerUnitPrefabs:
-  - {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3, type: 3}
-  - {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b, type: 3}
-  - {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306, type: 3}
-  - {fileID: 635934200550363531, guid: 69cb0630b057a0e4b951fd94a22483d5, type: 3}
+  HwyLightPrefab: {fileID: 1720311756858916788, guid: 975c82b803701e448a93a0c7fed1827b,
+    type: 3}
+  SphereLightPrefab: {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306,
+    type: 3}
+  VisualizerMazePrefab: {fileID: 635934200550363531, guid: 69cb0630b057a0e4b951fd94a22483d5,
+    type: 3}
+  ClockPrefab: {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3,
+    type: 3}
   UseHwyLight: 1
   HwyLightsPerBeat: 1
   HwyLightIndex: 0
   UseSphere: 1
+  SphereLightPosition: {x: -5, y: 5, z: 20}
   SphereIntensityMultiplier: 1000
   UseMaze: 1
+  size: 20
   UseClock: 1
+  ClockPosition: {x: 0, y: 10, z: 100}
   beat: 1
-  speed: 0
 --- !u!1 &994594080149283232
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +129,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7293819325817985974}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 820435176932308359}
