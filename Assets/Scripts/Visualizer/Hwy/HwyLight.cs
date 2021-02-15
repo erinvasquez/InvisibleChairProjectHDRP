@@ -12,6 +12,7 @@ public class HwyLight : VisualizerUnit {
     Vector3 direction;
     
     public bool moving = false;
+    public float speed = 0f;
 
     /// <summary>
     /// 
@@ -26,6 +27,8 @@ public class HwyLight : VisualizerUnit {
 
         transform.position = startPosition;
         transform.parent = visualizer.transform;
+        speed = Vector3.Distance(startPosition, endPosition) / (float)Conductor.secondsPerBeat;
+
     }
 
     /// <summary>
@@ -38,19 +41,10 @@ public class HwyLight : VisualizerUnit {
             return;
         }
 
-        // Do our visualizing
-        Visualize();
-
-    }
-
-    /// <summary>
-    /// Called in Update(), does our actual visualizer work
-    /// </summary>
-    public override void Visualize() {
         // If we've passed our endpoint,
         // Place our light at the back of the line again, and stop it from moving
         if (transform.position.z >= endPosition.z) {
-            StopLight();
+            ResetLight();
         }
 
         // If the light is supposed to be moving...
@@ -62,21 +56,21 @@ public class HwyLight : VisualizerUnit {
     }
 
     /// <summary>
-    /// Called by Visualize, moves the light forward [one frame?]
+    /// Called by Update(), moves the light forward one frame
     /// 
     /// CHANGE THIS to calculate speed inside here, rather than on the visualizer
     /// </summary>
     public void MoveLight() {
 
-        float speed = Vector3.Distance(startPosition, endPosition) / (float)Conductor.secondsPerBeat;
+        speed = Vector3.Distance(startPosition, endPosition) / (float)Conductor.secondsPerBeat;
 
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
     /// <summary>
-    /// Called by Visualize to stop moving light forward during update
+    /// Called by Update() to stop moving light forward
     /// </summary>
-    public void StopLight() {
+    public void ResetLight() {
         moving = false;
         transform.position = startPosition;
     }

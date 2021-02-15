@@ -129,6 +129,51 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1925745941}
     m_Modifications:
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: size
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: mazeX
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: mazeZ
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: UseClock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: UseSphere
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: UseHwyLight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: ClockPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: ClockPosition.z
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: HwyLightsPerBeat
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 820435176932308358, guid: 08da954a2ec07534ba4cb1b090bec8dc,
         type: 3}
       propertyPath: m_Name
@@ -188,6 +233,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4395920508260196553, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08da954a2ec07534ba4cb1b090bec8dc, type: 3}
@@ -274,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 079c6587840ff42409063e2a8d98589a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstBeatOffset: 0.026
+  firstBeatOffset: 0
   countdownMeasures: 1
 --- !u!4 &181407956
 Transform:
@@ -660,7 +710,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2180804234191712645, guid: 707933f95e97c1349ab4429e48bddcfa,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 6081085eeb7c5c244a125eec8c3743b0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b9a19d4206c455c44a037a7b34a9c4eb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

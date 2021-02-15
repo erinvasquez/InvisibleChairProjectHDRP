@@ -7,6 +7,9 @@ using UnityEngine;
 /// 
 /// </summary>
 public class VisualizerMaze : VisualizerUnit {
+    /// <summary>
+    /// Set in Generate() when called by our VisualizerSpawner
+    /// </summary>
     public IntVector2 size;
 
     public MazeCell cellPrefab;
@@ -21,19 +24,36 @@ public class VisualizerMaze : VisualizerUnit {
     /// An array of our maze cells
     /// </summary>
     private MazeCell[,] cells;
+    List<MazeCell> UnfinishedCells;
 
     /// <summary>
     /// The amount of seconds to delay the next step in maze generation
     /// </summary>
-    public float generationStepDelay;
+    public float generationStepDelay = 0.01f;
 
     /// <summary>
     /// True if the maze is already done being generated
     /// </summary>
     public bool MazeGenerated = false;
 
+    public int stepsTaken = 0;
+
     private void Awake() {
         //size = new IntVector2(20, 20);   
+    }
+
+    /// <summary>
+    /// Called in Update() by our VisualizerSpawner
+    /// 
+    /// This method is only called if Conductor.visualizerReady is true
+    /// 
+    /// Decide what to do during this frame as if it were its own Update()
+    /// </summary>
+    private void Visualize() {
+
+
+
+
     }
 
 
@@ -58,7 +78,7 @@ public class VisualizerMaze : VisualizerUnit {
     }
 
     /// <summary>
-    /// 
+    /// Gets the cell at the IntVector2 coordinates provided
     /// </summary>
     /// <param name="coordinates"></param>
     /// <returns></returns>
@@ -70,36 +90,37 @@ public class VisualizerMaze : VisualizerUnit {
     /// Called by our VisualizerSpawner after Conductor
     /// signals the visualizer being ready.
     /// 
-    /// A Coroutine that generates our maze by
-    /// creating the cells and the edges
+    /// A Coroutine that starts generating our maze by
+    /// creating cells and the edges.
+    /// 
+    /// Sets MazeGenerated to true when finished
     /// </summary>
     /// 
     /// <returns></returns>
     public IEnumerator Generate(IntVector2 mazeSize) {
-
-        // Set to...
-        generationStepDelay = Conductor.secondsPerBeat / 32f;
+        size = mazeSize;
 
         // Suspend our coroutine for this long
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
 
         // Make our MazeCell array
-        cells = new MazeCell[mazeSize.x, mazeSize.z];
+        cells = new MazeCell[size.x, size.z];
 
         // ActiveCells lists all maze cells that are "active"
         // Think Prim's algorithm. This is how we can manipulate the algorithm
         // Active meaning we've stepped on them and we're gonna
         // try backtracking to it
-        List<MazeCell> activeCells = new List<MazeCell>();
+        UnfinishedCells = new List<MazeCell>();
 
-        DoFirstGenerationStep(activeCells);
+        DoFirstGenerationStep(UnfinishedCells);
 
-        while (activeCells.Count > 0) {
+        while (UnfinishedCells.Count > 0) {
             yield return delay;
 
-            DoNextGenerationStep(activeCells);
+            DoNextGenerationStep(UnfinishedCells);
         }
 
+        Debug.Log("Maze Generation done in " + stepsTaken + " steps");
         MazeGenerated = true;
 
     }
@@ -110,6 +131,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// <param name="activeCells"></param>
     private void DoFirstGenerationStep(List<MazeCell> activeCells) {
         activeCells.Add(CreateCell(RandomCoordinates));
+        stepsTaken++;
     }
 
     /// <summary>
@@ -118,6 +140,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// </summary>
     /// <param name="activeCells"></param>
     private void DoNextGenerationStep(List<MazeCell> activeCells) {
+        stepsTaken++;
         // Set our current index as the last active cell
         int currentIndex = activeCells.Count - 1;
         
@@ -228,18 +251,6 @@ public class VisualizerMaze : VisualizerUnit {
     }
 
 
-    /// <summary>
-    /// Called in Update() by our VisualizerSpawner
-    /// 
-    /// This method is only called if Conductor.visualizerReady
-    /// 
-    /// Decide what to do during this frame as if it were its own Update()
-    /// </summary>
-    public override void Visualize() {
-
-        
-
-
-    }
+    
 
 }

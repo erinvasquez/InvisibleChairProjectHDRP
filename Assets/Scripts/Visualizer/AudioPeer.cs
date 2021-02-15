@@ -20,6 +20,7 @@ public class AudioPeer : MonoBehaviour {
     public static float intensity; // average value of all samples
     public static bool audioPeerReady = false; // True when BPM is analyzed
 
+
     /// <summary>
     /// Keep AudioPeer as a Singleton
     /// </summary>

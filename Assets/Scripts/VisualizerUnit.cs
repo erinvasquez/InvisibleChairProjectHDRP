@@ -23,7 +23,6 @@ public abstract class VisualizerUnit : MonoBehaviour {
         transform.parent = visualizer.transform;
     }
 
-    public abstract void Visualize();
 
 
 }

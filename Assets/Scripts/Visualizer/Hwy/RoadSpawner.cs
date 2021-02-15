@@ -46,7 +46,7 @@ public class RoadSpawner : MonoBehaviour {
         // That way we can just initialize [5], have them "spawn in" and move back around
         // the queue to be teleported to the beginning again
         // Instantiate a queue of Roads (bpm + 1 for now, I don't have any better ideas this is honestly just 5 most of the time)
-        roadQueue = new Road[Conductor.beatsPerMeasure + 1];
+        roadQueue = new Road[5];
 
         for (int a = 0; a < roadQueue.Length; a++) {
             roadQueue[a] = Object.Instantiate(roadPrefab, new Vector3((float)transform.position.x, (float)a, (float)transform.position.z), Quaternion.identity).GetComponent<Road>();
@@ -71,13 +71,13 @@ public class RoadSpawner : MonoBehaviour {
             // distance = transform.position.z - mainCamera.transform.position.z;
             distance = transform.position.z - 0; // fix this to use our "exit" position that we have set up
             Debug.Log("Conductor ready, calculating speed... ");
-            speed = distance / (Conductor.secondsPerBeat * Conductor.beatsPerMeasure);
+            speed = distance / (Conductor.secondsPerBeat * 4);
 
             Debug.Log("Road speed calculated: " + speed);
 
             // Use our distance to determine the length of each of our roads
             // It should just be distance / bpm
-            roadLength = (int)(distance / Conductor.beatsPerMeasure + 1);
+            roadLength = (int)(distance / 5);
 
             return;
         }

@@ -31,7 +31,7 @@ public class SphereLight : VisualizerUnit {
     /// <summary>
     /// Called in Update(), does our actual visualizer work
     /// </summary>
-    public override void Visualize() {
+    public void Visualize() {
 
         // lets get the intensity and apply it to our scale;
         SphereIntensity = spawner.SphereIntensityMultiplier * AudioPeer.intensity;
