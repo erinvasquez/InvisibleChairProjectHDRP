@@ -26,7 +26,7 @@ public class VisualizerSpawner : MonoBehaviour {
     public bool UseHwyLight = true;
     [Range(1, 16)]
     public int HwyLightsPerBeat = 1;
-    public int HwyLightIndex = 0; // Current HwyLight
+    int HwyLightIndex = 0; // Current HwyLight
     GameObject[] HwyLights;
     float lastTimeHwyLightSent = 0f; // the last time in seconds that we sent a HwyLight
 
@@ -63,6 +63,14 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Actually IntVector2 that we use to generate our maze
     /// </summary>
     IntVector2 mazeSize;
+    /// <summary>
+    /// Maze Spawning position
+    /// </summary>
+    public Vector3 mazeStartPosition = new Vector3(0f, 10f, 50f);
+    /// <summary>
+    /// Default maze rotation
+    /// </summary>
+    public Vector3 mazeStartRotation = new Vector3(30f, 0f, 0f);
 
 
     [Header("Clock")]
@@ -77,7 +85,8 @@ public class VisualizerSpawner : MonoBehaviour {
     /// </summary>
     public int beatIndex = 1;
 
-    bool unitsAdded = false;
+    // do we really need this to be public static or can I just make a method for it
+    public static bool unitsAdded = false;
 
 
     /// <summary>
@@ -118,7 +127,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // If we've passed enough time to send a HwyLight, SEND IT
         if (Conductor.songPositionInSeconds - lastTimeHwyLightSent >= (Conductor.secondsPerBeat / HwyLightsPerBeat)) {
-            Debug.Log("Send light?");
+            //Debug.Log("Send light?");
 
             // Keep track of the last time we sent a HwyLight
             lastTimeHwyLightSent = Conductor.songPositionInSeconds;
@@ -129,10 +138,10 @@ public class VisualizerSpawner : MonoBehaviour {
         if (mazeInstance.MazeGenerated) {
             RestartMazeGeneration();
         }
-        
+
     }
 
-    
+
 
     /// <summary>
     /// Instantiate all of the Visualizer units that we'll be using
@@ -191,7 +200,7 @@ public class VisualizerSpawner : MonoBehaviour {
     void SendHwyLight() {
         // Debug.Log("Sending HwyLight " + currentHwyLight);
 
-        if (HwyLightIndex >= HwyLights.Length) {
+        if (HwyLightIndex >= HwyLights.Length - 1) {
             HwyLightIndex = 0;
         }
 
@@ -214,7 +223,7 @@ public class VisualizerSpawner : MonoBehaviour {
         mazeInstance = Instantiate(VisualizerMazePrefab.GetComponent<VisualizerMaze>()) as VisualizerMaze;
 
         mazeInstance.transform.parent = transform;
-        mazeInstance.transform.position = new Vector3(0f, 10f, 30f);
+        mazeInstance.transform.position = mazeStartPosition;
         mazeInstance.transform.Rotate(new Vector3(30f, 0f, 0f));
         mazeInstance.size = mazeSize;
 

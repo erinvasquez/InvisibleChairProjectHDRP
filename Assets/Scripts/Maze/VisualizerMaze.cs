@@ -38,24 +38,6 @@ public class VisualizerMaze : VisualizerUnit {
 
     public int stepsTaken = 0;
 
-    private void Awake() {
-        //size = new IntVector2(20, 20);   
-    }
-
-    /// <summary>
-    /// Called in Update() by our VisualizerSpawner
-    /// 
-    /// This method is only called if Conductor.visualizerReady is true
-    /// 
-    /// Decide what to do during this frame as if it were its own Update()
-    /// </summary>
-    private void Visualize() {
-
-
-
-
-    }
-
 
     /// <summary>
     /// A property that returns a random IntVector2 coordinate
