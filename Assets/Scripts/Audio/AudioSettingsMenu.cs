@@ -5,16 +5,27 @@ using UnityEngine.UI;
 /// Audio settings part of our settings menu
 /// </summary>
 public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
+    
     public static Slider masterVolumeSlider;
     public static Slider musicVolumeSlider;
     public static InputField masterVolumeInputField;
     public static InputField musicVolumeInputField;
 
+    public MenuManager menuManager;
+
     public static float defaultMasterVolume = 0.65f;
     public static float defaultMusicVolume = 0.65f;
+    public static bool defaultMuteOnLoseFocus = true;
+    
+    // Fix the handling of these values
+    private float masterVolume;
+    private float musicVolume;
+    private bool muteOnLoseFocus;
 
     protected override void Awake() {
         base.Awake();
+
+        menuManager = transform.parent.GetComponent<MenuManager>();
 
         masterVolumeSlider = GameObject.Find("MasterVolume Slider").GetComponent<Slider>();
         musicVolumeSlider = GameObject.Find("MusicVolume Slider").GetComponent<Slider>();
@@ -22,11 +33,34 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
         masterVolumeInputField = GameObject.Find("MasterVolume InputField").GetComponent<InputField>();
         musicVolumeInputField = GameObject.Find("MusicVolume InputField").GetComponent<InputField>();
 
+        masterVolumeSlider.value = defaultMasterVolume;
+        musicVolumeSlider.value = defaultMusicVolume;
+        muteOnLoseFocus = defaultMuteOnLoseFocus;
+
     }
 
+    /// <summary>
+    /// Load our Audio PreferenceData before doing anything
+    /// 
+    /// </summary>
     private void Start() {
-        //masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", defaultMasterVolume); // Default value is set here, how else can we?
-        //musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", defaultMusicVolume); // This won't work in awake apparently
+
+        // Handle making a default preferences file so we don't get a "null" error
+
+        //menuManager.LoadPreferences();
+
+    }
+
+    public float GetMasterVolume() {
+        return masterVolumeSlider.value;
+    }
+
+    public float GetMusicVolume() {
+        return musicVolumeSlider.value;
+    }
+
+    public bool GetMuteOnLoseFocus() {
+        return muteOnLoseFocus;
     }
 
     public void SetMasterSliderValue(string value) {
@@ -50,6 +84,9 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
 
     /// <summary>
     /// I'm assuming we'll call this if the user pressed ESC/BACK while on this menu in particular?
+    /// 
+    /// TODO
+    /// Handle whether or not we save the changes made in our audio settings here
     /// </summary>
     public override void OnBackPressed() {
 
@@ -60,6 +97,6 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
         MenuManager.Instance.CloseMenu();
     }
 
-    
+
 
 }

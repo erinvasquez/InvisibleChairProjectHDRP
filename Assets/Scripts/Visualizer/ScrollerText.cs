@@ -7,8 +7,11 @@ public class ScrollerText : MonoBehaviour {
 
     private TextMeshProUGUI textComponent;
     public TMP_FontAsset[] fonts = new TMP_FontAsset[15];
+    [Range (1,16)]
+    public int scrollRate = 4;
     int currentFont = 0;
     float lastTimeFontChanged = 0f;
+
 
     private void Awake() {
         textComponent = GetComponent<TextMeshProUGUI>();
@@ -16,9 +19,6 @@ public class ScrollerText : MonoBehaviour {
 
 
     private void Start() {
-
-        Debug.Log("Font Asset: " + transform.gameObject.GetComponent<TextMeshProUGUI>().font);
-    
 
     }
 
@@ -31,7 +31,7 @@ public class ScrollerText : MonoBehaviour {
         }
 
         
-        if (Conductor.songPositionInSeconds - lastTimeFontChanged >= Conductor.secondsPerBeat / 4) {
+        if (Conductor.songPositionInSeconds - lastTimeFontChanged >= Conductor.secondsPerBeat / scrollRate) {
 
             lastTimeFontChanged = Conductor.songPositionInSeconds;
             

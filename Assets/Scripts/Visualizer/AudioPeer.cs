@@ -1,15 +1,33 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 
+/// From some YouTube video? find it and credit them
 /// </summary>
 public class AudioPeer : MonoBehaviour {
 
+    /// <summary>
+    /// 
+    /// </summary>
     AudioSource musicSource;
+    
+    /// <summary>
+    /// 
+    /// </summary>
     AudioClip audioClip;
 
-    public static float[] _averageSamples = new float[512];
+    /// <summary>
+    /// 512 sample array of averaged left and right stereo values
+    /// into one mono audio array
+    /// </summary>
+    public static float[] _AverageMonoSamples = new float[512];
+    /// <summary>
+    /// 512 sample array of channel 1, left side audio
+    /// </summary>
     float[] _leftSamples = new float[512];
+    
+    /// <summary>
+    /// 512 sample array of averaged left and right stereo values
+    /// </summary>
     float[] _rightSamples = new float[512];
 
     public static float[] _freqBand = new float[8];
@@ -97,7 +115,7 @@ public class AudioPeer : MonoBehaviour {
 
 
         // Get spectrum data from each channel
-        GetSpectrumAudioSourceStereo(_leftSamples, _rightSamples, _averageSamples);
+        GetSpectrumDataFromStereo(_leftSamples, _rightSamples, _AverageMonoSamples);
 
         // Set our intensity
         GetIntensity();
@@ -110,7 +128,7 @@ public class AudioPeer : MonoBehaviour {
     /// </summary>
     /// <param name="leftSamples">Channel 0, or the left side of our audio</param>
     /// <param name="rightSamples">Channel 1, or the right side of our audio</param>
-    void GetSpectrumAudioSourceStereo(float[] leftSamples, float[] rightSamples, float[] averageSamples) {
+    void GetSpectrumDataFromStereo(float[] leftSamples, float[] rightSamples, float[] averageSamples) {
         musicSource.GetSpectrumData(leftSamples, 0, FFTWindow.Blackman); // 0 is left channel
         musicSource.GetSpectrumData(rightSamples, 1, FFTWindow.Blackman); // 1 is right channel
 
@@ -126,7 +144,7 @@ public class AudioPeer : MonoBehaviour {
     /// 
     /// </summary>
     /// <param name="samples"></param>
-    void GetSpectrumAudioSourceMono(float[] samples) {
+    void GetSpectrumDataFromMono(float[] samples) {
 
         musicSource.GetSpectrumData(samples, 0, FFTWindow.Blackman); // 0 is left or mono channel
 
@@ -163,7 +181,7 @@ public class AudioPeer : MonoBehaviour {
             }
 
             for (int j = 0; j < sampleCount; j++) {
-                average += _averageSamples[count] * (count + 1);
+                average += _AverageMonoSamples[count] * (count + 1);
                 count++;
             }
 
@@ -185,11 +203,11 @@ public class AudioPeer : MonoBehaviour {
         // output it as our music's "intensity"
         float average = 0f;
 
-        for (int a = 0; a < _averageSamples.Length; a++) {
-            average += _averageSamples[a];
+        for (int a = 0; a < _AverageMonoSamples.Length; a++) {
+            average += _AverageMonoSamples[a];
         }
 
-        average /= _averageSamples.Length;
+        average /= _AverageMonoSamples.Length;
 
 
         intensity =  average;

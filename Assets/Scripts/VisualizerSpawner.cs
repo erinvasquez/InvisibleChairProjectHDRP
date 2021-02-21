@@ -71,6 +71,11 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Default maze rotation
     /// </summary>
     public Vector3 mazeStartRotation = new Vector3(30f, 0f, 0f);
+    /// <summary>
+    /// Maze regeneration rate
+    /// </summary>
+    [Range (1,128)]
+    public int mazeGenerationRate = 32;
 
 
     [Header("Clock")]
@@ -87,6 +92,13 @@ public class VisualizerSpawner : MonoBehaviour {
 
     // do we really need this to be public static or can I just make a method for it
     public static bool unitsAdded = false;
+
+    /// <summary>
+    /// A list of all objects that we'll try "sending", that way we can handle things a little better
+    /// </summary>
+    GameObject[] units = new GameObject[30];
+
+
 
 
     /// <summary>
@@ -151,7 +163,9 @@ public class VisualizerSpawner : MonoBehaviour {
         // Instantiate all of our Visualizer Units
         // Get our Mazes ready
         if (UseMaze) {
-            Debug.Log("Creating maze");
+            //Debug.Log("Creating mazeS");
+
+            mazes = new GameObject[5];
 
             mazeSize = new IntVector2(mazeX, mazeZ);
             CreateMaze(mazeSize);
@@ -159,7 +173,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // Get our Sphere Light ready
         if (UseSphere) {
-            Debug.Log("Creating Sphere");
+            //Debug.Log("Creating Sphere");
 
             sphereLight = Instantiate(SphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
             sphereLight.Initialize(this, SphereLightPosition);
@@ -183,7 +197,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // Get our Clock Ready
         if (UseClock) {
-            Debug.Log("Creating Clock");
+            //Debug.Log("Creating Clock");
 
             clock = Object.Instantiate(ClockPrefab, ClockPosition, Quaternion.identity) as GameObject;
             clock.transform.parent = transform;
@@ -224,7 +238,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         mazeInstance.transform.parent = transform;
         mazeInstance.transform.position = mazeStartPosition;
-        mazeInstance.transform.Rotate(new Vector3(30f, 0f, 0f));
+        mazeInstance.transform.Rotate(mazeStartRotation);
         mazeInstance.size = mazeSize;
 
 
@@ -233,9 +247,18 @@ public class VisualizerSpawner : MonoBehaviour {
         // Time to generate a maze is Conductor.secondsPerBeat * 16 beats
         // Divide that by the amount of cells, and you get the amount of time to make each one of those cells
 
-        mazeInstance.generationStepDelay = (Conductor.secondsPerBeat * 16) / (mazeSize.x * mazeSize.z);
+        mazeInstance.generationStepDelay = (Conductor.secondsPerBeat * mazeGenerationRate) / (mazeSize.x * mazeSize.z);
 
         StartCoroutine(mazeInstance.Generate(mazeSize));
+
+    }
+
+    private void CreateMazes(IntVector2 mazeSize) {
+
+        // If we already have some maze instances, get rid of them and any coroutines they started
+
+
+
 
     }
 

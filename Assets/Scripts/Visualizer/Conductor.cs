@@ -21,6 +21,8 @@ public class Conductor : MonoBehaviour {
     /// </summary>
     public static AudioSource musicSource;
 
+    // Our static variables that other scripts have access to.
+    // Most of these are timing related values
 
     /// <summary>
     /// Calculated in Update()

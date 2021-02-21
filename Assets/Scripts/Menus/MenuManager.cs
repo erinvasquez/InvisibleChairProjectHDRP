@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Reflection;
 
 /// <summary>
-/// Manages our menu flow
+/// Manages our menu flow, loads our preferences on game start,
+/// saves the preferences set in those menus
+/// 
 /// Using lessons taken from: https://github.com/YousicianGit/UnityMenuSystem/blob/master/Assets/Scripts/MenuSystem/MenuManager.cs
 /// https://bitbucket.org/UnityUIExtensions/unity-ui-extensions/wiki/Controls/MenuSystem#markdown-header-external-links
 /// </summary>
 public class MenuManager : MonoBehaviour {
 
+    [Header ("Menu Prefabs")]
     public MainMenu mainMenuPrefab;
     public GameMenu gameMenuPrefab;
     public PauseMenu pauseMenuPrefab;
@@ -19,6 +22,11 @@ public class MenuManager : MonoBehaviour {
 
     private Stack<Menu> MenuStack = new Stack<Menu>();
 
+    private GameSettingsMenu gameSettingsMenu;
+    private AudioSettingsMenu audioSettingsMenu;
+    private VideoSettingsMenu videoSettingsMenu;
+
+
     public static MenuManager Instance { get; private set; }
 
     /// <summary>
@@ -28,8 +36,62 @@ public class MenuManager : MonoBehaviour {
 
         Instance = this;
 
+        // Load our settings, in case another file was manipulated by the player externally
+        LoadPreferences();
+
+        // Show our main menu for now
+        // Call the static show method to create and show a MainMenu at the top of our menu stack
         MainMenu.Show();
 
+    }
+
+    /// <summary>
+    /// When ESCAPE/PAUSE/BACK is pressed, do the appropriate action
+    /// </summary>
+    private void Update() {
+
+        if (Input.GetKeyDown(KeyCode.Escape) && MenuStack.Count > 0) {
+
+            // Do the Appropriate action depending on the menu we're on
+            MenuStack.Peek().OnBackPressed();
+        }
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SavePreferences() {
+        PreferenceManager.SavePreferences(this);
+    }
+
+    /// <summary>
+    /// Called by our Game, Audio, and Video settings menus every time they're opened
+    /// 
+    /// Gets PreferenceData from our PreferenceManager script
+    /// </summary>
+    public void LoadPreferences() {
+        PreferenceData data = PreferenceManager.LoadPreferences();
+
+        // Get data from data and give it to [our Menus] (how do we handle which menu to give this to)
+
+
+    }
+
+    /// <summary>
+    /// Gets the game settings menu
+    /// </summary>
+    /// <returns></returns>
+    public Menu<GameSettingsMenu> GetGameSettingsMenu() {
+        return gameSettingsMenu;
+    }
+
+    public Menu<AudioSettingsMenu> GetAudioSettingsMenu() {
+        return audioSettingsMenu;
+    }
+
+    public Menu<VideoSettingsMenu> GetVideoSettingsMenu() {
+        return videoSettingsMenu;
     }
 
     /// <summary>
@@ -39,7 +101,19 @@ public class MenuManager : MonoBehaviour {
     public void CreateInstance<T>() where T : Menu {
         var prefab = GetPrefab<T>();
 
-        Instantiate(prefab, transform);
+        Menu menu = Instantiate(prefab, transform);
+
+        if (typeof(T) == typeof(GameSettingsMenu)) {
+            gameSettingsMenu = menu.gameObject.GetComponent<GameSettingsMenu>();
+        }
+
+        if (typeof(T) == typeof(AudioSettingsMenu)) {
+            audioSettingsMenu = menu.gameObject.GetComponent<AudioSettingsMenu>();
+        }
+
+        if (typeof(T) == typeof(VideoSettingsMenu)) {
+            videoSettingsMenu = menu.gameObject.GetComponent<VideoSettingsMenu>();
+        }
     }
 
     /// <summary>
@@ -179,15 +253,6 @@ public class MenuManager : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// When ESCAPE/PAUSE/BACK is pressed, do the appropriate action
-    /// </summary>
-    private void Update() {
-
-        if (Input.GetKeyDown(KeyCode.Escape) && MenuStack.Count > 0) {
-            MenuStack.Peek().OnBackPressed();
-        }
-
-    }
+    
 
 }

@@ -23,7 +23,9 @@ public abstract class Menu<T> : Menu where T : Menu<T> {
     }
 
     /// <summary>
-    /// Open our menu by creating an instance, or using one that already exists
+    /// Called by our MenuManager in Awake()
+    /// Creating a MenuManager instance if there isn't one already,
+    /// and use it to Open this menu
     /// </summary>
     protected static void Open() {
         if (Instance == null) {

@@ -18,7 +18,7 @@ public class Clock : MonoBehaviour {
 
     // Start is called before the first frame update
     void Awake() {
-        Debug.Log(DateTime.Now);
+        // Debug.Log(DateTime.Now);
         DateTime time = DateTime.Now;
 
         hoursPivot.localRotation = Quaternion.Euler(0f, 0f, hoursToDegrees * time.Hour);
