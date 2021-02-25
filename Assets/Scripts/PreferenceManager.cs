@@ -60,7 +60,7 @@ public static class PreferenceManager {
         stream = new FileStream(path, FileMode.Create);
 
 
-        // The default data should suffice
+        // The default data constructor should suffice
         data = new PreferenceData();
 
 

@@ -16,7 +16,7 @@ public class VisualizerSpawner : MonoBehaviour {
     [SerializeField]
     Transform receiver;
 
-    [Header("Prefab")]
+    [Header("Prefabs")]
     public GameObject HwyLightPrefab;
     public GameObject SphereLightPrefab;
     public GameObject VisualizerMazePrefab;
