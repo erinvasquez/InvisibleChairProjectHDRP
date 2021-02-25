@@ -29,7 +29,11 @@ public abstract class Menu<T> : Menu where T : Menu<T> {
     /// </summary>
     protected static void Open() {
         if (Instance == null) {
+
+            Debug.Log("Menu says Instance is null, so creating one");
+
             MenuManager.Instance.CreateInstance<T>();
+            //MenuManager.CreateInstance<T>();
         } else {
             Instance.gameObject.SetActive(true);
         }
