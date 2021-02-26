@@ -34,7 +34,7 @@ public class SphereLight : VisualizerUnit {
     public void Visualize() {
 
         // lets get the intensity and apply it to our scale;
-        SphereIntensity = spawner.SphereIntensityMultiplier * AudioPeer.intensity;
+        SphereIntensity = spawner.sphereIntensityMultiplier * AudioPeer.intensity;
 
         transform.localScale = new Vector3(SphereIntensity, SphereIntensity, SphereIntensity);
         

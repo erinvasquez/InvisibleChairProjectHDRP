@@ -7,10 +7,19 @@ using UnityEngine;
 /// 
 /// </summary>
 public class VisualizerMaze : VisualizerUnit {
+    VisualizerMazeManager mazeManager;
+    
+    Vector3 startPosition;
+    Vector3 endPosition;
+    Vector3 direction;
+
+    public bool moving = false;
+    public float speed = 0f;
+
     /// <summary>
     /// Set in Generate() when called by our VisualizerSpawner
     /// </summary>
-    public IntVector2 size;
+    public IntVector2 mazeSize;
 
     public MazeCell cellPrefab;
     public MazePassage passagePrefab;
@@ -34,7 +43,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// <summary>
     /// True if the maze is already done being generated
     /// </summary>
-    public bool MazeGenerated = false;
+    public bool mazeGenerated = false;
 
     public int stepsTaken = 0;
 
@@ -45,10 +54,79 @@ public class VisualizerMaze : VisualizerUnit {
     public IntVector2 RandomCoordinates {
 
         get {
-            return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
+            return new IntVector2(Random.Range(0, mazeSize.x), Random.Range(0, mazeSize.z));
         }
 
     }
+
+    /// <summary>
+    /// Called by VisualizerMazeManager,
+    /// 
+    /// initializes our values
+    /// </summary>
+    /// <param name="manager">The VisualizerMazeManager that instantiated this object</param>
+    /// <param name="startPos">Starting position vector for this maze</param>
+    /// <param name="endPos">Ending position vector for this maze</param>
+    /// <param name="dir">Direction vector for this maze</param>
+    /// <param name="size">Maze size</param>
+    /// <param name="genStepDelay">Time in seconds between generation steps</param>
+    public void Initialize(VisualizerMazeManager manager, Vector3 startPos, Vector3 endPos, Vector3 dir, Vector3 rotation, IntVector2 size, float genStepDelay) {
+        mazeManager = manager;
+        startPosition = startPos;
+        endPosition = endPos;
+        direction = dir;
+        transform.rotation = Quaternion.Euler(rotation.x, rotation.y, rotation.z);
+        mazeSize = size;
+        generationStepDelay = (Conductor.secondsPerBeat * genStepDelay) / (mazeSize.x * mazeSize.z);
+
+        transform.position = startPosition;
+        //transform.parent = manager.transform; // already parented in VMManager
+
+        speed = Vector3.Distance(startPosition, endPosition) / (float) (Conductor.secondsPerBeat * 16);
+
+    }
+
+    /// <summary>
+    /// Reset our Maze to the start once it's reached the end
+    /// </summary>
+    private void Update() {
+
+        // Make sure the visualizer is ready to run before doing anything
+        if (!Conductor.visualizerReady) {
+            return;
+        }
+
+        // If we've passed our endpoint,
+        // Place our light at the back of the line again, and stop it from moving
+        if (transform.position.z >= endPosition.z) {
+            ResetMaze();
+        }
+
+        // If the light is supposed to be moving...
+        if (moving) {
+            // Move it forward enough for 1 update
+            MoveMaze();
+        }
+
+        if (mazeGenerated) {
+            // Re do our maze generation in VisualizerMazeManager
+        }
+
+    }
+
+    public void MoveMaze() {
+        speed = Vector3.Distance(startPosition, endPosition) / (float)(Conductor.secondsPerBeat * 16f);
+
+        transform.Translate(direction * speed * Time.deltaTime, Space.World);
+
+    }
+
+    public void ResetMaze() {
+        moving = false;
+        transform.position = startPosition;
+    }
+
+
 
     /// <summary>
     /// Returns true if the coordinate can be contained by the maze
@@ -56,7 +134,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// <param name="coordinate">Coordinate for target MazeCell</param>
     /// <returns></returns>
     public bool ContainsCoordinates(IntVector2 coordinate) {
-        return coordinate.x >= 0 && coordinate.x < size.x && coordinate.z >= 0 && coordinate.z < size.z;
+        return coordinate.x >= 0 && coordinate.x < mazeSize.x && coordinate.z >= 0 && coordinate.z < mazeSize.z;
     }
 
     /// <summary>
@@ -77,16 +155,16 @@ public class VisualizerMaze : VisualizerUnit {
     /// 
     /// Sets MazeGenerated to true when finished
     /// </summary>
-    /// 
+    /// <param name="mazeSize">Size of the maze</param>
     /// <returns></returns>
     public IEnumerator Generate(IntVector2 mazeSize) {
-        size = mazeSize;
+        this.mazeSize = mazeSize;
 
         // Suspend our coroutine for this long
         WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
 
         // Make our MazeCell array
-        cells = new MazeCell[size.x, size.z];
+        cells = new MazeCell[this.mazeSize.x, this.mazeSize.z];
 
         // ActiveCells lists all maze cells that are "active"
         // Think Prim's algorithm. This is how we can manipulate the algorithm
@@ -102,8 +180,8 @@ public class VisualizerMaze : VisualizerUnit {
             DoNextGenerationStep(UnfinishedCells);
         }
 
-        Debug.Log("Maze Generation done in " + stepsTaken + " steps");
-        MazeGenerated = true;
+        //Debug.Log("Maze Generation done in " + stepsTaken + " steps");
+        mazeGenerated = true;
 
     }
 
@@ -187,7 +265,7 @@ public class VisualizerMaze : VisualizerUnit {
         newCell.name = "Maze Cell " + coordinates.x + ", " + coordinates.z;
         newCell.transform.parent = transform;
         newCell.transform.Rotate(transform.localRotation.eulerAngles);
-        newCell.transform.localPosition = new Vector3(coordinates.x - size.x * 0.5f + 0.5f, 0f, coordinates.z - size.z * 0.5f + 0.5f);
+        newCell.transform.localPosition = new Vector3(coordinates.x - mazeSize.x * 0.5f + 0.5f, 0f, coordinates.z - mazeSize.z * 0.5f + 0.5f);
 
         return newCell;
     }

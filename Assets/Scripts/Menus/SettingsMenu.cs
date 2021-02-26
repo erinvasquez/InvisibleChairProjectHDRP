@@ -31,11 +31,13 @@ public class SettingsMenu : SimpleMenu<SettingsMenu> {
     public void OnAudioSettingsPressed() {
 
         // Only hide the menu if there is an instance
-        if (GameSettingsMenu.Instance != null)
+        if (GameSettingsMenu.Instance != null) {
             GameSettingsMenu.Hide();
+        }
 
-        if (VideoSettingsMenu.Instance != null)
+        if (VideoSettingsMenu.Instance != null) {
             VideoSettingsMenu.Hide();
+        }
 
         // Only RE-show the menu if it's already destroyed
         if (AudioSettingsMenu.Instance == null) {
@@ -50,15 +52,20 @@ public class SettingsMenu : SimpleMenu<SettingsMenu> {
     public void OnVideoSettingsPressed() {
 
         // Only hide the menu if there is an instance
-        if (GameSettingsMenu.Instance != null)
+        if (GameSettingsMenu.Instance != null) {
             GameSettingsMenu.Hide();
+        }
 
-        if (AudioSettingsMenu.Instance != null)
+        if (AudioSettingsMenu.Instance != null) {
             AudioSettingsMenu.Hide();
+        }
 
         // Only RE-show the menu if it's already destroyed
-        if (VideoSettingsMenu.Instance == null)
+        if (VideoSettingsMenu.Instance == null) {
             VideoSettingsMenu.Show();
+        }
+            
+
     }
 
     public override void OnBackPressed() {

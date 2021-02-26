@@ -17,25 +17,26 @@ public class VisualizerSpawner : MonoBehaviour {
     Transform receiver;
 
     [Header("Prefabs")]
-    public GameObject HwyLightPrefab;
-    public GameObject SphereLightPrefab;
-    public GameObject VisualizerMazePrefab;
-    public GameObject ClockPrefab;
+    public GameObject hwyLightPrefab;
+    public GameObject sphereLightPrefab;
+    public GameObject vMazePrefab;
+    public GameObject vMazeManagerPrefab;
+    public GameObject clockPrefab;
 
     [Header("Highway Lights")]
-    public bool UseHwyLight = true;
+    public bool useHwyLight = true;
     [Range(1, 16)]
-    public int HwyLightsPerBeat = 1;
-    int HwyLightIndex = 0; // Current HwyLight
-    GameObject[] HwyLights;
+    public int hwyLightsPerBeat = 1;
+    int hwyLightIndex = 0; // Current HwyLight
+    GameObject[] hwyLights;
     float lastTimeHwyLightSent = 0f; // the last time in seconds that we sent a HwyLight
 
 
     [Header("Sphere Light")]
-    public bool UseSphere = true;
-    public Vector3 SphereLightPosition = new Vector3(-15f, 5f, 20f);
+    public bool useSphere = true;
+    public Vector3 sphereLightPosition = new Vector3(-15f, 5f, 20f);
     [Range(1, 1000)]
-    public int SphereIntensityMultiplier = 1000;
+    public int sphereIntensityMultiplier = 1000;
     SphereLight sphereLight;
 
 
@@ -43,12 +44,7 @@ public class VisualizerSpawner : MonoBehaviour {
     /// <summary>
     /// True when we want to initialize our maze
     /// </summary>
-    public bool UseMaze = true;
-    /// <summary>
-    /// An array of mazes (when we use it)
-    /// </summary>
-    GameObject[] mazes;
-    private VisualizerMaze mazeInstance;
+    public bool useMaze = true;
     /// <summary>
     /// Editor value for maze X size
     /// </summary>
@@ -66,7 +62,11 @@ public class VisualizerSpawner : MonoBehaviour {
     /// <summary>
     /// Maze Spawning position
     /// </summary>
-    public Vector3 mazeStartPosition = new Vector3(0f, 10f, 50f);
+    public Vector3 mazeStartPosition = new Vector3(0f, 10f, 0f);
+    /// <summary>
+    /// 
+    /// </summary>
+    public Vector3 mazeEndPosition = new Vector3(0f, 10f, 200f);
     /// <summary>
     /// Default maze rotation
     /// </summary>
@@ -75,7 +75,18 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Maze regeneration rate
     /// </summary>
     [Range (1,128)]
-    public int mazeGenerationRate = 32;
+    public int mazeRegenerationRate = 32;
+    /// <summary>
+    /// Number of Mazes per Beat
+    /// </summary>
+    [Range(1, 16)]
+    public int mazesPerBeat = 1;
+    /// <summary>
+    /// Last time in seconds we sent a maze
+    /// </summary>
+    float lastTimeMazeSent = 0f;
+    GameObject mazeManager;
+    public int mazeIndex = 0;
 
 
     [Header("Clock")]
@@ -96,7 +107,7 @@ public class VisualizerSpawner : MonoBehaviour {
     /// <summary>
     /// A list of all objects that we'll try "sending", that way we can handle things a little better
     /// </summary>
-    GameObject[] units = new GameObject[30];
+    //GameObject[] units = new GameObject[30];
 
 
 
@@ -112,7 +123,31 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Called when script is loaded and when an editor value has been changed
     /// </summary>
     private void OnValidate() {
+
+
+        // update our hwy light settings
+        
+
+        // update our sphere light settings
+        if (sphereLight) {
+            sphereLight.transform.position = sphereLightPosition;
+        }
+
+
+        // Update our clock settings
+        if (clock) {
+            clock.transform.position = ClockPosition;
+        }
+
+
+        // Update our Maze generation size
         mazeSize = new IntVector2(mazeX, mazeZ);
+
+        if (mazeManager) {
+            mazeManager.GetComponent<VisualizerMazeManager>().mazeSize = mazeSize;
+        }
+
+
     }
 
     /// <summary>
@@ -137,8 +172,17 @@ public class VisualizerSpawner : MonoBehaviour {
             return;
         }
 
+        // ----------------------------------------------------------------------------------------
+
+        // If we don't have any mazes generating, start our maze generation coroutine
+        if (!mazeManager.GetComponent<VisualizerMazeManager>().mazesGenerating) {
+            mazeManager.GetComponent<VisualizerMazeManager>().StartMazeGenerationCoroutine();
+        }
+
+
+
         // If we've passed enough time to send a HwyLight, SEND IT
-        if (Conductor.songPositionInSeconds - lastTimeHwyLightSent >= (Conductor.secondsPerBeat / HwyLightsPerBeat)) {
+        if (Conductor.songPositionInSeconds - lastTimeHwyLightSent >= (Conductor.secondsPerBeat / hwyLightsPerBeat)) {
             //Debug.Log("Send light?");
 
             // Keep track of the last time we sent a HwyLight
@@ -147,8 +191,14 @@ public class VisualizerSpawner : MonoBehaviour {
             SendHwyLight();
         }
 
-        if (mazeInstance.MazeGenerated) {
-            RestartMazeGeneration();
+        // If we've passed enough time to send a Maze, SEND IT
+        if (Conductor.songPositionInSeconds - lastTimeMazeSent >= (Conductor.secondsPerBeat / mazesPerBeat)) {
+            //Debug.Log("Send maze");
+
+            // Keep track of the last time we sent a HwyLight
+            lastTimeMazeSent = Conductor.songPositionInSeconds;
+
+            SendMaze();
         }
 
     }
@@ -160,37 +210,40 @@ public class VisualizerSpawner : MonoBehaviour {
     /// </summary>
     public void AddVisualizerUnits() {
 
-        // Instantiate all of our Visualizer Units
         // Get our Mazes ready
-        if (UseMaze) {
-            //Debug.Log("Creating mazeS");
+        if (useMaze) {
+            Debug.Log("Creating mazes");
 
-            mazes = new GameObject[5];
+            mazeManager = Instantiate(vMazeManagerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            mazeManager.transform.parent = transform;
 
-            mazeSize = new IntVector2(mazeX, mazeZ);
-            CreateMaze(mazeSize);
+            mazeManager.GetComponent<VisualizerMazeManager>().Initialize(mazeSize, mazeRegenerationRate);
+            mazeManager.GetComponent<VisualizerMazeManager>().InitializeMazes(vMazePrefab, mazeStartPosition, mazeEndPosition, Vector3.forward, mazeStartRotation, mazeSize);
+
+            
         }
 
         // Get our Sphere Light ready
-        if (UseSphere) {
-            //Debug.Log("Creating Sphere");
+        if (useSphere) {
+            Debug.Log("Creating Sphere");
 
-            sphereLight = Instantiate(SphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
-            sphereLight.Initialize(this, SphereLightPosition);
+            sphereLight = Instantiate(sphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
+            sphereLight.Initialize(this, sphereLightPosition);
 
         }
 
         // Get our HwyLights ready
-        if (UseHwyLight) {
+        if (useHwyLight) {
 
-            //Debug.Log("Creating " + ((HwyLightsPerBeat * 4) + 1) + " HwyLights");
+            Debug.Log("Creating " + ((hwyLightsPerBeat * 4) + 1) + " HwyLights");
+
             // Make 17 HwyLights (16th notes + 1 extra), since we might change the send rate for these
             // lights at any moment, and we'll need them all instantiated beforehand
-            HwyLights = new GameObject[17];
+            hwyLights = new GameObject[(hwyLightsPerBeat * 4) + 1];
 
-            for (int b = 0; b < HwyLights.Length; b++) {
-                HwyLights[b] = Instantiate(HwyLightPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-                HwyLights[b].GetComponent<HwyLight>().Initialize(this, sender.position, receiver.position, Vector3.forward);
+            for (int b = 0; b < hwyLights.Length; b++) {
+                hwyLights[b] = Instantiate(hwyLightPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+                hwyLights[b].GetComponent<HwyLight>().Initialize(this, sender.position, receiver.position, (receiver.transform.position - sender.transform.position).normalized);
             }
 
         }
@@ -199,7 +252,7 @@ public class VisualizerSpawner : MonoBehaviour {
         if (UseClock) {
             //Debug.Log("Creating Clock");
 
-            clock = Object.Instantiate(ClockPrefab, ClockPosition, Quaternion.identity) as GameObject;
+            clock = Object.Instantiate(clockPrefab, ClockPosition, Quaternion.identity) as GameObject;
             clock.transform.parent = transform;
 
         }
@@ -214,64 +267,26 @@ public class VisualizerSpawner : MonoBehaviour {
     void SendHwyLight() {
         // Debug.Log("Sending HwyLight " + currentHwyLight);
 
-        if (HwyLightIndex >= HwyLights.Length - 1) {
-            HwyLightIndex = 0;
+        if (hwyLightIndex >= hwyLights.Length - 1) {
+            hwyLightIndex = 0;
         }
 
-        HwyLights[HwyLightIndex].GetComponent<HwyLight>().moving = true;
-        HwyLightIndex++;
+        hwyLights[hwyLightIndex].GetComponent<HwyLight>().moving = true;
+        hwyLightIndex++;
 
     }
 
     /// <summary>
-    /// Instantiate and Initialize our maze(s)
+    /// Set "moving" flags on our mazes
     /// </summary>
-    private void CreateMaze(IntVector2 mazeSize) {
+    void SendMaze() {
 
-        // If we already have a mazeInstance, get rid of it and any coroutines it started
-        if (mazeInstance) {
-            StopAllCoroutines();
-            Destroy(mazeInstance.gameObject);
+        if (mazeIndex >= mazeManager.GetComponent<VisualizerMazeManager>().mazeObjects.Length - 1) {
+            mazeIndex = 0;
         }
 
-        mazeInstance = Instantiate(VisualizerMazePrefab.GetComponent<VisualizerMaze>()) as VisualizerMaze;
+        mazeManager.GetComponent<VisualizerMazeManager>().SetMazeMoving(mazeIndex);
 
-        mazeInstance.transform.parent = transform;
-        mazeInstance.transform.position = mazeStartPosition;
-        mazeInstance.transform.Rotate(mazeStartRotation);
-        mazeInstance.size = mazeSize;
-
-
-        // This would work if the number of steps needed to generate a maze was dependent on its size,
-        // but it's not considering the algorithm is pretty random
-        // Time to generate a maze is Conductor.secondsPerBeat * 16 beats
-        // Divide that by the amount of cells, and you get the amount of time to make each one of those cells
-
-        mazeInstance.generationStepDelay = (Conductor.secondsPerBeat * mazeGenerationRate) / (mazeSize.x * mazeSize.z);
-
-        StartCoroutine(mazeInstance.Generate(mazeSize));
-
-    }
-
-    private void CreateMazes(IntVector2 mazeSize) {
-
-        // If we already have some maze instances, get rid of them and any coroutines they started
-
-
-
-
-    }
-
-    /// <summary>
-    /// Restart our Maze generation
-    /// 
-    /// Stop any coroutines, destroy our maze instance,
-    /// and create a new maze instance
-    /// </summary>
-    private void RestartMazeGeneration() {
-        StopAllCoroutines();
-        Destroy(mazeInstance.gameObject);
-        CreateMaze(mazeSize);
     }
 
 }

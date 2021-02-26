@@ -23,6 +23,7 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
     private bool muteOnLoseFocus;
 
     protected override void Awake() {
+        // SUPER IMPORTANT line
         base.Awake();
 
         menuManager = transform.parent.GetComponent<MenuManager>();
@@ -38,6 +39,7 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
         muteOnLoseFocus = defaultMuteOnLoseFocus;
 
     }
+
 
     /// <summary>
     /// Load our Audio PreferenceData before doing anything

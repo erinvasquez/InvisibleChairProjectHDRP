@@ -48,6 +48,7 @@ public class PreferenceData {
         BloomQuality = VideoSettingsMenu.DefaultBloomQuality;
 
         // Get our default GameSettings from script
+        // Let's include our visualizer settings here too
 
 
     }

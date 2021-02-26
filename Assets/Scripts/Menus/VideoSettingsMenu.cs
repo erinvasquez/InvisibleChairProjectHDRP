@@ -87,13 +87,11 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
     public static int DefaultBloomQuality = 0;
 
     protected override void Awake() {
+        // You MUST have this otherwise problems will appear
+        base.Awake();
 
         // is this even used
         menuManager = transform.parent.GetComponent<MenuManager>();
-
-        if (menuManager == null) {
-            Debug.LogError("menu Manager couldn't be set and is null");
-        }
 
         resolutionDropdown = GameObject.Find("Resolution Dropdown").GetComponent<TMP_Dropdown>();
         frameRateLimitDropdown = GameObject.Find("FrameRateLimit Dropdown").GetComponent<TMP_Dropdown>();
@@ -120,16 +118,6 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
 
     private void Start() {
 
-        Resolution[] resolutions = Screen.resolutions;
-
-
-        for (int a = 0; a < resolutions.Length; a++) {
-
-            Debug.Log(resolutions[a]);
-
-        }
-
-        
 
     }
 

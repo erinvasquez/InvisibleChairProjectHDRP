@@ -65,6 +65,7 @@ public class HwyLight : VisualizerUnit {
         speed = Vector3.Distance(startPosition, endPosition) / (float)Conductor.secondsPerBeat;
 
         transform.Translate(direction * speed * Time.deltaTime);
+
     }
 
     /// <summary>
@@ -74,4 +75,5 @@ public class HwyLight : VisualizerUnit {
         moving = false;
         transform.position = startPosition;
     }
+
 }

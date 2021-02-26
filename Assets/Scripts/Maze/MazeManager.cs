@@ -50,7 +50,7 @@ public class MazeManager : MonoBehaviour {
         } else {
 
             // We already have a mazeInstance, so re-generate if it's done
-            if (mazeInstance.MazeGenerated) {
+            if (mazeInstance.mazeGenerated) {
                 RestartGeneration();
             }
 
