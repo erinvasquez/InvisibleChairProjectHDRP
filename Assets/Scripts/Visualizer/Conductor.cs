@@ -79,7 +79,7 @@ public class Conductor : MonoBehaviour {
 
         // Figure out best way to optimize this
         // Make some more stuff static?
-        musicSource = GameObject.Find("Main Menu Music").GetComponent<AudioSource>();
+        musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update

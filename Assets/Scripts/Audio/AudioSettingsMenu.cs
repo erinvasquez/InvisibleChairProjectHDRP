@@ -53,13 +53,15 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
 
     }
 
-    public float GetMasterVolume() {
+    public float GetSliderMasterVolume() {
         return masterVolumeSlider.value;
     }
 
-    public float GetMusicVolume() {
-        return musicVolumeSlider.value;
-    }
+    /// <summary>
+    /// A property that gets our music volume
+    /// from the slider
+    /// </summary>
+    public float MusicVolume => musicVolumeSlider.value;
 
     public bool GetMuteOnLoseFocus() {
         return muteOnLoseFocus;

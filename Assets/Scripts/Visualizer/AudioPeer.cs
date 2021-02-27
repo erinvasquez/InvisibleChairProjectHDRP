@@ -54,7 +54,7 @@ public class AudioPeer : MonoBehaviour {
         Instance = this;
 
         // Get our [Main Menu] Music
-        musicSource = GameObject.Find("Main Menu Music").GetComponent<AudioSource>();
+        musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
         audioClip = musicSource.clip;
 
         // Try to set our BPM
@@ -86,6 +86,7 @@ public class AudioPeer : MonoBehaviour {
 
 
     }
+
 
     /// <summary>
     /// After waiting for a VisualizerReady status...

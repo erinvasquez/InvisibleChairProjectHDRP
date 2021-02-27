@@ -22,44 +22,45 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
     /// Default resolution is provided automatically as
     /// the last in our Screen.resolutions[]
     /// </summary>
-    public Resolution resolution;
+    //public Resolution resolution;
+    public int resolution;
 
-    public int ResolutionScale;
-    public static int DefaultResolutionScale = 100;
+    public int resolutionScale;
+    public static int defaultResolutionScale = 100;
 
     /// <summary>
     /// Default value automtically set in PreferenceData,
     /// it's just the max refresh rate of the monitor anyways
     /// </summary>
-    public int FrameRateLimit;
+    public int frameRateLimit;
 
     /// <summary>
     /// God awful frame rame limit cap technology for those inclined to
     /// have input lag and 60 FPS
     /// </summary>
-    public bool VSync;
+    public bool vSync;
     public static bool defaultVSync = false;
 
     /// <summary>
     /// Ranges from 60 to 90+
     /// </summary>
-    public int VerticalFieldOfView;
+    public int verticalFieldOfView;
     public static int defaultVerticalFieldofView = 60;
 
     /// <summary>
     /// In HDRP at least, this can range from:
     /// FXAA, TAA, and SMAA
     /// </summary>
-    public int AntiAliasingType;
-    public static int DefaultAntiAliasingType = 0;
+    public int antiAliasingType;
+    public static int defaultAntiAliasingType = 0;
 
     /// <summary>
     /// Depends on the type of AntiAliasing,
     /// but usually a Low, Medium, High structure is used
     /// anwways
     /// </summary>
-    public int AntiAliasingQuality;
-    public static int DefaultAntiAliasingQuality = 0;
+    public int antiAliasingQuality;
+    public static int defaultAntiAliasingQuality = 0;
 
     /// <summary>
     /// This can be baked in if Baked Global Illumination is enabled
@@ -67,15 +68,15 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
     /// 
     /// Realtime Ambient Occlusion exists as a post-processing effect
     /// </summary>
-    public bool AmbientOcclusion;
-    public static bool DefaultAmbientOcclusion = false;
+    public bool ambientOcclusion;
+    public static bool defaultAmbientOcclusion = false;
 
     /// <summary>
     /// Ranges from 0 to 16 apparently, powers of 2
     /// It's also a per texture thing so don't worry about it for now
     /// </summary>
-    public int AnisotropicFiltering;
-    public static int DefaultAnisotropicFiltering = 0;
+    public int anisotropicFiltering;
+    public static int defaultAnisotropicFiltering = 0;
 
     /// <summary>
     /// Off, or Low, Medium and High
@@ -83,8 +84,8 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
     /// For our visualizer, we NEED bloom
     /// Maybe turning it off can't be a feature here
     /// </summary>
-    public int BloomQuality;
-    public static int DefaultBloomQuality = 0;
+    public int bloomQuality;
+    public static int defaultBloomQuality = 0;
 
     protected override void Awake() {
         // You MUST have this otherwise problems will appear
@@ -103,13 +104,13 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
         bloomQualityDropdown = GameObject.Find("Bloom Quality Dropdown").GetComponent<TMP_Dropdown>();
 
         resolutionDropdown.value = 0;
-        resolutionScaleSlider.value = DefaultResolutionScale;
+        resolutionScaleSlider.value = defaultResolutionScale;
         frameRateLimitDropdown.value = 0;
         vSyncToggle.isOn = defaultVSync;
         verticalFOVSlider.value = defaultVerticalFieldofView;
-        aaTypeDropdown.value = DefaultAntiAliasingType;
-        aaQualityDropdown.value = DefaultAntiAliasingQuality;
-        bloomQualityDropdown.value = DefaultBloomQuality;
+        aaTypeDropdown.value = defaultAntiAliasingType;
+        aaQualityDropdown.value = defaultAntiAliasingQuality;
+        bloomQualityDropdown.value = defaultBloomQuality;
 
 
 
@@ -119,6 +120,63 @@ public class VideoSettingsMenu : SimpleMenu<VideoSettingsMenu> {
     private void Start() {
 
 
+    }
+
+    public int GetResolution => resolutionDropdown.value;
+
+    public void SetResolution(int res) {
+        resolution = res;
+        //Screen.SetResolution(res.width, res.height, (FullScreenMode.FullScreenWindow)); // We need a fullscreen, windowed, etc handling here
+    }
+
+    public float GetResolutionScale => resolutionScaleSlider.value;
+
+    public void SetResolutionScale(int scale) {
+        resolutionScale = scale;
+        //resolutionScaleSlider.value = scale;
+
+    }
+
+    public int GetFrameRateLimit => frameRateLimitDropdown.value;
+
+    public void SetFrameRameLimit(int limit) {
+        frameRateLimit = limit;
+        //frameRateLimitDropdown.value = limit;
+    }
+
+    public bool GetVSyncToggle => vSyncToggle.isOn;
+
+    public void SetVSyncToggle(bool val) {
+        vSync = val;
+        //vSyncToggle.isOn = val;
+    }
+
+    public int GetVerticalFOV => (int) verticalFOVSlider.value;
+
+    public void SetVerticalFov(int fov) {
+        verticalFieldOfView = fov;
+        //verticalFOVSlider.value = fov;
+    }
+
+    public int GetAAType => aaTypeDropdown.value;
+
+    public void SetAAType(int type) {
+        antiAliasingType = type;
+        //aaTypeDropdown.value = type;
+    }
+
+    public int GetAAQuality => aaQualityDropdown.value;
+
+    public void SetAAQuality(int quality) {
+        antiAliasingQuality = quality;
+        //aaQualityDropdown.value = quality;
+    }
+
+    public int GetBloomQuality => bloomQualityDropdown.value;
+
+    public void SetBloomQuality(int quality) {
+        bloomQuality = quality;
+        //bloomQualityDropdown.value = quality;
     }
 
     /// <summary>

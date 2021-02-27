@@ -40,12 +40,12 @@ public class PreferenceData {
         resolution = Screen.resolutions[Screen.resolutions.Length];
         FrameRateLimit = resolution.refreshRate;
         VSync = VideoSettingsMenu.defaultVSync;
-        VerticalFieldOfView = VideoSettingsMenu.DefaultAntiAliasingQuality;
-        AntiAliasingType = VideoSettingsMenu.DefaultAntiAliasingType;
-        AntiAliasingQuality = VideoSettingsMenu.DefaultAntiAliasingQuality;
-        AmbientOcclusion = VideoSettingsMenu.DefaultAmbientOcclusion;
-        BloomQuality = VideoSettingsMenu.DefaultAnisotropicFiltering;
-        BloomQuality = VideoSettingsMenu.DefaultBloomQuality;
+        VerticalFieldOfView = VideoSettingsMenu.defaultAntiAliasingQuality;
+        AntiAliasingType = VideoSettingsMenu.defaultAntiAliasingType;
+        AntiAliasingQuality = VideoSettingsMenu.defaultAntiAliasingQuality;
+        AmbientOcclusion = VideoSettingsMenu.defaultAmbientOcclusion;
+        BloomQuality = VideoSettingsMenu.defaultAnisotropicFiltering;
+        BloomQuality = VideoSettingsMenu.defaultBloomQuality;
 
         // Get our default GameSettings from script
         // Let's include our visualizer settings here too

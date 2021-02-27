@@ -73,10 +73,10 @@ MonoBehaviour:
   sphereIntensityMultiplier: 1000
   useMaze: 1
   mazeX: 30
-  mazeZ: 5
+  mazeZ: 10
   mazeStartPosition: {x: 0, y: 10, z: 0}
   mazeEndPosition: {x: 0, y: 10, z: 200}
-  mazeStartRotation: {x: 0, y: 0, z: 0}
+  mazeStartRotation: {x: 90, y: 0, z: 0}
   mazeRegenerationRate: 32
   mazesPerBeat: 1
   mazeIndex: 0

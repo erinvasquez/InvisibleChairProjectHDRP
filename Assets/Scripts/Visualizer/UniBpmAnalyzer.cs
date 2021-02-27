@@ -14,7 +14,7 @@ public class UniBpmAnalyzer {
     #region CONST
 
     // BPM search range
-    private const int MIN_BPM = 60;
+    private const int MIN_BPM = 30;
     private const int MAX_BPM = 400;
     // Base frequency (44.1kbps)
     private const int BASE_FREQUENCY = 44100;

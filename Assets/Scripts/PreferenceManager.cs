@@ -36,8 +36,8 @@ public static class PreferenceManager {
         data = new PreferenceData();
 
         // Get it from our [Menu that is open?]
-        data.MasterVolume = audioMenu.GetMasterVolume();
-        data.MusicVolume = audioMenu.GetMusicVolume();
+        data.MasterVolume = audioMenu.GetSliderMasterVolume();
+        data.MusicVolume = audioMenu.MusicVolume;
         data.MuteOnLoseFocus = audioMenu.GetMuteOnLoseFocus();
 
 

@@ -67,6 +67,10 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Intensity
 
+    000
+
+    000
+
     000'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -94,7 +98,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62.1
+  m_fontSize: 30.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -259,7 +263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -70.2, y: -150.00003}
+  m_AnchoredPosition: {x: -70.200195, y: -150}
   m_SizeDelta: {x: 140.45251, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8813987522486747227
@@ -453,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   display: {fileID: 8813987523805842412}
   displayMode: 0
-  sampleDuration: 0.617
+  sampleDuration: 1
 --- !u!1 &8813987523908009595
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,7 +515,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
