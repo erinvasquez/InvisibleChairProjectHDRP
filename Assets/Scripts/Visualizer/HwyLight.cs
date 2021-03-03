@@ -42,8 +42,9 @@ public class HwyLight : VisualizerUnit {
         }
 
         // If we've passed our endpoint,
-        // Place our light at the back of the line again, and stop it from moving
-        if (transform.position.z >= endPosition.z) {
+        // Place our light at the start again, and stop it from moving
+        // use >= when moving forward instead of backwards
+        if (transform.position.z <= endPosition.z) {
             ResetLight();
         }
 

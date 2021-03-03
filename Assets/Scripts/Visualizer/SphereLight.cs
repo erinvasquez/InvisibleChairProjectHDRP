@@ -6,6 +6,7 @@ public class SphereLight : VisualizerUnit {
 
     VisualizerSpawner spawner;
     float SphereIntensity;
+    int intensitySource;
 
     /// <summary>
     /// Called once per frame
@@ -22,10 +23,11 @@ public class SphereLight : VisualizerUnit {
 
     }
 
-    public override void Initialize(VisualizerSpawner visualizer, Vector3 position) {
+    public void Initialize(VisualizerSpawner visualizer, Vector3 position, int source) {
         spawner = visualizer;
-        transform.parent = visualizer.transform;
+        transform.parent = spawner.transform;
         transform.position = position;
+        intensitySource = source;
     }
 
     /// <summary>
@@ -34,12 +36,29 @@ public class SphereLight : VisualizerUnit {
     public void Visualize() {
 
         // lets get the intensity and apply it to our scale;
-        SphereIntensity = spawner.sphereIntensityMultiplier * AudioPeer.intensity;
+        SetIntensity(intensitySource);
 
         transform.localScale = new Vector3(SphereIntensity, SphereIntensity, SphereIntensity);
         
     }
 
+    /// <summary>
+    /// 0 is lows, 1 is mids, 2 is highs
+    /// </summary>
+    public void SetIntensity(int source) {
 
+        switch (source) {
+            case 0:
+                SphereIntensity = Mathf.Log10(AudioPeer.lowsIntensity);
+                break;
+            case 1:
+                SphereIntensity = Mathf.Log10(AudioPeer.midsIntensity);
+                break;
+            case 2:
+                SphereIntensity = Mathf.Log10(AudioPeer.highsIntensity);
+                break;
+        }
+
+    }
 
 }

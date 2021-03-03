@@ -37,7 +37,9 @@ public class VisualizerSpawner : MonoBehaviour {
     public Vector3 sphereLightPosition = new Vector3(-15f, 5f, 20f);
     [Range(1, 1000)]
     public int sphereIntensityMultiplier = 1000;
-    SphereLight sphereLight;
+    SphereLight lowSphereLight;
+    SphereLight midSphereLight;
+    SphereLight highSphereLight;
 
 
     [Header("Maze")]
@@ -129,8 +131,8 @@ public class VisualizerSpawner : MonoBehaviour {
         
 
         // update our sphere light settings
-        if (sphereLight) {
-            sphereLight.transform.position = sphereLightPosition;
+        if (lowSphereLight) {
+            lowSphereLight.transform.position = sphereLightPosition;
         }
 
 
@@ -225,10 +227,19 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // Get our Sphere Light ready
         if (useSphere) {
-            Debug.Log("Creating Sphere");
+            Debug.Log("Creating Spheres");
 
-            sphereLight = Instantiate(sphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
-            sphereLight.Initialize(this, sphereLightPosition);
+            // Lets create three spheres
+
+            lowSphereLight = Instantiate(sphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
+            lowSphereLight.Initialize(this, sphereLightPosition, 0);
+
+            midSphereLight = Instantiate(sphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
+            midSphereLight.Initialize(this, sphereLightPosition + new Vector3(0f, 10f, 0f), 1);
+
+            highSphereLight = Instantiate(sphereLightPrefab.GetComponent<SphereLight>()) as SphereLight;
+            highSphereLight.Initialize(this, sphereLightPosition + new Vector3(0f, 20f, 0f), 2);
+
 
         }
 
@@ -243,7 +254,10 @@ public class VisualizerSpawner : MonoBehaviour {
 
             for (int b = 0; b < hwyLights.Length; b++) {
                 hwyLights[b] = Instantiate(hwyLightPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-                hwyLights[b].GetComponent<HwyLight>().Initialize(this, sender.position, receiver.position, (receiver.transform.position - sender.transform.position).normalized);
+                hwyLights[b].GetComponent<HwyLight>().Initialize(this, sender.position, receiver.position, Vector3.back);
+                hwyLights[b].transform.parent = transform;
+
+
             }
 
         }

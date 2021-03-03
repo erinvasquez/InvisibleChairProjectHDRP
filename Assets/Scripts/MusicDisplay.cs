@@ -9,7 +9,7 @@ public class MusicDisplay : MonoBehaviour {
     [SerializeField]
     TextMeshProUGUI display = default;
 
-    public static float[] averageSamples = AudioPeer._AverageMonoSamples;
+    public static float[] averageSamples = AudioPeer.monoSamples;
 
     float intensity, minIntensity = float.MaxValue, maxIntensity = 0f;
     

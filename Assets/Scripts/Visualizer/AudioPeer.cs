@@ -9,7 +9,7 @@ public class AudioPeer : MonoBehaviour {
     /// 
     /// </summary>
     AudioSource musicSource;
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -19,16 +19,32 @@ public class AudioPeer : MonoBehaviour {
     /// 512 sample array of averaged left and right stereo values
     /// into one mono audio array
     /// </summary>
-    public static float[] _AverageMonoSamples = new float[512];
+    public static float[] monoSamples = new float[512];
+
     /// <summary>
     /// 512 sample array of channel 1, left side audio
     /// </summary>
-    float[] _leftSamples = new float[512];
-    
+    float[] leftSamples = new float[512];
+
     /// <summary>
     /// 512 sample array of averaged left and right stereo values
     /// </summary>
-    float[] _rightSamples = new float[512];
+    float[] rightSamples = new float[512];
+
+    /// <summary>
+    /// Samples 0 to 169
+    /// </summary>
+    public float[] lowSamples = new float[170]; // turns out to be 170.6, so it'll give us 170 samples
+    /// <summary>
+    /// Samples 170 to 340
+    /// </summary>
+    public float[] midSamples = new float[170];
+    /// <summary>
+    /// Samples 341 to 511
+    /// </summary>
+    public float[] highSamples = new float[170];
+
+
 
     public static float[] _freqBand = new float[8];
 
@@ -36,6 +52,11 @@ public class AudioPeer : MonoBehaviour {
     public static int BPM = 0; // Default 0 BPM, must analyze for stuff to work
     public static float trackLength;
     public static float intensity; // average value of all samples
+
+    public static float lowsIntensity;
+    public static float midsIntensity;
+    public static float highsIntensity;
+
     public static bool audioPeerReady = false; // True when BPM is analyzed
 
 
@@ -100,7 +121,7 @@ public class AudioPeer : MonoBehaviour {
         //    stop the AudioSource from playing before
         //    the Conductor is ready
         if (!audioPeerReady) {
-            
+
             if (BPM == 0) {
                 // Debug.Log("AudioPeer: BPM 0, Attempting to re-analyze BPM in Update()");
                 BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
@@ -116,10 +137,10 @@ public class AudioPeer : MonoBehaviour {
 
 
         // Get spectrum data from each channel
-        GetSpectrumDataFromStereo(_leftSamples, _rightSamples, _AverageMonoSamples);
+        GetSpectrumDataFromStereo(leftSamples, rightSamples, monoSamples);
 
         // Set our intensity
-        GetIntensity();
+        SetIntensity(monoSamples);
 
     }
 
@@ -136,7 +157,18 @@ public class AudioPeer : MonoBehaviour {
 
         // Average left and right samples into one average mono-sample
         for (int a = 0; a < 512; a++) {
-            averageSamples[a] = (_leftSamples[a] + _rightSamples[a]) / 2;
+            averageSamples[a] = (leftSamples[a] + rightSamples[a]) / 2;
+
+            // Put our low mid and high samples in respective
+            if (a < lowSamples.Length) {
+                lowSamples[a] = averageSamples[a];
+            } else if (a < (lowSamples.Length + midSamples.Length)) {
+                midSamples[a - lowSamples.Length] = averageSamples[a];
+            } else if (a < (lowSamples.Length + midSamples.Length + highSamples.Length)) {
+                highSamples[a - (lowSamples.Length + midSamples.Length)] = averageSamples[a];
+            }
+
+
         }
 
     }
@@ -182,7 +214,7 @@ public class AudioPeer : MonoBehaviour {
             }
 
             for (int j = 0; j < sampleCount; j++) {
-                average += _AverageMonoSamples[count] * (count + 1);
+                average += monoSamples[count] * (count + 1);
                 count++;
             }
 
@@ -195,23 +227,54 @@ public class AudioPeer : MonoBehaviour {
     }
 
     /// <summary>
-    /// Takes our average samples' average, and
-    /// save it as our intensity variable
+    /// Get the volume intensity of the current sample set
     /// </summary>
     /// <returns></returns>
-    void GetIntensity() {
+    void SetIntensity(float[] samples) {
         // Average all of our current samples
         // output it as our music's "intensity"
         float average = 0f;
+        float lowAverage = 0f;
+        float midAverage = 0f;
+        float highAverage = 0f;
 
-        for (int a = 0; a < _AverageMonoSamples.Length; a++) {
-            average += _AverageMonoSamples[a];
+        for (int a = 0; a < samples.Length; a++) {
+            average += samples[a];
+
+            if (a <= 160) {
+                lowAverage += samples[a];
+            } else if (a <= 340) {
+                midAverage += samples[a];
+            } else if (a <= 511) {
+                highAverage += samples[a];
+            }
+
         }
 
-        average /= _AverageMonoSamples.Length;
+        average /= samples.Length;
+        lowAverage /= lowSamples.Length;
+        midAverage /= midSamples.Length;
+        highAverage /= highSamples.Length;
 
 
-        intensity =  average;
+        intensity = average;
+        lowsIntensity = lowAverage;
+        midsIntensity = midAverage;
+        highsIntensity = highAverage;
+
+
+    }
+
+    public float GetLowsIntensity() {
+        return lowsIntensity;
+    }
+
+    public float GetMidsIntensity() {
+        return midsIntensity;
+    }
+
+    public float GetHighsIntensity() {
+        return highsIntensity;
     }
 
 }
