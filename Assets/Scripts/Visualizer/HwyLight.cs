@@ -10,9 +10,18 @@ public class HwyLight : VisualizerUnit {
     Vector3 startPosition;
     Vector3 endPosition;
     Vector3 direction;
-    
+
     public bool moving = false;
+    public bool playedSound = false;
     public float speed = 0f;
+
+    //float timeAtLastHit = 0f;
+
+    //public AudioSource hitmarker;
+
+    private void Start() {
+        //hitmarker = GameObject.Find("Hit").GetComponent<AudioSource>();
+    }
 
     /// <summary>
     /// 
@@ -41,10 +50,11 @@ public class HwyLight : VisualizerUnit {
             return;
         }
 
-        // If we've passed our endpoint,
-        // Place our light at the start again, and stop it from moving
-        // use >= when moving forward instead of backwards
         if (transform.position.z <= endPosition.z) {
+            // If we've passed our endpoint,
+            // Place our light at the start again, and stop it from moving
+            // use >= when moving forward instead of backwards
+
             ResetLight();
         }
 
@@ -53,6 +63,28 @@ public class HwyLight : VisualizerUnit {
             // Move it forward enough for 1 update
             MoveLight();
         }
+
+    }
+
+    
+
+    private void FixedUpdate() {
+
+
+        /*
+        if (transform.position.z <= 0 && !playedSound) {
+
+            Debug.Log("Hit");
+
+            hitmarker.Play();
+            playedSound = true;
+
+            Debug.Log("Time since last hit: " + (Time.time - timeAtLastHit));
+
+            timeAtLastHit = Time.time;
+
+        }
+        */
 
     }
 
@@ -67,6 +99,9 @@ public class HwyLight : VisualizerUnit {
 
         transform.Translate(direction * speed * Time.deltaTime);
 
+
+        //GetComponent<Rigidbody>().MovePosition(direction * speed * Time.deltaTime);
+
     }
 
     /// <summary>
@@ -74,6 +109,7 @@ public class HwyLight : VisualizerUnit {
     /// </summary>
     public void ResetLight() {
         moving = false;
+        playedSound = false;
         transform.position = startPosition;
     }
 

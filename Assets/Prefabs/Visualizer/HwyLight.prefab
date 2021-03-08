@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1720311756858916791}
   - component: {fileID: 3360196697758418711}
+  - component: {fileID: 6752804432633482878}
   m_Layer: 0
   m_Name: HwyLight
   m_TagString: Untagged
@@ -46,7 +47,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moving: 0
+  playedSound: 0
   speed: 0
+  hitmarker: {fileID: 0}
+--- !u!65 &6752804432633482878
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720311756858916788}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 64.25, y: 50, z: 19.627892}
+  m_Center: {x: 0, y: 0.10000038, z: 0.6974335}
 --- !u!1 &2971502847164337483
 GameObject:
   m_ObjectHideFlags: 0

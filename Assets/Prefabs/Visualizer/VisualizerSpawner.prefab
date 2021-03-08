@@ -68,20 +68,20 @@ MonoBehaviour:
     type: 3}
   useHwyLight: 1
   hwyLightsPerBeat: 1
-  useSphere: 1
-  sphereLightPosition: {x: -15, y: 5, z: 20}
+  useSphere: 0
+  sphereLightPosition: {x: 0, y: 5, z: 50}
   sphereIntensityMultiplier: 1000
   useMaze: 1
   mazeX: 30
   mazeZ: 10
-  mazeStartPosition: {x: 0, y: 10, z: 0}
-  mazeEndPosition: {x: 0, y: 10, z: 200}
+  mazeStartPosition: {x: 0, y: 10, z: 500}
+  mazeEndPosition: {x: 0, y: 10, z: -500}
   mazeStartRotation: {x: 90, y: 0, z: 0}
   mazeRegenerationRate: 32
   mazesPerBeat: 1
   mazeIndex: 0
-  UseClock: 1
-  ClockPosition: {x: 0, y: 10, z: 100}
+  UseClock: 0
+  ClockPosition: {x: 0, y: 10, z: 200}
   beatIndex: 1
 --- !u!1 &994594080149283232
 GameObject:
@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994594080149283232}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -500}
+  m_LocalPosition: {x: 0, y: 0, z: 500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 820435176932308359}
@@ -137,7 +137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7293819325817985974}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 500}
+  m_LocalPosition: {x: 0, y: 0, z: -500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 820435176932308359}

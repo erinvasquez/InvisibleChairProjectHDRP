@@ -7,7 +7,6 @@ using UnityEngine;
 /// 
 /// </summary>
 public class VisualizerMaze : VisualizerUnit {
-    VisualizerMazeManager mazeManager;
     
     Vector3 startPosition;
     Vector3 endPosition;
@@ -70,8 +69,7 @@ public class VisualizerMaze : VisualizerUnit {
     /// <param name="dir">Direction vector for this maze</param>
     /// <param name="size">Maze size</param>
     /// <param name="genStepDelay">Time in seconds between generation steps</param>
-    public void Initialize(VisualizerMazeManager manager, Vector3 startPos, Vector3 endPos, Vector3 dir, Vector3 rotation, IntVector2 size, float genStepDelay) {
-        mazeManager = manager;
+    public void Initialize(Vector3 startPos, Vector3 endPos, Vector3 dir, Vector3 rotation, IntVector2 size, float genStepDelay) {
         startPosition = startPos;
         endPosition = endPos;
         direction = dir;

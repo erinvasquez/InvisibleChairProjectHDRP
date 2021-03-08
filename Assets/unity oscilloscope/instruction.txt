@@ -1,0 +1,43 @@
+-the project file is made in unity 2017.1, in case if oyu have something else, use the loose files to build your own.
+
+
+========================how to use the thing========================
+1.import a audio file of your choice, in the impport setting of the audio flie, you have 3 types of compression meathod to choose from: vorbis, PCM, ADPCM.
+
+-Vorbis will compress the audio the most, result in the least amount of memory usage and witht no noticealbe quility loss. Note that vorbis will limit the  sample rate upto 44100hz
+
+-PCM is simply uncompressed audio data, allowing you go upto 196000hz and taking up good amount of space while doing it.
+
+-ADPCM will let you to go upto 196000hz and not take too much space, but it will introduce some rather noticealbe noise to the result.(try it your self.)
+
+-I would recommand you to use PCM, and click "sample rate setting" and change it to "over ride sample rate", then change the sample rate to 196000.
+this will take more memory and time to process, and sometime(very unlikely) it breaks the audio file and make it look really weird whem displayed(such as the files i provided..).
+ so in that csae consider using vorbis or ADPCM(what am i saying is that  you try all 3 three settings and difffernt sample rate to see which one works bettr)
+ 
+ 2.drag the audio file into the default clip of the audio source
+ 
+ 3. click play.
+ -mess around with the variables wont really break anything, but increasing "afterGlow" or "afterGlowRef" above 10 and your fps might start to drop.
+ -read the script it self if you dont  know what each varible does.
+ 
+ 4.press key 1, 2, 3 to change your camera angle
+
+
+ ========================setting up your own project file========================
+ 
+ 1.make empty game object, and add the following to the object:
+ -"osiclloscpe" the script
+ -audios source
+ -line renderer
+ 
+ 2.grab your camera and add "cameraScript" to it.
+ -!!!make sure you have the camera in orthographic projection, and then adjust size to you liking.
+ -add anti-aliasing and bloom from unity standard asset if you are feeling it.
+ 
+ 3. copy the values from my screen shots.
+ 
+ 4.make "new matereial" your skybox(optional), by going to Windows > lighting > settings
+ 
+ 
+ 
+ feel free to ask if you have any question.

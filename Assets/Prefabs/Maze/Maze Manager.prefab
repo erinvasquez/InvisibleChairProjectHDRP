@@ -43,5 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439e8ae42f131d44cadef6a8092a9a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazePrefab: {fileID: 3196789830859505048, guid: 69cb0630b057a0e4b951fd94a22483d5,
+  position: {x: 0, y: 0, z: 0}
+  rotation: {x: 0, y: 0, z: 0}
+  scale: {x: 5, y: 5, z: 5}
+  mazeSize:
+    x: 2
+    z: 2
+  genStepDelay: 0.01
+  doorProbability: 0
+  mazePrefab: {fileID: 8123750451770012203, guid: 4e17b91dd3f41b647ba4f8ea047d48e0,
     type: 3}

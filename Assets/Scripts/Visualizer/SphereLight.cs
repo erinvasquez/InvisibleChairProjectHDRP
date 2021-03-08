@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class SphereLight : VisualizerUnit {
 
+    AudioMeasureCS audioMeasure;
     VisualizerSpawner spawner;
     float SphereIntensity;
     int intensitySource;
+
+    private void Start() {
+        audioMeasure = GameObject.Find("NewAudioData").GetComponent<AudioMeasureCS>();
+    }
 
     /// <summary>
     /// Called once per frame
@@ -49,13 +54,13 @@ public class SphereLight : VisualizerUnit {
 
         switch (source) {
             case 0:
-                SphereIntensity = Mathf.Log10(AudioPeer.lowsIntensity);
+                SphereIntensity = audioMeasure.GetRms();
                 break;
             case 1:
-                SphereIntensity = Mathf.Log10(AudioPeer.midsIntensity);
+                SphereIntensity = audioMeasure.GetRms();
                 break;
             case 2:
-                SphereIntensity = Mathf.Log10(AudioPeer.highsIntensity);
+                SphereIntensity = audioMeasure.GetRms();
                 break;
         }
 

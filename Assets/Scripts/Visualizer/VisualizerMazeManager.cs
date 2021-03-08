@@ -71,7 +71,7 @@ public class VisualizerMazeManager : MonoBehaviour {
 
             // Initialize
             //old mazeregenrate param is (Conductor.secondsPerBeat * mazeGenerationRate) / (mazeSize.x * mazeSize.z)
-            mazeObjects[a].transform.GetChild(0).GetComponent<VisualizerMaze>().Initialize(this, startPos, endPos, dir, rotation, size, mazeGenerationRate);
+            mazeObjects[a].transform.GetChild(0).GetComponent<VisualizerMaze>().Initialize(startPos, endPos, dir, rotation, size, mazeGenerationRate);
         }
 
     }

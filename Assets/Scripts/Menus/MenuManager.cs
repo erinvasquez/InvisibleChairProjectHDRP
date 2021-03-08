@@ -35,7 +35,7 @@ public class MenuManager : MonoBehaviour {
     private void Awake() {
 
         Instance = this;
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         // Load our settings, in case another file was manipulated by the player externally
         LoadPreferences();
