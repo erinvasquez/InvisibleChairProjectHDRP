@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4534618709392190158}
   - component: {fileID: 3191223672003008281}
   - component: {fileID: 1138435382}
+  - component: {fileID: 6381587044208260238}
   m_Layer: 0
-  m_Name: Oscillator
+  m_Name: Theremin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,9 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 440
-  lerpDurationSlider: 10
-  lerpDuration: 10
-  waveform: 2
+  waveform: 1
 --- !u!114 &3191223672003008281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,10 +160,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lastmousePositionPixel: {x: 0, y: 0}
   lastmousePositionPercent: {x: 0, y: 0}
-  minPianoKey: -33
-  maxPianoKey: -17
-  minFrequency: 65.40629
-  maxFrequency: 164.81364
+  minPianoNote: -57
+  maxPianoNote: -29
+  minFrequency: 16.351555
+  maxFrequency: 82.40678
 --- !u!114 &1138435382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,3 +225,15 @@ MonoBehaviour:
   m_DefaultActionMap: Theremin
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6381587044208260238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534618709392190159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2265ee5d17f7d40a3e6e32a283a698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

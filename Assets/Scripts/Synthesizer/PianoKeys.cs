@@ -1,14 +1,5 @@
 ﻿public enum PianoKeys {
-    C0 = 0,
-    C0Sharp,
-    D0,
-    D0Sharp,
-    E0,
-    F0,
-    F0Sharp,
-    G0,
-    G0Sharp,
-    A0,
+    A0 = 0,
     A0Sharp,
     B0,
     C1,
@@ -95,16 +86,5 @@
     A7,
     A7Sharp,
     B7,
-    C8,
-    C8Sharp,
-    D8,
-    D8Sharp,
-    E8,
-    F8,
-    F8Sharp,
-    G8,
-    G8Sharp,
-    A8,
-    A8Sharp,
-    B8
+    C8
 };

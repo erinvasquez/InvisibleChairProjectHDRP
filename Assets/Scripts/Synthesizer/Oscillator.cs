@@ -12,24 +12,19 @@ using UnityEngine;
 public class Oscillator : MonoBehaviour {
 
     /// <summary>
-    /// A frequency array for 88 piano keys
-    /// </summary>
-    private float[] equalTempramentFrequencies;
-
-    /// <summary>
-    /// In Hz, the note made by this sine
-    /// wave oscillator
+    /// In Hz, the current note being produced
     /// </summary>
     [SerializeField]
     double frequency = 440.0;
 
     /// <summary>
-    /// 
+    /// Phase increment based on sampling frequency
     /// </summary>
     private double increment;
 
     /// <summary>
-    /// Stays between 0 and 2pi
+    /// Stays between 0 and 2 PI,
+    /// phase for our sin wave
     /// 
     /// Used as a float value sometimes
     /// </summary>
@@ -42,104 +37,120 @@ public class Oscillator : MonoBehaviour {
 
     /// <summary>
     /// How loud it is basically, but not really
+    /// moves between -1 and 1?
     /// </summary>
     float gain;
-    float volume;
-
-    [Range(0f, 120f)]
-    public float lerpDurationSlider = 10f;
-    public float lerpDuration;
+    float volume = 0.1f;
 
     [SerializeField]
     public Waveforms waveform = Waveforms.SinWave;
     Waveforms currentWaveform;
+
+    public PitchClass currentPitch;
 
     private float t = 0;
 
     private void Start() {
 
         // Get our frequency array calculated
-        equalTempramentFrequencies = InitializeEqualTempramentFrequencies();
         currentWaveform = waveform;
-        lerpDuration = lerpDurationSlider;
+        currentPitch = new PitchClass(Notes.D, 4); // I like D4 as our default note, just cause
+        frequency = currentPitch.GetETFrequency();
+
+        Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
 
     }
 
     private void OnValidate() {
 
         // Get our frequency array calculated
-        equalTempramentFrequencies = InitializeEqualTempramentFrequencies();
         currentWaveform = waveform;
-        lerpDuration = lerpDurationSlider;
 
     }
 
-    public void StartPlay(float freq, float vol) {
+    /// <summary>
+    /// Called when we click and hold,
+    /// assures that we have the right frequency and gain(/volume?)
+    /// </summary>
+    /// <param name="freq"></param>
+    /// <param name="g"></param>
+    public void StartPlay(float freq, float g) {
         frequency = freq;
-        gain = vol;
+        gain = g;
     }
 
-    public void StartPlay(HalfStepsFromA4 key, float vol) {
-        SetFrequency(key);
-        gain = vol;
-    }
-
+    /// <summary>
+    /// Called when we've released our play button,
+    /// sets our gain to 0 to "stop" our oscillator
+    /// </summary>
     public void EndPlay() {
         gain = 0;
     }
 
-    public void SetFrequency(HalfStepsFromA4 key) {
-        SetFrequency(equalTempramentFrequencies[(int)key]);
-    }
-
+    /// <summary>
+    /// Set this oscillator's frequency
+    /// </summary>
+    /// <param name="f"></param>
     public void SetFrequency(float f) {
         frequency = f;
     }
 
-    public double getFrequency() {
+    /// <summary>
+    /// Return our oscillator's current frequency
+    /// </summary>
+    /// <returns></returns>
+    public double GetFrequency() {
         return frequency;
     }
 
+
     /// <summary>
-    /// A coroutine to change our frequency to a certain note
-    /// 
+    /// Set our oscillator's gain
     /// </summary>
-    /// <param name="noteA"></param>
-    /// <param name="noteB"></param>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    IEnumerator LerpToNote(int noteA, int noteB, float time) {
-
-        if (frequency == equalTempramentFrequencies[noteB]) {
-            t = 0;
-            frequency = equalTempramentFrequencies[0];
-        }
-
-        // Using time.deltaTime and our own t value gives us more control of the interpolation length, since
-        // its clamped by [0,1]
-        t += Time.deltaTime / time; // divide t, our interpolator by duration to make it last our duration
-        frequency = Mathf.Lerp(equalTempramentFrequencies[noteA], equalTempramentFrequencies[noteB], t);
-
-        // this line signals "the point at which execution will pause and be resumed the following frame"
-        yield return null;
+    /// <param name="g"></param>
+    public void SetGain(float g) {
+        gain = g;
     }
 
     /// <summary>
-    /// Called in update (or a coroutine?)
+    /// Returns our osicllator's gain
     /// </summary>
-    IEnumerator SweepPianoFrequencies() {
+    /// <returns></returns>
+    public float GetGain() {
+        return gain;
+    }
 
-        if (frequency == equalTempramentFrequencies[equalTempramentFrequencies.Length - 1]) {
-            t = 0;
-            frequency = equalTempramentFrequencies[0];
-        }
+    /// <summary>
+    /// Get our gain in decibels
+    /// </summary>
+    /// <returns></returns>
+    public float GetdB() {
+        return 20f * Mathf.Log10((float) gain);
+    }
 
-        // Using time.deltaTime and our own t value gives us more control of the interpolation length, since
-        // its clamped by [0,1]
-        t += Time.deltaTime / lerpDurationSlider; // divide t, our interpolator by duration to make it last our duration
-        frequency = Mathf.Lerp(equalTempramentFrequencies[0], equalTempramentFrequencies[equalTempramentFrequencies.Length - 1], t);
+    /// <summary>
+    /// Set the waveform to be used by our oscillator
+    /// </summary>
+    /// <param name="form"></param>
+    public void SetWaveform(int form) {
+        SetWaveform((Waveforms) form);
+    }
 
-        yield return null;
+    /// <summary>
+    /// Set the waveform to be used by our oscillator
+    /// </summary>
+    /// <param name="form"></param>
+    public void SetWaveform(Waveforms form) {
+        currentWaveform = form;
+    }
+
+    /// <summary>
+    /// Get the waveform type this oscillator
+    /// currently uses.
+    /// </summary>
+    /// <returns></returns>
+    public Waveforms GetWaveform() {
+        return currentWaveform;
     }
 
     /// <summary>
@@ -156,15 +167,15 @@ public class Oscillator : MonoBehaviour {
     /// <param name="channels"></param>
     private void OnAudioFilterRead(float[] data, int channels) {
 
-        // how much to increment the phase
+        // how much to increment the phase,
+        // apparently just enough to move at the rate of our sampling frequency
         increment = frequency * 2 * Mathf.PI / sampling_frequency;
 
         for (int a = 0; a < data.Length; a += channels) {
 
             phase += increment;
 
-            // This right here is where our Sin Wave function makes our sound data
-            // Replace this with whatever wave type you can find
+            // Apply our frequency and phase to a certain waveform equation
 
             switch (currentWaveform) {
                 case Waveforms.SinWave:
@@ -194,7 +205,7 @@ public class Oscillator : MonoBehaviour {
                 data[a + 1] = data[a];
             }
 
-            // Set phase to 0 when its 2 * pi
+            // Reset phase to 0 when it reaches 2 pi
             if (phase > (Mathf.PI * 2)) {
                 phase = 0.0;
             }
@@ -204,16 +215,24 @@ public class Oscillator : MonoBehaviour {
     }
 
     // Converts our frequency to angular velocity w (or omega)
-    double AngularVelocity(double hertz) {
-        return hertz * 2.0 * Mathf.PI;
+    /// <summary>
+    /// Get our frequency as an angular velocity
+    /// </summary>
+    /// <param name="freq"></param>
+    /// <returns></returns>
+    float AngularVelocity(float freq) {
+        return freq * 2.0f * Mathf.PI;
     }
 
     /// <summary>
     /// Gets a sinewave
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A float</returns>
     float GetSinWaveform() {
-        return (float)(gain * Mathf.Sin((float) phase));
+
+        // phase is just set to 2 PI * frequency/sampling frequency
+
+        return gain * Mathf.Sin((float) phase);
     }
 
     /// <summary>
@@ -223,9 +242,9 @@ public class Oscillator : MonoBehaviour {
     float GetSquareWaveform() {
 
         if (gain * GetSinWaveform() >= 0 * gain) {
-            return (float)gain * 0.6f;
+            return gain * 0.6f;
         } else {
-            return (-(float)gain) * 0.6f;
+            return -gain * 0.6f;
         }
 
     }
@@ -237,7 +256,7 @@ public class Oscillator : MonoBehaviour {
     /// <returns></returns>
     float GetTriangleWaveform() {
 
-        return (float)(gain * (double)Mathf.PingPong((float)phase, 1.0f));
+        return gain * Mathf.PingPong((float) phase, 1.0f);
 
     }
 
@@ -260,58 +279,8 @@ public class Oscillator : MonoBehaviour {
     float GetHarshSawWaveform() {
         // y= 2A/pi * (f * pi mod(1.0/f) - pi/2)
 
+        return (2f / Mathf.PI) * ((float) frequency * (float) Mathf.PI * ((float) phase % (1f / (float) frequency) - ((float) Mathf.PI / 2f)));
 
-        return (2.0f / Mathf.PI) * ((float) frequency * (float) Mathf.PI * ((float) phase % (1.0f / (float) frequency) - ((float) Mathf.PI / 2.0f)));
-
-        
-
-    }
-
-    /// <summary>
-    /// Initializes an array of frequencies
-    /// in A-440 Equal Temprement tuning
-    /// </summary>
-    /// <returns></returns>
-    float[] InitializeEqualTempramentFrequencies() {
-        float[] frequencies = new float[88]; // 88 key piano, 52 white, 36 black
-        int currentNote = (int)HalfStepsFromA4.C0;
-
-        for (int a = 0; a < frequencies.Length; a++) {
-
-            frequencies[a] = GetEqualTempramentFrequency(currentNote);
-
-            currentNote++;
-
-        }
-
-
-        return frequencies;
-    }
-
-    /// <summary>
-    /// Optimize this later
-    /// </summary>
-    /// <param name="note">Number of half steps away from A4-440hz,
-    /// with higher notes being positive and lower notes being negative</param>
-    /// <returns></returns>
-    public float GetEqualTempramentFrequency(int note) {
-        // formula is fn = f0 * (a)^n
-        // where fn is our note's frequency
-        // f0 is our fixed note frequency (A4-440Hz)
-        // a is the ratio 1/12
-        int aForForty = 440;
-
-        // Number of half steps (or piano keys) away from our fixed note frequency (A-440Hz here)
-        // Higher notes positive, lower notes are negative
-        float a = Mathf.Pow(2f, (float)(1f / 12f)); // approx 1.059463094359...
-
-        //Debug.Log("a is " + a.ToString("0.00000000") + "\n. Shoud be approx 1.059463094...");
-
-        // Wavelength of a sound is Wn = c/fn
-        //int c = 345; // speed of sound in m/s
-
-
-        return ((float) aForForty * Mathf.Pow(a, (float)note));
     }
 
 }

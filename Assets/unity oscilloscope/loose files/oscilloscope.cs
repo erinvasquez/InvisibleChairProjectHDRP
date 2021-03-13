@@ -8,7 +8,7 @@ public class oscilloscope : MonoBehaviour {
     private float[] leftChannel;
     private float[] rightChannel;
 
-    public AudioSource audio;
+    public AudioSource audioSource;
    
   
     //playRate is number of samples played within a fixed update(0.02 sec)
@@ -40,12 +40,12 @@ public class oscilloscope : MonoBehaviour {
 	void Start () {
         //AudioSource audio = GetComponent<AudioSource>();
        
-         totalSamples = new float[audio.clip.samples * audio.clip.channels];
-         leftChannel = new float[audio.clip.samples];
-         rightChannel = new float[audio.clip.samples];
+         totalSamples = new float[GetComponent<AudioSource>().clip.samples * GetComponent<AudioSource>().clip.channels];
+         leftChannel = new float[GetComponent<AudioSource>().clip.samples];
+         rightChannel = new float[GetComponent<AudioSource>().clip.samples];
     
         //fill "totalsamples" with samples from the audioclip, the other perameter is an "offset", so 0 mean to read from the beginning, while 100 mean it will skip 100 samples and start reading from sample 101
-        audio.clip.GetData(totalSamples, 0);
+        GetComponent<AudioSource>().clip.GetData(totalSamples, 0);
 
         //audio.clip.getdata will fill the array wih both left and right channel, and do it in a way that left channel and right channel alternates. the script below is a simple even/odd sort, so leftChannel[] has only the odd sample, and right has the even ones
         int l = 0;
@@ -63,9 +63,9 @@ public class oscilloscope : MonoBehaviour {
             }
         }  
         //audio.clip.frequency is actually the sample rate of the audio clip. "(int)" is to force the  output to be an interger, although it really shouldntmatter since Time.delta time here will always out in 0.05, and audio.clip.frequency is always a multiple of 5
-        playRate =(int)(audio.clip.frequency * Time.deltaTime);
+        playRate =(int)(GetComponent<AudioSource>().clip.frequency * Time.deltaTime);
         //how many time.deltatimes there is in this audio clip
-        totalCycles = audio.clip.samples / playRate;
+        totalCycles = GetComponent<AudioSource>().clip.samples / playRate;
       
     }
 	

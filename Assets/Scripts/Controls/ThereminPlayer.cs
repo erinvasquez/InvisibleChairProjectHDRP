@@ -9,50 +9,28 @@ public class ThereminPlayer : MonoBehaviour {
     Oscillator oscillator;
 
     [SerializeField]
-    Vector2 lastmousePositionPixel;
+    Vector2 lastMousePositionPixel;
     [SerializeField]
-    Vector2 lastmousePositionPercent;
+    Vector2 lastMousePositionPercent;
 
-
-    public HalfStepsFromA4 minPianoKey = HalfStepsFromA4.C0;
-    int minKey;
-    
-    public HalfStepsFromA4 maxPianoKey = HalfStepsFromA4.E2;
-    int maxKey;
-
-    [SerializeField]
-    float minFrequency;
-    [SerializeField]
-    public float maxFrequency;
+    public PitchClass minimumNote = new PitchClass(Notes.GSHARP, 4);
+    public PitchClass maximumNote = new PitchClass(Notes.A, 4);
 
     float currentFrequency;
-    float currentVolume;
+    float currentGain;
 
     private void Start() {
         oscillator = GetComponent<Oscillator>();
-
-        minKey = (int) minPianoKey;
-        maxKey = (int) maxPianoKey;
-
-        minFrequency = oscillator.GetEqualTempramentFrequency((int) minPianoKey);
-        maxFrequency = oscillator.GetEqualTempramentFrequency((int) maxPianoKey);
-
     }
 
     private void OnValidate() {
 
         oscillator = GetComponent<Oscillator>();
-
-        minKey = (int)minPianoKey;
-        maxKey = (int)maxPianoKey;
-
-        minFrequency = oscillator.GetEqualTempramentFrequency((int)minPianoKey);
-        maxFrequency = oscillator.GetEqualTempramentFrequency((int)maxPianoKey);
     }
 
     private void FixedUpdate() {
         currentFrequency = GetFrequencyFromMouse();
-        currentVolume = GetVolumeFromMouse();
+        currentGain = GetVolumeFromMouse();
     }
 
     public void OnPressPlay(InputAction.CallbackContext context) {
@@ -61,7 +39,7 @@ public class ThereminPlayer : MonoBehaviour {
 
         switch (playInput) {
             case 1f:
-                oscillator.StartPlay(currentFrequency, currentVolume);
+                oscillator.StartPlay(currentFrequency, currentGain);
                 break;
             case 0f:
                 oscillator.EndPlay();
@@ -72,12 +50,12 @@ public class ThereminPlayer : MonoBehaviour {
 
     public void OnAim(InputAction.CallbackContext context) {
 
-        lastmousePositionPixel = context.ReadValue<Vector2>();
-        lastmousePositionPercent = new Vector2(lastmousePositionPixel.x / (float)Screen.width, lastmousePositionPixel.y / (float)Screen.height);
+        lastMousePositionPixel = context.ReadValue<Vector2>();
+        lastMousePositionPercent = new Vector2(lastMousePositionPixel.x / (float)Screen.width, lastMousePositionPixel.y / (float)Screen.height);
 
         switch (playInput) {
             case 1f:
-                oscillator.StartPlay(currentFrequency, currentVolume);
+                oscillator.StartPlay(currentFrequency, currentGain);
                 break;
             case 0f:
                 oscillator.EndPlay();
@@ -86,6 +64,30 @@ public class ThereminPlayer : MonoBehaviour {
 
     }
 
+    public PitchClass GetMinNote() {
+        return minimumNote;
+    }
+
+    public void SetMinNote(PitchClass note) {
+        minimumNote = note;
+    }
+
+
+
+
+    public PitchClass GetMaxNote() {
+        return maximumNote;
+    }
+
+    public void SetMaxNote(PitchClass note) {
+        maximumNote = note;
+    }
+
+    /// <summary>
+    /// Maps our minimum and maximum frequencies to our screen's height,
+    /// so our mouse returns a percentage of how high up the screen it is
+    /// </summary>
+    /// <returns></returns>
     public float GetFrequencyFromMouse() {
         // we have a float for how high the mouse is
         // lastMousePositionPercent.y
@@ -94,15 +96,28 @@ public class ThereminPlayer : MonoBehaviour {
         //  and everything in between
 
         // Set to the minimum first
-        float frequency = lastmousePositionPercent.y;
-        
-        return Remap(frequency, 0f, 1f, minFrequency, maxFrequency);
+        float frequency = lastMousePositionPercent.y;
+
+        return Remap(frequency, 0f, 1f, minimumNote.frequency, maximumNote.frequency);
     }
 
+    /// <summary>
+    /// Maps our mouse position to a volume value we can use later
+    /// </summary>
+    /// <returns></returns>
     public float GetVolumeFromMouse() {
-        return lastmousePositionPercent.x;
+        return lastMousePositionPercent.x;
     }
 
+    /// <summary>
+    /// Used to remap between two ranges
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="from1"></param>
+    /// <param name="to1"></param>
+    /// <param name="from2"></param>
+    /// <param name="to2"></param>
+    /// <returns></returns>
     public float Remap(float value, float from1, float to1, float from2, float to2) {
         value = (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 

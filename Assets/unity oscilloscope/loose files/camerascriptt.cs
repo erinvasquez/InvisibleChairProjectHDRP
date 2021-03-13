@@ -10,12 +10,14 @@ public class camerascriptt : MonoBehaviour {
     public Vector3 rightR;
     public Vector3 bothR;
 
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             transform.position = leftT;
             transform.rotation = Quaternion.Euler(leftR);
@@ -30,5 +32,11 @@ public class camerascriptt : MonoBehaviour {
             transform.position = bothT;
             transform.rotation = Quaternion.Euler(bothR);
         }
+
+        */
+
+
     }
+
+
 }
