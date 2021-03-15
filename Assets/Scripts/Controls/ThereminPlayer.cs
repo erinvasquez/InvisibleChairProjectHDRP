@@ -13,14 +13,18 @@ public class ThereminPlayer : MonoBehaviour {
     [SerializeField]
     Vector2 lastMousePositionPercent;
 
-    public PitchClass minimumNote = new PitchClass(Notes.GSHARP, 4);
-    public PitchClass maximumNote = new PitchClass(Notes.A, 4);
+    public PitchClass minimumNote = new PitchClass(Notes.A, 0);
+    public PitchClass maximumNote = new PitchClass(Notes.E, 2);
 
     float currentFrequency;
     float currentGain;
 
+    RectTransform playArea;
+    bool insidePlayArea = false;
+
     private void Start() {
         oscillator = GetComponent<Oscillator>();
+        playArea = GameObject.Find("Play Area").GetComponent<RectTransform>();
     }
 
     private void OnValidate() {
@@ -37,13 +41,19 @@ public class ThereminPlayer : MonoBehaviour {
 
         playInput = context.ReadValue<float>();
 
-        switch (playInput) {
-            case 1f:
-                oscillator.StartPlay(currentFrequency, currentGain);
-                break;
-            case 0f:
-                oscillator.EndPlay();
-                break;
+        if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
+
+            switch (playInput) {
+                case 1f:
+                    oscillator.StartPlay(currentFrequency, currentGain);
+                    break;
+                case 0f:
+                    oscillator.EndPlay();
+                    break;
+            }
+
+        } else if (playInput == 0) {
+            oscillator.EndPlay();
         }
 
     }
@@ -51,15 +61,21 @@ public class ThereminPlayer : MonoBehaviour {
     public void OnAim(InputAction.CallbackContext context) {
 
         lastMousePositionPixel = context.ReadValue<Vector2>();
-        lastMousePositionPercent = new Vector2(lastMousePositionPixel.x / (float)Screen.width, lastMousePositionPixel.y / (float)Screen.height);
+        lastMousePositionPercent = new Vector2(lastMousePositionPixel.x / Screen.width, lastMousePositionPixel.y / Screen.height);
 
-        switch (playInput) {
-            case 1f:
-                oscillator.StartPlay(currentFrequency, currentGain);
-                break;
-            case 0f:
-                oscillator.EndPlay();
-                break;
+        if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
+
+            switch (playInput) {
+                case 1f:
+                    oscillator.StartPlay(currentFrequency, currentGain);
+                    break;
+                case 0f:
+                    oscillator.EndPlay();
+                    break;
+            }
+
+        } else if (playInput == 0) {
+            oscillator.EndPlay();
         }
 
     }
@@ -89,16 +105,19 @@ public class ThereminPlayer : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public float GetFrequencyFromMouse() {
-        // we have a float for how high the mouse is
-        // lastMousePositionPercent.y
-        // we want frequency to be maxFrequency when lastMousePositionPercent.y == 1f
-        //                         minFrequency when ... == 0f;
-        //  and everything in between
 
-        // Set to the minimum first
-        float frequency = lastMousePositionPercent.y;
 
-        return Remap(frequency, 0f, 1f, minimumNote.frequency, maximumNote.frequency);
+        Vector3[] corners = new Vector3[4];
+        playArea.GetWorldCorners(corners);
+
+
+        float maxY = corners[1].y;
+        float minY = corners[0].y;
+
+        float normalizedY = Remap(lastMousePositionPixel.y, minY, maxY, 0f, 1f);
+
+
+        return Remap(normalizedY, 0f, 1f, minimumNote.frequency, maximumNote.frequency);
     }
 
     /// <summary>
@@ -106,7 +125,17 @@ public class ThereminPlayer : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public float GetVolumeFromMouse() {
-        return lastMousePositionPercent.x;
+
+        Vector3[] corners = new Vector3[4];
+        playArea.GetWorldCorners(corners);
+
+
+        float maxX = corners[2].x;
+        float minX = corners[0].x;
+
+        float normalizedX = Remap(lastMousePositionPixel.x, minX, maxX, 0f, 1f);
+
+        return normalizedX;
     }
 
     /// <summary>

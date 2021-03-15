@@ -57,7 +57,7 @@ public class Oscillator : MonoBehaviour {
         currentPitch = new PitchClass(Notes.D, 4); // I like D4 as our default note, just cause
         frequency = currentPitch.GetETFrequency();
 
-        Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
+        //Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
 
     }
 

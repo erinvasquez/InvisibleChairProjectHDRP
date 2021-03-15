@@ -43,6 +43,4 @@ QualitySettings:
     customRenderPipeline: {fileID: 11400000, guid: 3e2e6bfc59709614ab90c0cd7d755e48,
       type: 2}
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality:
-    Standalone: 0
-    Windows Store Apps: 0
+  m_PerPlatformDefaultQuality: {}
