@@ -18,8 +18,8 @@ public class NoteChooser : MonoBehaviour {
     int maxNoteOctave;
     int minNoteOctave;
 
-    PitchClass maxNote;
-    PitchClass minNote;
+    MusicNote maxNote;
+    MusicNote minNote;
 
     private void Start() {
 
@@ -32,16 +32,16 @@ public class NoteChooser : MonoBehaviour {
         maxOctaveDropdown = GameObject.Find("MaxNoteOctave Dropdown").GetComponent<TMP_Dropdown>();
         minOctaveDropdown = GameObject.Find("MinNoteOctave Dropdown").GetComponent<TMP_Dropdown>();
 
-        maxNameDropdown.value = (int) theremin.GetMaxNote().noteName;
-        minNameDropdown.value = (int)theremin.GetMinNote().noteName;
-        maxNoteName = (int) theremin.GetMaxNote().noteName;
-        minNoteName = (int)theremin.GetMinNote().noteName;
+        maxNameDropdown.value = (int) theremin.GetHighNote().noteName;
+        minNameDropdown.value = (int)theremin.GetLowNote().noteName;
+        maxNoteName = (int) theremin.GetHighNote().noteName;
+        minNoteName = (int)theremin.GetLowNote().noteName;
 
 
-        maxOctaveDropdown.value = theremin.GetMaxNote().octave;
-        minOctaveDropdown.value = theremin.GetMinNote().octave;
-        maxNoteOctave = theremin.GetMaxNote().octave;
-        minNoteOctave = theremin.GetMinNote().octave;
+        maxOctaveDropdown.value = theremin.GetHighNote().octave;
+        minOctaveDropdown.value = theremin.GetLowNote().octave;
+        maxNoteOctave = theremin.GetHighNote().octave;
+        minNoteOctave = theremin.GetLowNote().octave;
 
 
 
@@ -82,8 +82,8 @@ public class NoteChooser : MonoBehaviour {
     }
 
     public void SetNotes() {
-        maxNote = new PitchClass((Notes)maxNoteName, maxNoteOctave);
-        minNote = new PitchClass((Notes)minNoteName, minNoteOctave);
+        maxNote = new MusicNote((Notes)maxNoteName, maxNoteOctave);
+        minNote = new MusicNote((Notes)minNoteName, minNoteOctave);
 
         /*
         if (maxNoteOctave < minNoteOctave) {
@@ -97,7 +97,7 @@ public class NoteChooser : MonoBehaviour {
             return;
         }*/
 
-        if (maxNote.frequency <= minNote.frequency) {
+        if (maxNote.equalTemperamentfrequency <= minNote.equalTemperamentfrequency) {
             Debug.LogError(maxNote + " isn't larger than " + minNote);
             return;
         }
@@ -109,8 +109,8 @@ public class NoteChooser : MonoBehaviour {
         }*/
 
 
-        theremin.SetMaxNote(maxNote);
-        theremin.SetMinNote(minNote);
+        theremin.SetHighNote(maxNote);
+        theremin.SetLowNote(minNote);
 
         Debug.Log("Set notes to " + maxNote + " and " + minNote);
 

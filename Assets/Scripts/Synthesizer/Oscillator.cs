@@ -46,7 +46,7 @@ public class Oscillator : MonoBehaviour {
     public Waveforms waveform = Waveforms.SinWave;
     Waveforms currentWaveform;
 
-    public PitchClass currentPitch;
+    public MusicNote currentPitch;
 
     private float t = 0;
 
@@ -54,7 +54,7 @@ public class Oscillator : MonoBehaviour {
 
         // Get our frequency array calculated
         currentWaveform = waveform;
-        currentPitch = new PitchClass(Notes.D, 4); // I like D4 as our default note, just cause
+        currentPitch = new MusicNote(Notes.D, 4); // I like D4 as our default note, just cause
         frequency = currentPitch.GetETFrequency();
 
         //Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");

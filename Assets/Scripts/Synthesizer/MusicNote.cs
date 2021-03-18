@@ -7,7 +7,7 @@ using UnityEngine;
 /// number of octaves apart"
 /// </summary>
 [SerializeField]
-public class PitchClass {
+public class MusicNote {
 
     /// <summary>
     /// Our note's letter name, ex.
@@ -23,9 +23,9 @@ public class PitchClass {
     /// <summary>
     /// The frequency for this pitch at the current octave
     /// </summary>
-    public float frequency;
+    public float equalTemperamentfrequency;
 
-    public PitchClass(Notes name, int octaveNumber) {
+    public MusicNote(Notes name, int octaveNumber) {
         noteName = name;
         octave = octaveNumber;
 
@@ -33,10 +33,10 @@ public class PitchClass {
         // 7 note names
         // 0 to 8 octaves
 
-        frequency = GetETFrequency();
+        equalTemperamentfrequency = GetETFrequency();
     }
 
-    public bool IsGreaterThan(PitchClass pitch) {
+    public bool IsGreaterThan(MusicNote pitch) {
 
         // if our octave is greater, the frequency is greater
         if (octave > pitch.octave) {
@@ -88,7 +88,7 @@ public class PitchClass {
     /// </summary>
     /// <returns></returns>
     public float GetP() {
-        return 9 + (12 * Mathf.Log(frequency, 2f) / 440f);
+        return 9 + (12 * Mathf.Log(equalTemperamentfrequency, 2f) / 440f);
     }
 
     public string GetName() {
@@ -98,7 +98,7 @@ public class PitchClass {
     public override string ToString() {
 
 
-        return noteName.ToString() + octave + " " + frequency + " Hz";
+        return noteName.ToString() + octave + " " + equalTemperamentfrequency + " Hz";
     }
 
 }

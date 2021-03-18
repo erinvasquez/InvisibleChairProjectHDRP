@@ -3,28 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// Handles our 2D Theremin player
+/// </summary>
 public class ThereminPlayer : MonoBehaviour {
 
-    float playInput;
+    /// <summary>
+    /// Our mouse input value, controls when to play our
+    /// instrument
+    /// </summary>
+    float mouseClickInput;
+    
+    /// <summary>
+    /// The oscillator used to
+    /// synthesize our music
+    /// </summary>
     Oscillator oscillator;
 
+    /// <summary>
+    /// Pixel coordinate for the last position on screen
+    /// for our mouth
+    /// </summary>
     [SerializeField]
     Vector2 lastMousePositionPixel;
-    [SerializeField]
-    Vector2 lastMousePositionPercent;
 
-    public PitchClass minimumNote = new PitchClass(Notes.A, 0);
-    public PitchClass maximumNote = new PitchClass(Notes.E, 2);
+    /// <summary>
+    /// The lowest note we can play on our Theremin
+    /// </summary>
+    public MusicNote lowNote = new MusicNote(Notes.A, 0);
+    /// <summary>
+    /// The highest note we can play on our Theremin
+    /// </summary>
+    public MusicNote highNote = new MusicNote(Notes.E, 2);
 
+    /// <summary>
+    /// The frequency we want to set our oscillator to
+    /// </summary>
     float currentFrequency;
+    /// <summary>
+    /// The "gain" we want to se our oscillator to
+    /// Figure out if this should be volume instead
+    /// </summary>
     float currentGain;
-
+    /// <summary>
+    /// A Rectangle area on our canvas that defines our instrument's
+    /// interaction and "play" area on screen
+    /// </summary>
     RectTransform playArea;
-    bool insidePlayArea = false;
+    /// <summary>
+    /// A corner array for our play area
+    /// </summary>
+    Vector3[] corners = new Vector3[4];
 
     private void Start() {
         oscillator = GetComponent<Oscillator>();
         playArea = GameObject.Find("Play Area").GetComponent<RectTransform>();
+
+        InitPlayArea();
+
     }
 
     private void OnValidate() {
@@ -37,35 +74,47 @@ public class ThereminPlayer : MonoBehaviour {
         currentGain = GetVolumeFromMouse();
     }
 
+    /// <summary>
+    /// Callled by the Input System as a Unity Event when
+    /// the mouse is clicked or held down
+    /// 
+    /// they also 
+    /// </summary>
+    /// <param name="context"></param>
     public void OnPressPlay(InputAction.CallbackContext context) {
 
-        playInput = context.ReadValue<float>();
+        mouseClickInput = context.ReadValue<float>();
 
-        if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
-
-            switch (playInput) {
-                case 1f:
-                    oscillator.StartPlay(currentFrequency, currentGain);
-                    break;
-                case 0f:
-                    oscillator.EndPlay();
-                    break;
-            }
-
-        } else if (playInput == 0) {
-            oscillator.EndPlay();
-        }
+        HandleMouseInput();
 
     }
 
+    /// <summary>
+    /// Callled by the Input System as a Unity Event when
+    /// the mouse is moved.
+    /// 
+    /// Since our frequency AND volume are dependent on mouse position,
+    /// we also need to make sure to let the oscillator know NOT to stop playing
+    /// until we have a "0f" playInput
+    /// </summary>
+    /// <param name="context"></param>
     public void OnAim(InputAction.CallbackContext context) {
 
         lastMousePositionPixel = context.ReadValue<Vector2>();
-        lastMousePositionPercent = new Vector2(lastMousePositionPixel.x / Screen.width, lastMousePositionPixel.y / Screen.height);
+
+        HandleMouseInput();
+
+    }
+
+    /// <summary>
+    /// Handles any input we got during our onPressPlay and OnAim calls
+    /// </summary>
+    private void HandleMouseInput() {
 
         if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
 
-            switch (playInput) {
+            // If the mouse has been clicked or is still being held down, keep
+            switch (mouseClickInput) {
                 case 1f:
                     oscillator.StartPlay(currentFrequency, currentGain);
                     break;
@@ -74,29 +123,43 @@ public class ThereminPlayer : MonoBehaviour {
                     break;
             }
 
-        } else if (playInput == 0) {
+        } else if (mouseClickInput == 0) {
             oscillator.EndPlay();
         }
 
     }
 
-    public PitchClass GetMinNote() {
-        return minimumNote;
+
+    /// <summary>
+    /// Get our low note
+    /// </summary>
+    /// <returns></returns>
+    public MusicNote GetLowNote() {
+        return lowNote;
     }
 
-    public void SetMinNote(PitchClass note) {
-        minimumNote = note;
+    /// <summary>
+    /// Set our low note
+    /// </summary>
+    /// <param name="note">The note we want to use</param>
+    public void SetLowNote(MusicNote note) {
+        lowNote = note;
     }
 
-
-
-
-    public PitchClass GetMaxNote() {
-        return maximumNote;
+    /// <summary>
+    /// Get our high note
+    /// </summary>
+    /// <returns></returns>
+    public MusicNote GetHighNote() {
+        return highNote;
     }
 
-    public void SetMaxNote(PitchClass note) {
-        maximumNote = note;
+    /// <summary>
+    /// Set our high note
+    /// </summary>
+    /// <param name="note">The note we want to use</param>
+    public void SetHighNote(MusicNote note) {
+        highNote = note;
     }
 
     /// <summary>
@@ -106,18 +169,14 @@ public class ThereminPlayer : MonoBehaviour {
     /// <returns></returns>
     public float GetFrequencyFromMouse() {
 
+        // get the positions of our play area's cornerss
+        // 0 is bot left, 1 is top left?
+        // Remap from the y values used for our play area's corners to 0-1
+        // (AKA normalize our input)
+        float normalizedY = Remap(lastMousePositionPixel.y, corners[0].y, corners[1].y, 0f, 1f);
 
-        Vector3[] corners = new Vector3[4];
-        playArea.GetWorldCorners(corners);
-
-
-        float maxY = corners[1].y;
-        float minY = corners[0].y;
-
-        float normalizedY = Remap(lastMousePositionPixel.y, minY, maxY, 0f, 1f);
-
-
-        return Remap(normalizedY, 0f, 1f, minimumNote.frequency, maximumNote.frequency);
+        // Remap our normalized input into our frequency
+        return Remap(normalizedY, 0f, 1f, lowNote.equalTemperamentfrequency, highNote.equalTemperamentfrequency);
     }
 
     /// <summary>
@@ -126,16 +185,21 @@ public class ThereminPlayer : MonoBehaviour {
     /// <returns></returns>
     public float GetVolumeFromMouse() {
 
-        Vector3[] corners = new Vector3[4];
-        playArea.GetWorldCorners(corners);
-
-
-        float maxX = corners[2].x;
-        float minX = corners[0].x;
-
-        float normalizedX = Remap(lastMousePositionPixel.x, minX, maxX, 0f, 1f);
+        // Corner 0 is bottom left, corner 2 is top right
+        float normalizedX = Remap(lastMousePositionPixel.x, corners[0].x, corners[2].x, 0f, 1f);
 
         return normalizedX;
+    }
+
+
+    
+    /// <summary>
+    /// Get our play area's variables ready
+    /// </summary>
+    private void InitPlayArea() {
+
+        playArea.GetWorldCorners(corners);
+
     }
 
     /// <summary>
