@@ -82,8 +82,8 @@ public class NoteChooser : MonoBehaviour {
     }
 
     public void SetNotes() {
-        maxNote = new MusicNote((Notes)maxNoteName, maxNoteOctave);
-        minNote = new MusicNote((Notes)minNoteName, minNoteOctave);
+        maxNote = new MusicNote((SharpNotes)maxNoteName, maxNoteOctave);
+        minNote = new MusicNote((SharpNotes)minNoteName, minNoteOctave);
 
         /*
         if (maxNoteOctave < minNoteOctave) {

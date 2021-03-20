@@ -15,11 +15,11 @@ public class ScrollingText : MonoBehaviour {
     /// <summary>
     /// GameObjects for the individual characters
     /// </summary>
-    private GameObject textCharacters;
+    //private GameObject textCharacters;
     /// <summary>
     /// A list of our each of our characters' TMPro text components
     /// </summary>
-    private TextMeshProUGUI[] textComponents;
+    //private TextMeshProUGUI[] textComponents;
     /// <summary>
     /// The font assets we'll use on this text
     /// </summary>
@@ -33,11 +33,11 @@ public class ScrollingText : MonoBehaviour {
     /// <summary>
     /// The font we're currently using
     /// </summary>
-    private int fontIndex = 0;
+    //private int fontIndex = 0;
     /// <summary>
     /// The last time in seconds our font was changed
     /// </summary>
-    private float lastTimeFontChanged = 0f;
+    //private float lastTimeFontChanged = 0f;
 
     // Start is called before the first frame update
     void Start() {

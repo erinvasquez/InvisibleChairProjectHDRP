@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Controls a Canvas TMP_Text component
+/// that shows our the played note's frequency
+/// </summary>
 public class FrequencyDisplay : MonoBehaviour {
     TMP_Text text;
     Oscillator oscillator;

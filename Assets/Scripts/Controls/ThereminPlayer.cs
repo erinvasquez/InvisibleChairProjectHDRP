@@ -3,58 +3,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 /// <summary>
 /// Handles our 2D Theremin player
 /// </summary>
 public class ThereminPlayer : MonoBehaviour {
 
     /// <summary>
-    /// Our mouse input value, controls when to play our
-    /// instrument
+    /// Our mouse input value, controls when to play
+    /// our instrument
     /// </summary>
-    float mouseClickInput;
+    private float mouseClickInput;
     
     /// <summary>
     /// The oscillator used to
     /// synthesize our music
     /// </summary>
-    Oscillator oscillator;
+    private Oscillator oscillator;
 
     /// <summary>
     /// Pixel coordinate for the last position on screen
     /// for our mouth
     /// </summary>
     [SerializeField]
-    Vector2 lastMousePositionPixel;
+    private Vector2 lastMousePositionPixel;
 
     /// <summary>
     /// The lowest note we can play on our Theremin
     /// </summary>
-    public MusicNote lowNote = new MusicNote(Notes.A, 0);
+    public MusicNote lowNote = new MusicNote(SharpNotes.A, 0);
     /// <summary>
     /// The highest note we can play on our Theremin
     /// </summary>
-    public MusicNote highNote = new MusicNote(Notes.E, 2);
+    public MusicNote highNote = new MusicNote(SharpNotes.E, 2);
 
     /// <summary>
     /// The frequency we want to set our oscillator to
     /// </summary>
-    float currentFrequency;
+    private float currentFrequency;
     /// <summary>
-    /// The "gain" we want to se our oscillator to
+    /// The "gain" we want to set our oscillator to
     /// Figure out if this should be volume instead
     /// </summary>
-    float currentGain;
+    private float currentGain;
     /// <summary>
     /// A Rectangle area on our canvas that defines our instrument's
     /// interaction and "play" area on screen
     /// </summary>
-    RectTransform playArea;
+    private RectTransform playArea;
     /// <summary>
     /// A corner array for our play area
     /// </summary>
-    Vector3[] corners = new Vector3[4];
+    private Vector3[] corners = new Vector3[4];
 
     private void Start() {
         oscillator = GetComponent<Oscillator>();
@@ -129,7 +128,6 @@ public class ThereminPlayer : MonoBehaviour {
 
     }
 
-
     /// <summary>
     /// Get our low note
     /// </summary>
@@ -191,8 +189,6 @@ public class ThereminPlayer : MonoBehaviour {
         return normalizedX;
     }
 
-
-    
     /// <summary>
     /// Get our play area's variables ready
     /// </summary>

@@ -9,10 +9,13 @@ using UnityEngine;
 /// - use rng to select new frequencies after certain periods of time
 /// - make more sounds
 /// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class Oscillator : MonoBehaviour {
 
     /// <summary>
     /// In Hz, the current note being produced
+    /// 
+    /// Kept as a double, since we dont want anything past 1 (2 would be good) decimals honestly
     /// </summary>
     [SerializeField]
     double frequency = 440.0;
@@ -40,7 +43,7 @@ public class Oscillator : MonoBehaviour {
     /// moves between -1 and 1?
     /// </summary>
     float gain;
-    float volume = 0.1f;
+    // float volume = 0.1f;
 
     [SerializeField]
     public Waveforms waveform = Waveforms.SinWave;
@@ -48,15 +51,15 @@ public class Oscillator : MonoBehaviour {
 
     public MusicNote currentPitch;
 
-    private float t = 0;
+    // private float t = 0;
 
     private void Start() {
 
         // Get our frequency array calculated
         currentWaveform = waveform;
-        currentPitch = new MusicNote(Notes.D, 4); // I like D4 as our default note, just cause
+        currentPitch = new MusicNote(SharpNotes.D, 4); // I like D4 as our default note, just cause
         frequency = currentPitch.GetETFrequency();
-
+        gain = 1f;
         //Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
 
     }
@@ -214,7 +217,6 @@ public class Oscillator : MonoBehaviour {
 
     }
 
-    // Converts our frequency to angular velocity w (or omega)
     /// <summary>
     /// Get our frequency as an angular velocity
     /// </summary>
@@ -260,6 +262,12 @@ public class Oscillator : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Expensive on the CPU, probably not for mobile
+    /// purposes. Fix GetHarshSawWaveform() to get an
+    /// optimized model
+    /// </summary>
+    /// <returns></returns>
     float GetSawWaveform() {
         // y = 2A/pi * (sigma n = 1 to s (-sin((n) * f * 2 * pi * x)) / n)
         // where S is the number of sin waves
@@ -276,6 +284,10 @@ public class Oscillator : MonoBehaviour {
         return (float) dOutput * (2.0f / Mathf.PI);
     }
 
+    /// <summary>
+    /// FIX THIS IT DONT WORK D:
+    /// </summary>
+    /// <returns></returns>
     float GetHarshSawWaveform() {
         // y= 2A/pi * (f * pi mod(1.0/f) - pi/2)
 
