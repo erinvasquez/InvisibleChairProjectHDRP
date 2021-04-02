@@ -61,6 +61,9 @@ public class Conductor : MonoBehaviour {
     [SerializeField, Range(0.1f, 2f)]
     public float delay = 0.1f;
 
+    // BEGIN INPUT BPM DETECTION
+    public float timeSinceLastBeatInput;
+
     /// <summary>
     /// Time in seconds from beginning of music file to first actual beat.
     /// Depends on the song, and is manual so far.
@@ -73,6 +76,8 @@ public class Conductor : MonoBehaviour {
     /// </summary>
     public int countdownMeasures = 0; // The number of measures before starting music
 
+    public bool getBPMFromMusic = false;
+    public bool getBPMFromInput = true;
 
     public static bool conductorReady = false;
     public static bool visualizerReady = false;
@@ -80,9 +85,14 @@ public class Conductor : MonoBehaviour {
     private void Awake() {
         instance = this;
 
-        // Figure out best way to optimize this
+
+        if (getBPMFromMusic) {
+            // Figure out best way to optimize this
         // Make some more stuff static?
         musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
+        } else if (getBPMFromInput) {
+
+        }
     }
 
     // Start is called before the first frame update
@@ -95,24 +105,34 @@ public class Conductor : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        // Since we can't get the BPM without letting it run for a split second, I've put this set up code here
-        // Find the best place to run all of this without ruining any timing or optimization.
-        if (!visualizerReady) {
+        if (getBPMFromMusic) {
 
-            VisualizerSetUp();
+            // Since we can't get the BPM without letting it run for a split second, I've put this set up code here
+            // Find the best place to run all of this without ruining any timing or optimization.
+            if (!visualizerReady) {
 
-            return;
+                MusicVisualizerSetUp();
+
+                return;
+            }
+
+            // Update our song position variables
+            UpdateMusicVariables();
+
+        } else if (getBPMFromInput) {
+            // Use our new system that gets BPM from the user pressing a button
+            // one or more times
+
         }
 
-        // Update our song position variables
-        UpdateVariables();
+        
 
     }
 
     /// <summary>
     /// Set up the visualizer before doing the rest of Update()
     /// </summary>
-    private void VisualizerSetUp() {
+    private void MusicVisualizerSetUp() {
 
         if (AudioPeer.audioPeerReady) {
             secondsPerBeat = 60f / AudioPeer.BPM;
@@ -135,7 +155,7 @@ public class Conductor : MonoBehaviour {
     /// 
     /// 
     /// </summary>
-    private void UpdateVariables() {
+    private void UpdateMusicVariables() {
         // Current Unity Audio time - Unity AudioTime
         songPositionInSeconds = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         songPositionInBeats = (int)(songPositionInSeconds / secondsPerBeat);
