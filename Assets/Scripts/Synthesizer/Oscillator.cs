@@ -2,13 +2,21 @@
 using UnityEngine;
 
 /// <summary>
+/// Plays a wave and outputs to an
+/// AudioSource component on the GameObject its
+/// attached to. Can function along side other 
+/// GameObjects with their own AudioSource and script attached.
+/// 
+/// 
+/// 
+/// </summary>
+
 /// Things to do:
 /// - add, divide, multiply, average different waveforms together
 /// - Add sliders/knobs to control multipliers to frequency/mix ratios
 ///   of different waveforms
 /// - use rng to select new frequencies after certain periods of time
 /// - make more sounds
-/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class Oscillator : MonoBehaviour {
 
@@ -204,6 +212,7 @@ public class Oscillator : MonoBehaviour {
             }
 
             // if we have two channels...
+            // copy data onto our second channel?
             if (channels == 2) {
                 data[a + 1] = data[a];
             }
@@ -224,6 +233,23 @@ public class Oscillator : MonoBehaviour {
     /// <returns></returns>
     float AngularVelocity(float freq) {
         return freq * 2.0f * Mathf.PI;
+    }
+
+    float AddWaves(float waveA, float waveB) {
+
+        return waveA + waveB;
+    }
+
+    /// <summary>
+    /// Returns one wave to the power of the other
+    /// </summary>
+    /// <param name="waveA"></param>
+    /// <param name="waveB"></param>
+    /// <returns></returns>
+    float ExponentWaves(float waveA, float waveB) {
+
+
+        return Mathf.Pow(waveA, waveB);
     }
 
     /// <summary>

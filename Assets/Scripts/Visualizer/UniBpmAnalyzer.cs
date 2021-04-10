@@ -10,17 +10,39 @@ Copyright (c) 2016 WestHillApps (Hironari Nishioka)
 This software is released under the MIT License.
 http://opensource.org/licenses/mit-license.php
 */
+/*
+ * Edited by Erin Vasquez
+ * for clarity
+ */
+
+
+/// <summary>
+/// Analyzes BPM for a specific AudioClip in Unity
+/// </summary>
 public class UniBpmAnalyzer {
     #region CONST
 
     // BPM search range
+    /// <summary>
+    /// 
+    /// </summary>
     private const int MIN_BPM = 30;
+    /// <summary>
+    /// 
+    /// </summary>
     private const int MAX_BPM = 400;
     // Base frequency (44.1kbps)
+    /// <summary>
+    /// 
+    /// </summary>
     private const int BASE_FREQUENCY = 44100;
-    // Base channels (2ch)
+    /// <summary>
+    /// 2 Channels by default
+    /// </summary>
     private const int BASE_CHANNELS = 2;
-    // Base split size of sample data (case of 44.1kbps & 2ch)
+    /// <summary>
+    /// Base split size of sample data (case of 44.1kbps & 2ch)
+    /// </summary>
     private const int BASE_SPLIT_SAMPLE_SIZE = 2205;
 
     #endregion

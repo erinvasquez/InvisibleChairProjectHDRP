@@ -74,11 +74,11 @@ public class AudioPeer : MonoBehaviour {
     private void Awake() {
         Instance = this;
 
-        // Get our [Main Menu] Music
+        // Get our Music
         musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
         audioClip = musicSource.clip;
 
-        // Try to set our BPM
+        // Get our BPM from UniBPMAnalyzer, which uses a static method
         BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
         trackLength = audioClip.length;
 
@@ -88,23 +88,11 @@ public class AudioPeer : MonoBehaviour {
     /// <summary>
     /// Called before the first frame update
     /// 
-    /// 
-    /// We'll change this for generic use later
+    /// Analyze BPM of our music source if we haven't already
     /// </summary>
     private void Start() {
 
-        // If by now we haven't successfully anyalyzed BPM, try analyzing
-        // If we have analyzed BPM, stop the AudioSource from playing before
-        // everyone else (Conductor) is ready to visualize
-        if (BPM != 0) {
-            //Debug.Log("AudioPeer: BPM already analyzed before Update(), Stopping AudioSource");
-            audioPeerReady = true;
-            musicSource.Stop();
-        } else {
-            //Debug.Log("AudioPeer: BPM 0, re-analyzing BPM before Update()");
-            BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
-        }
-
+        AnalyzeBPM();
 
     }
 
@@ -176,53 +164,34 @@ public class AudioPeer : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
+    void AnalyzeBPM() {
+
+        
+        
+        if (BPM != 0) {
+            // If we have analyzed BPM, stop the AudioSource from playing before
+            // everyone else (Conductor) is ready to visualize
+
+            //Debug.Log("AudioPeer: BPM already analyzed before Update(), Stopping AudioSource");
+            
+            audioPeerReady = true;
+            musicSource.Stop();
+
+        } else {
+            // We haven't successfully analyzed BPM yet, try again
+
+            //Debug.Log("AudioPeer: BPM 0, re-analyzing BPM before Update()");
+            BPM = UniBpmAnalyzer.AnalyzeBpm(audioClip) / 2;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="samples"></param>
     void GetSpectrumDataFromMono(float[] samples) {
 
         musicSource.GetSpectrumData(samples, 0, FFTWindow.Blackman); // 0 is left or mono channel
-
-    }
-
-    /// <summary>
-    /// Old method used to make frequency bands...?
-    /// </summary>
-    void MakeFrequencyBands() {
-        /* 48000 hz frequency for 1/50 AM
-         * 48000/512 = 93.75 Hz per sample
-         * 
-         * 0 - 2    = 187.5 Hz  =
-         * 1 - 4    = 375 Hz    = 188-563
-         * 2 - 8    = 750 Hz    = 564-1314
-         * 3 - 16   = 1500      = 1315-2815
-         * 4 - 32   = 3000      = 2816-5816
-         * 5 - 64   = 6000      = 5817-11817
-         * 6 - 128  = 12000     = 11818-23818
-         * 7 - 256  = 24000     = 23919-47819
-         * 510
-         * 
-         */
-
-        int count = 0;
-
-        for (int i = 0; i < 8; i++) {
-
-            float average = 0;
-            int sampleCount = (int)Mathf.Pow(2, i) * 2;
-
-            if (i == 7) {
-                sampleCount += 2;
-            }
-
-            for (int j = 0; j < sampleCount; j++) {
-                average += monoSamples[count] * (count + 1);
-                count++;
-            }
-
-            average /= count;
-            _freqBand[i] = average * 10;
-
-        }
-
 
     }
 

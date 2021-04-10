@@ -76,7 +76,13 @@ public class Conductor : MonoBehaviour {
     /// </summary>
     public int countdownMeasures = 0; // The number of measures before starting music
 
+    /// <summary>
+    /// Uses the old conductor update loop, and plays music from an audio source
+    /// </summary>
     public bool getBPMFromMusic = false;
+    /// <summary>
+    /// Uses the new conductor update loop, which gets BPM from an 
+    /// </summary>
     public bool getBPMFromInput = true;
 
     public static bool conductorReady = false;
@@ -88,11 +94,14 @@ public class Conductor : MonoBehaviour {
 
         if (getBPMFromMusic) {
             // Figure out best way to optimize this
-        // Make some more stuff static?
-        musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
+            // Make some more stuff static?
+            musicSource = GameObject.Find("Music").GetComponent<AudioSource>();
         } else if (getBPMFromInput) {
 
+            Debug.Log("Get BPMFromInput true");
+
         }
+
     }
 
     // Start is called before the first frame update
@@ -125,7 +134,7 @@ public class Conductor : MonoBehaviour {
 
         }
 
-        
+
 
     }
 

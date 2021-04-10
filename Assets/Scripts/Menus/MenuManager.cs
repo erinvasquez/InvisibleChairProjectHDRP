@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Manages our menu flow, loads our preferences on game start,
@@ -51,11 +52,20 @@ public class MenuManager : MonoBehaviour {
     /// </summary>
     private void Update() {
 
+        /*
         if (Input.GetKeyDown(KeyCode.Escape) && MenuStack.Count > 0) {
 
             // Do the Appropriate action depending on the menu we're on
             MenuStack.Peek().OnBackPressed();
         }
+        */
+
+
+
+
+    }
+
+    void OnBackPressed(InputAction.CallbackContext context) {
 
     }
 

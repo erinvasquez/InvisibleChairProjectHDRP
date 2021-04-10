@@ -5,15 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Oscillator))]
 public class AutoKeyPlayer : MonoBehaviour {
 
-    MajorScale currentScale;
+    public MajorScale currentScale;
     Oscillator oscillator;
     public MusicNote currentNote;
 
 
-
+    /// <summary>
+    /// Time in seconds between notes changing
+    /// </summary>
     public float waitTime;
 
-
+    /// <summary>
+    /// Beats Per Minute, or Tempo
+    /// </summary>
     public double BPM = 85.0;
     
     private IEnumerator myCoroutine;
@@ -36,9 +40,6 @@ public class AutoKeyPlayer : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        
-        //StartCoroutine(myCoroutine);
 
     }
 
