@@ -177,14 +177,14 @@ public class VisualizerSpawner : MonoBehaviour {
         // ----------------------------------------------------------------------------------------
 
         // If we don't have any mazes generating, start our maze generation coroutine
-        if (!mazeManager.GetComponent<VisualizerMazeManager>().mazesGenerating) {
+        if (useMaze && !mazeManager.GetComponent<VisualizerMazeManager>().mazesGenerating) {
             mazeManager.GetComponent<VisualizerMazeManager>().StartMazeGenerationCoroutine();
         }
 
 
 
         // If we've passed enough time to send a HwyLight, SEND IT
-        if (Conductor.songPositionInSeconds - lastTimeHwyLightSent >= (Conductor.secondsPerBeat / hwyLightsPerBeat)) {
+        if (useHwyLight && Conductor.songPositionInSeconds - lastTimeHwyLightSent >= (Conductor.secondsPerBeat / hwyLightsPerBeat)) {
             //Debug.Log("Send light?");
 
             // Keep track of the last time we sent a HwyLight
@@ -194,7 +194,7 @@ public class VisualizerSpawner : MonoBehaviour {
         }
 
         // If we've passed enough time to send a Maze, SEND IT
-        if (Conductor.songPositionInSeconds - lastTimeMazeSent >= (Conductor.secondsPerBeat / mazesPerBeat)) {
+        if (useMaze && Conductor.songPositionInSeconds - lastTimeMazeSent >= (Conductor.secondsPerBeat / mazesPerBeat)) {
             //Debug.Log("Send maze");
 
             // Keep track of the last time we sent a HwyLight
@@ -214,7 +214,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // Get our Mazes ready
         if (useMaze) {
-            Debug.Log("Creating mazes");
+            //Debug.Log("Creating mazes");
 
             mazeManager = Instantiate(vMazeManagerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             mazeManager.transform.parent = transform;
@@ -246,7 +246,7 @@ public class VisualizerSpawner : MonoBehaviour {
         // Get our HwyLights ready
         if (useHwyLight) {
 
-            Debug.Log("Creating " + ((hwyLightsPerBeat * 4) + 1) + " HwyLights");
+            //Debug.Log("Creating " + ((hwyLightsPerBeat * 4) + 1) + " HwyLights");
 
             // Make 17 HwyLights (16th notes + 1 extra), since we might change the send rate for these
             // lights at any moment, and we'll need them all instantiated beforehand

@@ -49,7 +49,7 @@ public class AudioSettingsMenu : SimpleMenu<AudioSettingsMenu> {
 
         // Handle making a default preferences file so we don't get a "null" error
 
-        menuManager.LoadPreferences();
+        //menuManager.LoadPreferences();
 
     }
 

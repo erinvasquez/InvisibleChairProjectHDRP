@@ -67,7 +67,7 @@ MonoBehaviour:
   clockPrefab: {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3,
     type: 3}
   useHwyLight: 1
-  hwyLightsPerBeat: 1
+  hwyLightsPerBeat: 2
   useSphere: 0
   sphereLightPosition: {x: 0, y: 5, z: 50}
   sphereIntensityMultiplier: 1000

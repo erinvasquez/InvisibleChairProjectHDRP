@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour {
     public GameSettingsMenu gameSettingsMenuPrefab;
     public AudioSettingsMenu audioSettingsMenuPrefab;
     public VideoSettingsMenu videoSettingsMenuPrefab;
+    public GameSelectionMenu gameSelectionMenuPrefab;
 
     private Stack<Menu> MenuStack = new Stack<Menu>();
 
@@ -39,7 +40,7 @@ public class MenuManager : MonoBehaviour {
         //DontDestroyOnLoad(this);
 
         // Load our settings, in case another file was manipulated by the player externally
-        LoadPreferences();
+        //LoadPreferences();
 
         // Show our main menu for now
         // Call the static show method to create and show a MainMenu at the top of our menu stack
@@ -216,7 +217,8 @@ public class MenuManager : MonoBehaviour {
         if (typeof(T) == typeof(VideoSettingsMenu))
             return videoSettingsMenuPrefab as T;
 
-
+        if (typeof(T) == typeof(GameSelectionMenu))
+            return gameSelectionMenuPrefab as T;
 
 
         throw new MissingReferenceException("Prefab not found for type " + typeof(T));

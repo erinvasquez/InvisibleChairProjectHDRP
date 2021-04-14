@@ -1,0 +1,50 @@
+{
+    "name": "MyInputActions",
+    "maps": [
+        {
+            "name": "KeyboardAndMouse",
+            "id": "1eb925aa-46a9-401f-9904-6627eb2a800b",
+            "actions": [
+                {
+                    "name": "Connect",
+                    "type": "Button",
+                    "id": "4a81d9df-6be8-4f4e-944d-e3cd3255445b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "27b9cbe4-c739-4c7b-a2e3-9d2972a8dec5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Connect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard and Mouse",
+            "bindingGroup": "Keyboard and Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
