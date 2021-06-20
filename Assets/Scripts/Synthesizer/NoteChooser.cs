@@ -18,8 +18,8 @@ public class NoteChooser : MonoBehaviour {
     int maxNoteOctave;
     int minNoteOctave;
 
-    MusicNote maxNote;
-    MusicNote minNote;
+    public MusicNote maxNote;
+    public MusicNote minNote;
 
     private void Start() {
 
@@ -35,14 +35,13 @@ public class NoteChooser : MonoBehaviour {
         maxNameDropdown.value = (int) theremin.GetHighNote().noteName;
         minNameDropdown.value = (int)theremin.GetLowNote().noteName;
         maxNoteName = (int) theremin.GetHighNote().noteName;
-        minNoteName = (int)theremin.GetLowNote().noteName;
+        minNoteName = (int) theremin.GetLowNote().noteName;
 
 
         maxOctaveDropdown.value = theremin.GetHighNote().octave;
         minOctaveDropdown.value = theremin.GetLowNote().octave;
         maxNoteOctave = theremin.GetHighNote().octave;
         minNoteOctave = theremin.GetLowNote().octave;
-
 
 
     }

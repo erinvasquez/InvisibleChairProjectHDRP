@@ -5,20 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(Oscillator))]
 public class AutoKeyPlayer : MonoBehaviour {
 
+    [SerializeField]
     public MajorScale currentScale;
     Oscillator oscillator;
+    [SerializeField]
     public MusicNote currentNote;
 
+    [Range (0f, 1f)]
+    public float volume = 0.2f;
 
     /// <summary>
     /// Time in seconds between notes changing
     /// </summary>
-    public float waitTime;
+    private float waitTime;
 
     /// <summary>
     /// Beats Per Minute, or Tempo
+    /// 
+    /// Controls our wait time
     /// </summary>
-    public double BPM = 85.0;
+    public double BPM = 120.0;
     
     private IEnumerator myCoroutine;
 
@@ -48,10 +54,14 @@ public class AutoKeyPlayer : MonoBehaviour {
 
         while(true) {
 
-            Debug.Log("NoteCoroutine: " + (int) Time.time);
+            //Debug.Log("NoteCoroutine: " + (int) Time.time);
 
             currentNote = currentScale.GetRandomNote();
-            oscillator.StartPlay(currentNote.GetETFrequency(), 1f);
+            //oscillator.StartPlay(currentNote.GetETFrequency(), 1f);
+
+            oscillator.SetFrequency(currentNote.GetETFrequency());
+            oscillator.SetVolume(volume);
+            oscillator.StartPlay();
 
             yield return new WaitForSeconds(waitTime);
         }

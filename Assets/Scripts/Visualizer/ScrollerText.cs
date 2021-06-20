@@ -7,11 +7,12 @@ public class ScrollerText : MonoBehaviour {
 
     private TextMeshProUGUI textComponent;
     public TMP_FontAsset[] fonts = new TMP_FontAsset[15];
-    [Range (1,16)]
+    [Range(1, 16)]
     public int scrollRate = 4;
     int currentFont = 0;
     float lastTimeFontChanged = 0f;
 
+    bool moving = false;
 
     private void Awake() {
         textComponent = GetComponent<TextMeshProUGUI>();
@@ -26,15 +27,15 @@ public class ScrollerText : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (!Conductor.visualizerReady) {
+        if (!Conductor.musicSourceReadyForVisualizing) {
             return;
         }
 
-        
+
         if (Conductor.songPositionInSeconds - lastTimeFontChanged >= Conductor.secondsPerBeat / scrollRate) {
 
             lastTimeFontChanged = Conductor.songPositionInSeconds;
-            
+
             //ScrollText(textComponent);
             ScrollTextRandom(textComponent);
 

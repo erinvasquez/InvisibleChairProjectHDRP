@@ -2,6 +2,8 @@
 using UnityEngine;
 
 /// <summary>
+/// Non-VR Oscillator
+/// 
 /// Plays a wave and outputs to an
 /// AudioSource component on the GameObject its
 /// attached to. Can function along side other 
@@ -23,7 +25,7 @@ public class Oscillator : MonoBehaviour {
     /// <summary>
     /// In Hz, the current note being produced
     /// 
-    /// Kept as a double, since we dont want anything past 1 (2 would be good) decimals honestly
+    /// Kept as a double, since we dont want anything past 1 (2 would be okay, try later) decimals honestly
     /// </summary>
     [SerializeField]
     double frequency = 440.0;
@@ -44,40 +46,42 @@ public class Oscillator : MonoBehaviour {
     /// <summary>
     /// Unity defaults to 48,000 
     /// </summary>
-    private double sampling_frequency = 48000.0;
+    private double sampling_frequency = 48_000.0;
 
     /// <summary>
     /// How loud it is basically, but not really
     /// moves between -1 and 1?
     /// </summary>
-    float gain;
-    // float volume = 0.1f;
+    private float gain;
+    public float volume = 0.2f;
 
-    [SerializeField]
-    public Waveforms waveform = Waveforms.SinWave;
+    /// <summary>
+    /// The current waveform the oscillator uses
     Waveforms currentWaveform;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public MusicNote currentPitch;
 
-    // private float t = 0;
+    /// <summary>
+    /// True if the oscilator is to play a sound
+    /// </summary>
+    public bool isPlaying = false;
+
 
     private void Start() {
 
         // Get our frequency array calculated
-        currentWaveform = waveform;
+        currentWaveform = Waveforms.SinWave;
         currentPitch = new MusicNote(SharpNotes.D, 4); // I like D4 as our default note, just cause
         frequency = currentPitch.GetETFrequency();
-        gain = 1f;
+        
+        //gain = 1f;
         //Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
 
     }
 
-    private void OnValidate() {
-
-        // Get our frequency array calculated
-        currentWaveform = waveform;
-
-    }
+    #region Instrument controls
 
     /// <summary>
     /// Called when we click and hold,
@@ -88,15 +92,37 @@ public class Oscillator : MonoBehaviour {
     public void StartPlay(float freq, float g) {
         frequency = freq;
         gain = g;
+        isPlaying = true;
+    }
+
+    /// <summary>
+    /// Called when we press play.
+    /// Sets is PLaying to true while using the previous
+    /// frequency and volume
+    /// </summary>
+    public void StartPlay() {
+        isPlaying = true;
     }
 
     /// <summary>
     /// Called when we've released our play button,
-    /// sets our gain to 0 to "stop" our oscillator
+    /// sets isPlaying to false to stop our oscillator
     /// </summary>
     public void EndPlay() {
-        gain = 0;
+        //gain = 0;
+        isPlaying = false;
     }
+
+    /// <summary>
+    /// Toggle our oscillator's playing status
+    /// </summary>
+    public void TogglePlay() {
+        isPlaying = !isPlaying;
+    }
+
+    #endregion
+
+    #region oscillator getter/setters
 
     /// <summary>
     /// Set this oscillator's frequency
@@ -114,7 +140,6 @@ public class Oscillator : MonoBehaviour {
         return frequency;
     }
 
-
     /// <summary>
     /// Set our oscillator's gain
     /// </summary>
@@ -129,6 +154,10 @@ public class Oscillator : MonoBehaviour {
     /// <returns></returns>
     public float GetGain() {
         return gain;
+    }
+
+    public void SetVolume(float v) {
+        volume = v;
     }
 
     /// <summary>
@@ -163,6 +192,7 @@ public class Oscillator : MonoBehaviour {
     public Waveforms GetWaveform() {
         return currentWaveform;
     }
+    #endregion
 
     /// <summary>
     /// Called on the audio thread, (not the main one)
@@ -177,6 +207,13 @@ public class Oscillator : MonoBehaviour {
     /// <param name="data"></param>
     /// <param name="channels"></param>
     private void OnAudioFilterRead(float[] data, int channels) {
+
+        // full volume or nothing, that's what we're doing
+        if (isPlaying) {
+            SetGain(volume);
+        } else {
+            SetGain(0f);
+        }
 
         // how much to increment the phase,
         // apparently just enough to move at the rate of our sampling frequency
@@ -235,6 +272,8 @@ public class Oscillator : MonoBehaviour {
         return freq * 2.0f * Mathf.PI;
     }
 
+    #region wavemath
+
     float AddWaves(float waveA, float waveB) {
 
         return waveA + waveB;
@@ -251,6 +290,10 @@ public class Oscillator : MonoBehaviour {
 
         return Mathf.Pow(waveA, waveB);
     }
+
+    #endregion
+
+    #region waveforms
 
     /// <summary>
     /// Gets a sinewave
@@ -270,9 +313,9 @@ public class Oscillator : MonoBehaviour {
     float GetSquareWaveform() {
 
         if (gain * GetSinWaveform() >= 0 * gain) {
-            return gain * 0.6f;
+            return gain * 0.5f;
         } else {
-            return -gain * 0.6f;
+            return -gain * 0.5f;
         }
 
     }
@@ -320,5 +363,7 @@ public class Oscillator : MonoBehaviour {
         return (2f / Mathf.PI) * ((float) frequency * (float) Mathf.PI * ((float) phase % (1f / (float) frequency) - ((float) Mathf.PI / 2f)));
 
     }
+
+    #endregion
 
 }

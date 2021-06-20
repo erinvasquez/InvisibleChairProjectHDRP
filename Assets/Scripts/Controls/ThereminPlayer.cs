@@ -44,7 +44,7 @@ public class ThereminPlayer : MonoBehaviour {
     /// The "gain" we want to set our oscillator to
     /// Figure out if this should be volume instead
     /// </summary>
-    private float currentGain;
+    private float currentVolume;
     /// <summary>
     /// A Rectangle area on our canvas that defines our instrument's
     /// interaction and "play" area on screen
@@ -55,23 +55,56 @@ public class ThereminPlayer : MonoBehaviour {
     /// </summary>
     private Vector3[] corners = new Vector3[4];
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject localInstrumentPrefab;
+    /// <summary>
+    /// 
+    /// </summary>
+    MeshRenderer instrumentMeshRenderer;
+    /// <summary>
+    /// The next color that our sphere will turn into
+    /// </summary>
+    public Color baseColor = Color.red;
+
     private void Start() {
+        // Cache some stuff
         oscillator = GetComponent<Oscillator>();
         playArea = GameObject.Find("Play Area").GetComponent<RectTransform>();
+        localInstrumentPrefab = GameObject.Find("LocalInstrument");
 
+        // Initialize play area
         InitPlayArea();
 
+        // Set up instrument color changing
+        instrumentMeshRenderer = localInstrumentPrefab.GetComponent<MeshRenderer>();
     }
 
-    private void OnValidate() {
+    private void Update() {
 
-        oscillator = GetComponent<Oscillator>();
+        Color nextColor = new Color(baseColor.r * currentVolume, baseColor.g * currentVolume, baseColor.b * currentVolume);
+        instrumentMeshRenderer.material.SetColor("_BaseColor", nextColor);
+        
+        
+        localInstrumentPrefab.transform.localScale = new Vector3(0.1f * currentFrequency, 0.1f * currentFrequency, 0.1f * currentFrequency);
+
+
     }
 
     private void FixedUpdate() {
-        currentFrequency = GetFrequencyFromMouse();
-        currentGain = GetVolumeFromMouse();
+        //currentFrequency = GetFrequencyFromMouse();
+        //currentVolume = GetVolumeFromMouse();
+        //oscillator.SetVolume(currentVolume);
+
+        
+
+        
+
+
     }
+
+    #region input system
 
     /// <summary>
     /// Callled by the Input System as a Unity Event when
@@ -84,7 +117,23 @@ public class ThereminPlayer : MonoBehaviour {
 
         mouseClickInput = context.ReadValue<float>();
 
-        HandleMouseInput();
+        if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
+
+            // If the mouse has been clicked or is still being held down, keep
+            switch (mouseClickInput) {
+                case 1f:
+                    oscillator.StartPlay(currentFrequency, currentVolume);
+                    //oscillator.StartPlay();
+
+                    break;
+                case 0f:
+                    oscillator.EndPlay();
+                    break;
+            }
+
+        } else {
+            oscillator.EndPlay();
+        }
 
     }
 
@@ -99,34 +148,25 @@ public class ThereminPlayer : MonoBehaviour {
     /// <param name="context"></param>
     public void OnAim(InputAction.CallbackContext context) {
 
-        lastMousePositionPixel = context.ReadValue<Vector2>();
-
-        HandleMouseInput();
-
-    }
-
-    /// <summary>
-    /// Handles any input we got during our onPressPlay and OnAim calls
-    /// </summary>
-    private void HandleMouseInput() {
-
         if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
 
-            // If the mouse has been clicked or is still being held down, keep
-            switch (mouseClickInput) {
-                case 1f:
-                    oscillator.StartPlay(currentFrequency, currentGain);
-                    break;
-                case 0f:
-                    oscillator.EndPlay();
-                    break;
-            }
+            lastMousePositionPixel = context.ReadValue<Vector2>();
 
-        } else if (mouseClickInput == 0) {
-            oscillator.EndPlay();
+
         }
 
+
+        currentFrequency = GetFrequencyFromMouse();
+        currentVolume = GetVolumeFromMouse();
+
+        oscillator.SetFrequency(currentFrequency);
+        oscillator.SetVolume(currentVolume);
+
     }
+
+    #endregion
+
+    #region low and high notes
 
     /// <summary>
     /// Get our low note
@@ -159,8 +199,12 @@ public class ThereminPlayer : MonoBehaviour {
     public void SetHighNote(MusicNote note) {
         highNote = note;
     }
+    
+    #endregion
 
     /// <summary>
+    /// Uses our lastMousePositionPixel
+    /// 
     /// Maps our minimum and maximum frequencies to our screen's height,
     /// so our mouse returns a percentage of how high up the screen it is
     /// </summary>

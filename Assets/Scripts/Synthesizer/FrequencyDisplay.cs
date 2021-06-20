@@ -14,7 +14,7 @@ public class FrequencyDisplay : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         text = GetComponent<TMP_Text>();
-        oscillator = GameObject.Find("Theremin").GetComponent<Oscillator>();
+        oscillator = GameObject.Find("LocalTheremin").GetComponent<Oscillator>();
     }
 
     private void Update() {

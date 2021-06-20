@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Functions the same as real conductor. Reads and Analyzes the music the game is playing,
@@ -8,6 +9,8 @@ using UnityEngine;
 /// 
 /// AudioPeer and any Visualizer objects should be scripted to interact with the conductor as a [Musician]
 /// part of our [band].
+/// 
+/// Gets BPM either from a specified audio source or from player input
 /// </summary>
 public class Conductor : MonoBehaviour {
 
@@ -84,13 +87,13 @@ public class Conductor : MonoBehaviour {
     /// Uses the new conductor update loop, which gets BPM from an 
     /// </summary>
     public bool getBPMFromInput = true;
+    public float BPMInput = 0f;
 
     public static bool conductorReady = false;
-    public static bool visualizerReady = false;
+    public static bool musicSourceReadyForVisualizing = false;
 
     private void Awake() {
-        instance = this;
-
+        instance = this; // Make this our singleton
 
         if (getBPMFromMusic) {
             // Figure out best way to optimize this
@@ -118,7 +121,7 @@ public class Conductor : MonoBehaviour {
 
             // Since we can't get the BPM without letting it run for a split second, I've put this set up code here
             // Find the best place to run all of this without ruining any timing or optimization.
-            if (!visualizerReady) {
+            if (!musicSourceReadyForVisualizing) {
 
                 MusicVisualizerSetUp();
 
@@ -132,6 +135,16 @@ public class Conductor : MonoBehaviour {
             // Use our new system that gets BPM from the user pressing a button
             // one or more times
 
+            // Since we have to get our BPM from some user input first, make sure we're read enough
+            // input to get a BPM reading
+            // We need at least two different readings to get a "time between" that we can calculate
+
+
+
+            if (!musicSourceReadyForVisualizing) {
+                InstrumentVisualizerSetUp();
+            }
+
         }
 
 
@@ -139,7 +152,7 @@ public class Conductor : MonoBehaviour {
     }
 
     /// <summary>
-    /// Set up the visualizer before doing the rest of Update()
+    /// Set up an audio source based visualizer instead of depending on user BPM input
     /// </summary>
     private void MusicVisualizerSetUp() {
 
@@ -153,9 +166,18 @@ public class Conductor : MonoBehaviour {
         if (conductorReady && AudioPeer.audioPeerReady && !musicSource.isPlaying) {
             //Debug.Log("Conductor and AudioPeer ready, playing");
             dspSongTime = (float)AudioSettings.dspTime;
-            visualizerReady = true;
+            musicSourceReadyForVisualizing = true;
+
+
             musicSource.Play(); // Set a button to press this later
         }
+
+    }
+
+    /// <summary>
+    /// Set up a visualizer that controls player's instruments
+    /// </summary>
+    public void InstrumentVisualizerSetUp() {
 
     }
 
@@ -179,6 +201,18 @@ public class Conductor : MonoBehaviour {
         loopPositionInAnalog = loopPositionInBeats / BeatsPerLoop;
         //dspSongTime = (float)AudioSettings.dspTime;
         //Debug.Log("AudioSystemTime: " + AudioSettings.dspTime +"\nDSP Audio Time: " + dspSongTime + "\nSongPositionInSeconds: " + songPositionInSeconds);
+
+    }
+
+    public void HandleBPMInput() {
+
+    }
+
+    public void OnPressBPMInput(InputAction.CallbackContext context) {
+
+        BPMInput = context.ReadValue<float>();
+
+        HandleBPMInput();
 
     }
 

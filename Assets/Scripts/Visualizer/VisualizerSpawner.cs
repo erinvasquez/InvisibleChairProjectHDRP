@@ -76,7 +76,7 @@ public class VisualizerSpawner : MonoBehaviour {
     /// <summary>
     /// Maze regeneration rate
     /// </summary>
-    [Range (1,128)]
+    [Range(1, 128)]
     public int mazeRegenerationRate = 32;
     /// <summary>
     /// Number of Mazes per Beat
@@ -112,6 +112,7 @@ public class VisualizerSpawner : MonoBehaviour {
     //GameObject[] units = new GameObject[30];
 
 
+    public bool moving = false;
 
 
     /// <summary>
@@ -128,7 +129,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
 
         // update our hwy light settings
-        
+
 
         // update our sphere light settings
         if (lowSphereLight) {
@@ -161,7 +162,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
         // SET-UP ---------------------------------------------------------------------------------
         // If our conductor isn't ready to visualize, don't do anything
-        if (!Conductor.visualizerReady) {
+        if (!Conductor.musicSourceReadyForVisualizing) {
             return;
         }
 
@@ -222,7 +223,7 @@ public class VisualizerSpawner : MonoBehaviour {
             mazeManager.GetComponent<VisualizerMazeManager>().Initialize(mazeSize, mazeRegenerationRate);
             mazeManager.GetComponent<VisualizerMazeManager>().InitializeMazes(vMazePrefab, mazeStartPosition, mazeEndPosition, Vector3.forward, mazeStartRotation, mazeSize);
 
-            
+
         }
 
         // Get our Sphere Light ready

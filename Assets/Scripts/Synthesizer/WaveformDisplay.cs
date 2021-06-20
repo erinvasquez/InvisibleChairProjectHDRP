@@ -10,7 +10,7 @@ public class WaveformDisplay : MonoBehaviour {
     private void Start() {
 
         text = GetComponent<TMP_Text>();
-        oscillator = GameObject.Find("Theremin").GetComponent<Oscillator>();
+        oscillator = GameObject.Find("LocalTheremin").GetComponent<Oscillator>();
 
     }
 

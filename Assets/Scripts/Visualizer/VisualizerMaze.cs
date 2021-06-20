@@ -90,7 +90,7 @@ public class VisualizerMaze : VisualizerUnit {
     private void Update() {
 
         // Make sure the visualizer is ready to run before doing anything
-        if (!Conductor.visualizerReady) {
+        if (!Conductor.musicSourceReadyForVisualizing) {
             return;
         }
 

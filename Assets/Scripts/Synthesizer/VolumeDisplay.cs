@@ -9,7 +9,7 @@ public class VolumeDisplay : MonoBehaviour {
 
     private void Start() {
         text = GetComponent<TMP_Text>();
-        oscillator = GameObject.Find("Theremin").GetComponent<Oscillator>();
+        oscillator = GameObject.Find("LocalTheremin").GetComponent<Oscillator>();
     }
 
     private void Update() {

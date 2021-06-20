@@ -2,7 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// Unity Network Client Game Manager,
+/// 
+/// Should this manage Game we're in? [GAME01, GAME02, etc]
+/// Should this game manage the players we're connected to?
+/// Should this manage parties?
+/// Should this manage chat? [Game, Party, Group, World]
+/// Manages our player prefabs.
+/// 
+/// Assuming this won't be destroyed between scenes,
+/// this script
+/// 
+/// </summary>
 public class GameManager : MonoBehaviour {
+    /// <summary>
+    /// Our GameManager instance.
+    /// 
+    /// Should we set this to DoNotDestroy?
+    /// 
+    /// </summary>
     public static GameManager instance;
 
     /// <summary>
@@ -28,6 +48,10 @@ public class GameManager : MonoBehaviour {
     private void Awake() {
         if (instance == null) {
             instance = this;
+
+            // Keep this game manager around, we'll need it
+            DontDestroyOnLoad(gameObject);
+
         } else if (instance != this) {
             Debug.Log("GameManager instance already exists, destroying object!");
             Destroy(this);
