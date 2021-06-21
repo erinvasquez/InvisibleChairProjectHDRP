@@ -47,9 +47,10 @@ MonoBehaviour:
   rotation: {x: 0, y: 0, z: 0}
   scale: {x: 5, y: 5, z: 5}
   mazeSize:
-    x: 2
-    z: 2
+    x: 10
+    z: 10
   genStepDelay: 0.01
-  doorProbability: 0
+  doorProbability: 0.038
   mazePrefab: {fileID: 8123750451770012203, guid: 4e17b91dd3f41b647ba4f8ea047d48e0,
     type: 3}
+  mazeMaterial: {fileID: 2100000, guid: c2b422c346427fd4181a7fe8da2ab956, type: 2}
