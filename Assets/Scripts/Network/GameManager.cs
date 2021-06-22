@@ -6,21 +6,22 @@ using UnityEngine;
 /// 
 /// Unity Network Client Game Manager,
 /// 
-/// Should this manage Game we're in? [GAME01, GAME02, etc]
-/// Should this game manage the players we're connected to?
-/// Should this manage parties?
-/// Should this manage chat? [Game, Party, Group, World]
-/// Manages our player prefabs.
+/// Should this manage Game we're in? [GAME01, GAME02, etc]     YES
+/// Should this game manage the players we're connected to?     MAYBE
+/// Should this manage parties?                                 IF ABOVE IS TRUE
+/// Should this manage chat? [Game, Party, Group, World]        MAYBE
+/// 
+/// Manages our player prefabs.                                 
 /// 
 /// Assuming this won't be destroyed between scenes,
-/// this script
+/// this script...
 /// 
 /// </summary>
 public class GameManager : MonoBehaviour {
     /// <summary>
     /// Our GameManager instance.
     /// 
-    /// Should we set this to DoNotDestroy?
+    /// Should we set this to DoNotDestroy?     YES FOR NOW
     /// 
     /// </summary>
     public static GameManager instance;
@@ -44,6 +45,9 @@ public class GameManager : MonoBehaviour {
     //public GameObject itemSpawnerPrefab;
     //public GameObject projectilePrefab;
     //public GameObject enemyPrefab;
+
+    public int gameNumber = 0; // By default, 0 is the main menu, 1 is "GAME_01"
+    // We can think of another way of doing this later, like with a type or its own script
 
     private void Awake() {
         if (instance == null) {

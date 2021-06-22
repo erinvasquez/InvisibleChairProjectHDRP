@@ -37,6 +37,8 @@ public class CameraLook : MonoBehaviour {
             Look();
         }
 
+        Debug.Log("Camera forward direction: " + transform.forward);
+
     }
 
     /// <summary>

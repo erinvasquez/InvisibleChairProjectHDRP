@@ -2180,6 +2180,7 @@ MonoBehaviour:
   maxDepth: 2
   childScale: 0.49
   maxRotationSpeed: 43.61
+  moving: 0
 --- !u!4 &1014739718
 Transform:
   m_ObjectHideFlags: 0
@@ -2242,6 +2243,7 @@ MonoBehaviour:
   maxDepth: 2
   childScale: 0.49
   maxRotationSpeed: 43.61
+  moving: 0
 --- !u!1 &1049569084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2785,6 +2787,7 @@ MonoBehaviour:
   speedMod: 1
   degrees: 90
   point: {x: 0, y: 0, z: 0}
+  moving: 0
 --- !u!114 &1297650286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2909,6 +2912,7 @@ GameObject:
   - component: {fileID: 1418617802}
   - component: {fileID: 1418617801}
   - component: {fileID: 1418617800}
+  - component: {fileID: 1418617803}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -2983,6 +2987,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1418617803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418617799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1db111fb15a8844aaec27dc8c6d18e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1447317677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,6 +3032,7 @@ MonoBehaviour:
     type: 3}
   playerPrefab: {fileID: 8758096986107834318, guid: 6b6da53ecb45fde42bff4cb39e58c1c9,
     type: 3}
+  gameNumber: 0
 --- !u!4 &1447317679
 Transform:
   m_ObjectHideFlags: 0

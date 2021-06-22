@@ -19,8 +19,6 @@ public class GameSelectionMenu : SimpleMenu<GameSelectionMenu> {
         // SUPER IMPORTANT line
         base.Awake();
 
-        
-
     }
 
 
@@ -38,17 +36,26 @@ public class GameSelectionMenu : SimpleMenu<GameSelectionMenu> {
 
     public void OnGame01Pressed() {
 
+        // Set our network game manager's game number to 1
+        GameManager.instance.gameNumber = 1;
+
         SceneManager.LoadScene("Game_01");
 
     }
 
     public void OnGame02Pressed() {
 
+        // Set our network game manager's game number to 2
+        GameManager.instance.gameNumber = 2;
+
         SceneManager.LoadScene("Game_02");
 
     }
 
     public void OnGame03Pressed() {
+
+        // Set our network game manager's game number to 3
+        GameManager.instance.gameNumber = 3;
 
         SceneManager.LoadScene("Game_03");
 
