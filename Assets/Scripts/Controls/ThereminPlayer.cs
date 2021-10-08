@@ -93,9 +93,9 @@ public class ThereminPlayer : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        //currentFrequency = GetFrequencyFromMouse();
-        //currentVolume = GetVolumeFromMouse();
-        //oscillator.SetVolume(currentVolume);
+        currentFrequency = GetFrequencyFromMouse();
+        currentVolume = GetVolumeFromMouse();
+        oscillator.SetVolume(currentVolume);
 
         
 
@@ -116,6 +116,9 @@ public class ThereminPlayer : MonoBehaviour {
     public void OnPressPlay(InputAction.CallbackContext context) {
 
         mouseClickInput = context.ReadValue<float>();
+
+        Debug.Log("Click!");
+
 
         if (RectTransformUtility.RectangleContainsScreenPoint(playArea, lastMousePositionPixel)) {
 

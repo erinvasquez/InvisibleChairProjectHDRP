@@ -476,7 +476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1269106274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,28 +491,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: f6c15ce57cc8044479cb4a057ef5bdb7,
     type: 3}
-  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018,
-    type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: 0}
+  m_SubmitAction: {fileID: 0}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
 --- !u!114 &1269106275
@@ -556,6 +546,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 58858459}
+    - target: {fileID: 1467976342443792066, guid: a361cf5de860a1e43898a356f18efe8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1467976342543744945, guid: a361cf5de860a1e43898a356f18efe8e,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -631,6 +626,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThereminUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1467976342762783011, guid: a361cf5de860a1e43898a356f18efe8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1467976342885645203, guid: a361cf5de860a1e43898a356f18efe8e,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -651,6 +651,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1951962635}
+    - target: {fileID: 1467976343637699151, guid: a361cf5de860a1e43898a356f18efe8e,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a361cf5de860a1e43898a356f18efe8e, type: 3}
 --- !u!1 &1752869664
@@ -705,6 +710,83 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1951962635}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: f6c15ce57cc8044479cb4a057ef5bdb7,
+        type: 3}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1269106274}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: KeyboardAndMouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionId
+      value: 5ff08ac1-b62b-4c7d-a9f0-1553a3b1644f
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionId
+      value: 086d8e3b-fc91-4895-8f5e-28039a246004
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: b95defa0-278e-43f8-b59c-1401f67494cf
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: cf6c70b6-088a-4caf-923c-6e1c97729aac
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: 5f76d8e2-9529-487f-92be-9a26ec55ad67
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: 566dc790-2435-4622-9cfc-60400ce6834b
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionName
+      value: KeyboardAndMouse/MouseX[/Mouse/delta/x]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionName
+      value: KeyboardAndMouse/MouseY[/Mouse/delta/y]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: KeyboardAndMouse/Forward[/Keyboard/w,/Keyboard/upArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: KeyboardAndMouse/Left[/Keyboard/a,/Keyboard/leftArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: KeyboardAndMouse/Right[/Keyboard/d,/Keyboard/rightArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: KeyboardAndMouse/Backward[/Keyboard/s,/Keyboard/downArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1138435382, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4534618709392190157, guid: 60e6a7ce85ab2034a9422c58cd31ccc5,
         type: 3}
       propertyPath: m_RootOrder
@@ -764,6 +846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LocalTheremin
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534618709392190159, guid: 60e6a7ce85ab2034a9422c58cd31ccc5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60e6a7ce85ab2034a9422c58cd31ccc5, type: 3}
@@ -1013,7 +1100,7 @@ MonoBehaviour:
   firstBeatOffset: 0
   countdownMeasures: 0
   getBPMFromMusic: 0
-  getBPMFromInput: 1
+  getBPMFromInput: 0
   BPMInput: 0
 --- !u!1 &2000518657
 GameObject:
@@ -1138,7 +1225,7 @@ PrefabInstance:
     - target: {fileID: 7124597553995708349, guid: efc6894964c7ab24cb1557a633c47249,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efc6894964c7ab24cb1557a633c47249, type: 3}
