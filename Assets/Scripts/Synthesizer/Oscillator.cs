@@ -13,6 +13,15 @@ using UnityEngine;
 /// 
 /// </summary>
 
+///<summary>
+/// Looking at Sebastian Lague's "...AI's Video Game Idea" video, he has this on his synth
+/// Gain, Wave Type w/ a dropdown, wave frequency, attack float, release float
+/// 
+/// Then an info section with:
+/// sample rate, num channels, buffer length, num buffers, batches per scond, num ticks, and audio time
+/// 
+///</summary>
+
 /// Things to do:
 /// - add, divide, multiply, average different waveforms together
 /// - Add sliders/knobs to control multipliers to frequency/mix ratios
@@ -60,8 +69,9 @@ public class Oscillator : MonoBehaviour {
     /// <summary>
     /// The current waveform the oscillator uses
     Waveforms currentWaveform;
+
     /// <summary>
-    /// 
+    /// Default music note oscillator is set to
     /// </summary>
     public MusicNote currentPitch;
 
@@ -228,12 +238,11 @@ public class Oscillator : MonoBehaviour {
             phase += increment;
 
             // Apply our frequency and phase to a certain waveform equation
-
+            /*
             switch (currentWaveform) {
                 case Waveforms.SinWave:
                     data[a] = GetSinWaveform();
                     break;
-
                 case Waveforms.SquareWave:
                     data[a] = GetSquareWaveform();
                     break;
@@ -251,6 +260,11 @@ public class Oscillator : MonoBehaviour {
                     data[a] = 0;
                     break;
             }
+            */
+            // some testing done here
+            // Two waves multiplied with each other?
+            data[a] = AddWaves(GetSinWaveform(), GetTriangleWaveform());
+
 
             // if we have two channels...
             // copy data onto our second channel?
@@ -306,12 +320,15 @@ public class Oscillator : MonoBehaviour {
     float GetSinWaveform() {
 
         // phase is just set to 2 PI * frequency/sampling frequency
+        // equation is sample = ampliture * sin(t * i), where t is angular freq and i is unit of time
 
         return gain * Mathf.Sin((float) phase);
     }
 
     /// <summary>
     /// "Sounds like ann old nintendo"
+    /// Sample = Amplitude * sng(sin(t * i)), where sgn gives us the value
+    /// of the sign of the sin function (positive, negative, or zero)
     /// </summary>
     /// <returns></returns>
     float GetSquareWaveform() {

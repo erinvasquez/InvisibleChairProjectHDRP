@@ -727,6 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe7742d62757d647a4bc35aec8ebf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentKeys: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1 &1211968229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,6 +2770,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1211968230}
+        m_TargetAssemblyTypeName: Oscillator, Assembly-CSharp
+        m_MethodName: StartPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5e39f41c-7fe5-49fe-a134-a32425031483
     m_ActionName: KeyboardMouseTest/New action
   - m_PersistentCalls:
@@ -2777,6 +2790,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressMouse2
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1211968230}
+        m_TargetAssemblyTypeName: Oscillator, Assembly-CSharp
+        m_MethodName: EndPlay
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3148,6 +3173,75 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8c7469b6a969341a7f4fc74c394411, type: 3}
+--- !u!1001 &5520213572297833412
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5520213573465854560, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_Name
+      value: Synthesizer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 279e895028012d74a84d79eb751581f8, type: 3}
 --- !u!1001 &6490979862596912676
 PrefabInstance:
   m_ObjectHideFlags: 0

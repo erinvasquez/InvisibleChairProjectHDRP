@@ -409,7 +409,7 @@
                     "id": "b279a4ab-398f-4472-933e-ca2569e9f492",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "E",
@@ -513,7 +513,7 @@
                     "id": "b07f3325-c7a1-48de-999c-d09fa7da2336",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "S",
@@ -521,7 +521,7 @@
                     "id": "daa3de7f-e1b5-4360-9010-5e0f63257f8a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "D",
@@ -529,7 +529,7 @@
                     "id": "5563f2a0-77b7-4848-82f0-b9c1fb988c26",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "F",
@@ -808,14 +808,6 @@
                     "type": "Button",
                     "id": "06c6aeee-b397-4c29-a55d-48a79ccf1631",
                     "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MouseX",
-                    "type": "Value",
-                    "id": "ee2f5e08-67fa-4113-892d-ca2f35c2718c",
-                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -1698,17 +1690,6 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Mouse5",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "54d2ff31-d567-4364-af72-dd4a70605dab",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and Mouse",
-                    "action": "MouseX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,4 +1,9 @@
-﻿public enum PianoKeys {
+﻿/// <summary>
+/// An enum listing piano keys
+/// from A0 to C8,
+/// mapped from 0 to 87 (88 keys)
+/// </summary>
+public enum PianoKeys {
     A0 = 0,
     A0Sharp,
     B0,

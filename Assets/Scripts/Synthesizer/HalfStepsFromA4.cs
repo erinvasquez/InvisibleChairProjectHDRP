@@ -1,4 +1,8 @@
-﻿public enum HalfStepsFromA4 {
+﻿
+/// <summary>
+/// Enum indicating how many half steps from A4 the key is
+/// </summary>
+public enum HalfStepsFromA4 {
     A0 = -48,
     ASHARP0 = -47,
     B0 = -46,

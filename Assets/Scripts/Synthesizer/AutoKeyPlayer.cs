@@ -2,20 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A Script that uses an attached Oscillator
+/// to play a random not from a random major scale
+/// </summary>
 [RequireComponent(typeof(Oscillator))]
 public class AutoKeyPlayer : MonoBehaviour {
 
+    /// <summary>
+    /// The current 7 scale or key signature we're using
+    /// </summary>
     [SerializeField]
     public MajorScale currentScale;
+
+    /// <summary>
+    /// Our oscillator object
+    /// </summary>
     Oscillator oscillator;
+
+    /// <summary>
+    /// The current note we want our oscillator to play
+    /// </summary>
     [SerializeField]
     public MusicNote currentNote;
 
+    /// <summary>
+    /// The current volume we want our oscillator to play
+    /// </summary>
     [Range (0f, 1f)]
-    public float volume = 0.2f;
+    public float currentVolume = 0.2f;
 
     /// <summary>
     /// Time in seconds between notes changing
+    /// 
+    /// Basically just secondsPerBeat if we treat this as a metronome
     /// </summary>
     private float waitTime;
 
@@ -60,7 +80,7 @@ public class AutoKeyPlayer : MonoBehaviour {
             //oscillator.StartPlay(currentNote.GetETFrequency(), 1f);
 
             oscillator.SetFrequency(currentNote.GetETFrequency());
-            oscillator.SetVolume(volume);
+            oscillator.SetVolume(currentVolume);
             oscillator.StartPlay();
 
             yield return new WaitForSeconds(waitTime);

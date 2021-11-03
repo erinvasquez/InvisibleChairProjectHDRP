@@ -46,11 +46,14 @@ public class InputKeyboardFeedback : MonoBehaviour {
     TextMeshProUGUI mousePosText;
 
     // Our input action set, currently set to our feedback text actions
-    InputActionAsset keyboardMouseTestActions;
-    Button okButton;
+    //InputActionAsset keyboardMouseTestActions;
+    //Button okButton;
 
     // our scroll input
     float scroll = 0f;
+
+    // our currently held down keys (max 10 considering 10 fingers, although I know you could press more than 10)
+    public KeyboardKeys[] currentKeys = new KeyboardKeys[10];
 
 
     private void Start() {
@@ -65,6 +68,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
         currentInputText.text = "LAST INPUT: ";
         mousePosText.text = "MOUSE POS: ";
 
+        // "Clear" all keys by marking them empty
+        // Depending on how many keys are being pressed,
+        for (int a = 0; a < currentKeys.Length; a++) {
+            currentKeys[a] = (KeyboardKeys)(-1);
+        }
+
     }
 
     /// <summary>
@@ -77,12 +86,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
 
         // In the future, replace "ProcessKey(...)" with whatever function handles input later on
         if (scroll < 0f) {
-            ProcessKey("ScrollDown");
+            //KeyPerformed("ScrollDown");
         } else if (scroll > 0f) {
-            ProcessKey("ScrollUp");
+            //KeyPerformed("ScrollUp");
         }
 
-        Debug.Log(Mouse.current.position.ReadValue());
         mousePosText.text = "MOUSE POS: " + Mouse.current.position.ReadValue();
 
     }
@@ -105,21 +113,23 @@ public class InputKeyboardFeedback : MonoBehaviour {
 
     #endregion
 
-    #region Getters/Setters
 
-    void setFeedbackText(string text) {
-        feedbackText.text = text;
-    }
-
-    void addFeedbackText(string text) {
+    /// <summary>
+    /// Adds text input from keyboard to a text object in our UI
+    /// </summary>
+    /// <param name="text"></param>
+    void AddFeedbackText(string text) {
         feedbackText.text += text;
     }
 
-    void setLastInputText(string text) {
+    /// <summary>
+    /// Sets the text variable for a UI object to show our last
+    /// keytboard input
+    /// </summary>
+    /// <param name="text"></param>
+    void SetLastInputText(string text) {
         currentInputText.text = "LAST INPUT: " + text;
     }
-
-    #endregion
 
 
     /// <summary>
@@ -127,9 +137,112 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// pressed, and displays the last known key pressed
     /// </summary>
     /// <para name="context"></param>
-    public void ProcessKey(string key) {
-            addFeedbackText(key);
-            setLastInputText(key);
+    public void KeyPerformed(string key) {
+        AddFeedbackText(key);
+        SetLastInputText(key);
+
+        // NOTE: Not sure if this should be done when action first started instead, but it's here for now
+        AddToCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+
+
+    }
+
+    public void KeyCanceled(string key) {
+        RemoveFromCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+    }
+
+    /// <summary>
+    /// Add the currently pressed key to our array of keys in an empty spot
+    /// -1 indicating an empty or unplayed key
+    /// </summary>
+    /// <param name="key"></param>
+    public void AddToCurrentKeys(KeyboardKeys key) {
+
+        // Find the next empty spot on our key array,
+        // (which should be the right end of the array if we've properly
+        // handled shifting empty spaces over to the right)
+        // and put this key on that spot
+        for (int a = 0; a < currentKeys.Length; a++) {
+
+            if (currentKeys[a] == (KeyboardKeys)(-1)) {
+                currentKeys[a] = key;
+                break;
+            }
+
+        }
+
+        Debug.Log("Added key... " + CurrentKeysToString());
+
+    }
+
+    /// <summary>
+    /// Find the key we've released and remove it from our current
+    /// key array by replacing it with an empty key (-1) and shifting it over
+    /// to the right
+    /// </summary>
+    /// <param name="key"></param>
+    public void RemoveFromCurrentKeys(KeyboardKeys key) {
+
+        for (int a = 0; a < currentKeys.Length; a++) {
+
+            if (currentKeys[a] == key) {
+                currentKeys[a] = (KeyboardKeys)(-1);
+            }
+
+        }
+
+        // Now recreate the array with empty keys shifted over
+        // cycle through our array and fill non-empty keys into another empty
+        // array, filling the rest with empty keys
+        KeyboardKeys[] tempKeys = new KeyboardKeys[10];
+        int currentTempKey = 0;
+
+        for (int a = 0; a < currentKeys.Length; a++) {
+
+            // Add any non-empty keys to our temp array
+            if (currentKeys[a] != (KeyboardKeys)(-1)) {
+                tempKeys[currentTempKey] = currentKeys[a];
+                currentTempKey++;
+            }
+
+        }
+
+        // Fill the rest with empty keys
+        while (currentTempKey < tempKeys.Length) {
+            tempKeys[currentTempKey] = (KeyboardKeys)(-1);
+            currentTempKey++;
+        }
+
+        // Set temp array to our permanent one
+        currentKeys = tempKeys;
+
+        Debug.Log("Key removed... " + CurrentKeysToString());
+
+    }
+
+    /// <summary>
+    /// "Clears" all keys being pressed by marking them "unpressed"
+    /// with "-1"
+    /// </summary>
+    public void ClearCurrentKeys() {
+
+        for (int a = 0; a < currentKeys.Length; a++) {
+            currentKeys[a] = (KeyboardKeys)(-1);
+        }
+
+        Debug.Log("Current Keys cleared, " + CurrentKeysToString());
+
+    }
+
+    public string CurrentKeysToString() {
+        string result = "[";
+
+        for (int a = 0; a < currentKeys.Length; a++) {
+            result += currentKeys[a].ToString() + " ";
+        }
+
+
+        return result + "]";
     }
 
     ///<summary>
@@ -144,7 +257,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressESC(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("ESC");
+            //KeyPerformed("ESC");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -155,9 +272,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF1(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F1");
-            }
+        if (context.performed) {
+            //KeyPerformed("F1");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -167,9 +288,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF2(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F2");
-            }
+        if (context.performed) {
+            //KeyPerformed("F2");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -179,9 +304,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF3(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F3");
-            }
+        if (context.performed) {
+            //KeyPerformed("F3");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -191,9 +320,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF4(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F4");
-            }
+        if (context.performed) {
+            //KeyPerformed("F4");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
     }
 
     /// <summary>
@@ -202,9 +335,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF5(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F5");
-            }
+        if (context.performed) {
+            //KeyPerformed("F5");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -214,9 +351,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF6(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F6");
-            }
+        if (context.performed) {
+            //KeyPerformed("F6");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -226,9 +367,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF7(InputAction.CallbackContext context) {
 
-            if (context.performed) {
-                ProcessKey("F7");
-            }
+        if (context.performed) {
+            //KeyPerformed("F7");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -239,9 +384,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressF8(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            if (context.performed) {
-                ProcessKey("F8");
-            }
+            //KeyPerformed("F8");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -253,9 +400,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressF9(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            if (context.performed) {
-                ProcessKey("F9");
-            }
+            //KeyPerformed("F9");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -267,9 +416,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressF10(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            if (context.performed) {
-                ProcessKey("F10");
-            }
+            //KeyPerformed("F10");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -281,9 +432,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressF11(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            if (context.performed) {
-                ProcessKey("F11");
-            }
+            //KeyPerformed("F11");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -294,10 +447,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressF12(InputAction.CallbackContext context) {
 
-        if (context.performed) {
-            if (context.performed) {
-                ProcessKey("F12");
-            }
+           if (context.performed) {
+            //KeyPerformed("F12");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
     }
 
@@ -307,10 +462,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressTilde(InputAction.CallbackContext context) {
 
-        if (context.performed) {
             if (context.performed) {
-                ProcessKey("`");
-            }
+            //KeyPerformed("`");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
     }
 
@@ -320,10 +477,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPress1(InputAction.CallbackContext context) {
 
-        if (context.performed) {
             if (context.performed) {
-                ProcessKey("1");
-            }
+            //KeyPerformed("1");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
     }
 
@@ -334,7 +493,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress2(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("2");
+            //KeyPerformed("2");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -346,7 +509,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress3(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("3");
+            //KeyPerformed("3");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -358,7 +525,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress4(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("4");
+            //KeyPerformed("4");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -370,7 +541,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress5(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("5");
+            //KeyPerformed("5");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -382,7 +557,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress6(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("6");
+            //KeyPerformed("6");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -394,7 +573,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress7(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("7");
+            //KeyPerformed("7");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -406,7 +589,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress8(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("8");
+            //KeyPerformed("8");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -419,7 +606,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress9(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("9");
+            //KeyPerformed("9");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -432,7 +623,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPress0(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("0");
+            //KeyPerformed("0");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -444,7 +639,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMinus(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("-");
+            //KeyPerformed("-");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -456,7 +655,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressEquals(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("=");
+            //KeyPerformed("=");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -468,7 +671,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressBackspace(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Backspace");
+            //KeyPerformed("Backspace");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -480,7 +687,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressTab(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Tab");
+            //KeyPerformed("Tab");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -492,7 +703,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressQ(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Q");
+            KeyPerformed("Q");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Q");
         }
 
     }
@@ -504,7 +719,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressW(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("W");
+            KeyPerformed("W");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("W");
         }
 
     }
@@ -516,7 +735,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressE(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("E");
+            KeyPerformed("E");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("E");
         }
 
     }
@@ -528,7 +751,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressR(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("R");
+            KeyPerformed("R");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("R");
         }
 
     }
@@ -540,7 +767,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressT(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("T");
+            KeyPerformed("T");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("T");
         }
 
     }
@@ -552,7 +783,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressY(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Y");
+            KeyPerformed("Y");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Y");
         }
 
     }
@@ -564,7 +799,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressU(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("U");
+            KeyPerformed("U");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("U");
         }
 
     }
@@ -576,7 +815,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressI(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("I");
+            KeyPerformed("I");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("I");
         }
 
     }
@@ -588,7 +831,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressO(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("O");
+            KeyPerformed("O");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("O");
         }
 
     }
@@ -600,7 +847,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressP(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("P");
+            KeyPerformed("P");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("P");
         }
 
     }
@@ -612,7 +863,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressLeftBracket(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("[");
+            KeyPerformed("Leftbracket");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Leftbracket");
         }
 
     }
@@ -624,7 +879,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressRightBracket(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("]");
+            KeyPerformed("Rightbracket");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Rightbracket");
         }
 
     }
@@ -636,8 +895,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressBackslash(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("\\");
+            //KeyPerformed("\\");
         } // not sure if this works correctly, let's see
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -648,7 +911,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressCapsLock(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("CapsLock");
+            //KeyPerformed("CapsLock");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -660,7 +927,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressA(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("A");
+            KeyPerformed("A");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("A");
         }
 
     }
@@ -672,7 +943,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressS(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("S");
+            KeyPerformed("S");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("S");
         }
 
     }
@@ -684,7 +959,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressD(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("D");
+            KeyPerformed("D");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("D");
         }
 
     }
@@ -696,7 +975,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressF(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("F");
+            KeyPerformed("F");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("F");
         }
 
     }
@@ -708,7 +991,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressG(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("G");
+            KeyPerformed("G");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("G");
         }
 
     }
@@ -720,7 +1007,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressH(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("H");
+            KeyPerformed("H");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("H");
         }
     }
 
@@ -731,7 +1022,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressJ(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("J");
+            KeyPerformed("J");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("J");
         }
 
     }
@@ -743,7 +1038,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressK(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("K");
+            KeyPerformed("K");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("K");
         }
 
     }
@@ -755,7 +1054,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressL(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("L");
+            KeyPerformed("L");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("L");
         }
 
     }
@@ -767,7 +1070,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressSemicolon(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey(";");
+            KeyPerformed("Semicolon");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Semicolon");
         }
 
     }
@@ -779,7 +1086,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressApostrophe(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("'");
+            KeyPerformed("Apostrophe");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Apostrophe");
         }
 
     }
@@ -791,8 +1102,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressEnter(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("ENTER");
+            //KeyPerformed("ENTER");
         } // use this differently for submitting, etc
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -803,7 +1118,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressLShift(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("LeftShift");
+            //KeyPerformed("LeftShift");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -815,7 +1134,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressZ(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Z");
+            KeyPerformed("Z");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Z");
         }
 
     }
@@ -827,7 +1150,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressX(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("X");
+            KeyPerformed("X");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("X");
         }
 
     }
@@ -839,7 +1166,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressC(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("C");
+            KeyPerformed("C");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("C");
         }
 
     }
@@ -851,7 +1182,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressV(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("V");
+            KeyPerformed("V");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("V");
         }
 
     }
@@ -863,7 +1198,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressB(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("B");
+            KeyPerformed("B");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("B");
         }
 
     }
@@ -875,7 +1214,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressN(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("N");
+            KeyPerformed("N");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("N");
         }
 
     }
@@ -887,7 +1230,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressM(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("M");
+            KeyPerformed("M");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("M");
         }
 
     }
@@ -899,7 +1246,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressComma(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey(",");
+            KeyPerformed("Comma");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Comma");
         }
 
     }
@@ -911,7 +1262,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressPeriod(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey(".");
+            KeyPerformed("Period");
+        }
+
+        if (context.canceled) {
+            KeyCanceled("Period");
         }
 
     }
@@ -922,7 +1277,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// <param name="context"></param>
     public void OnPressForwardslash(InputAction.CallbackContext context) {
         if (context.performed) {
-            ProcessKey("/");
+            //KeyPerformed("/");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
     }
 
@@ -933,7 +1292,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressRShift(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("RightShift");
+            //KeyPerformed("RightShift");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -945,7 +1308,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressLControl(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("LeftControl");
+            //KeyPerformed("LeftControl");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -957,7 +1324,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressLAlt(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("LeftAlt");
+            //KeyPerformed("LeftAlt");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
     }
 
@@ -968,8 +1339,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressSpacebar(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("_");
+            //KeyPerformed("_");
         } // shows as "_" for now, so its not empty empty
+
+        if (context.canceled) {
+            //KeyCanceled("");
+        }
 
     }
 
@@ -980,7 +1355,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressRAlt(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("RightAlt");
+            //KeyPerformed("RightAlt");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -992,7 +1371,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressRControl(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("RightControl");
+            //KeyPerformed("RightControl");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1004,7 +1387,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressLeftArrow(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("LeftArrow");
+            //KeyPerformed("LeftArrow");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1016,7 +1403,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressUpArrow(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("UpArrow");
+            //KeyPerformed("UpArrow");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1028,7 +1419,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressRightArrow(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("RightArrow");
+            //KeyPerformed("RightArrow");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1040,7 +1435,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressDownArrow(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("DownArrow");
+            //KeyPerformed("DownArrow");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1052,7 +1451,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMouse1(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Mouse1");
+            //KeyPerformed("Mouse1");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1064,7 +1467,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMouse2(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Mouse2");
+            //KeyPerformed("Mouse2");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1076,7 +1483,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMouse3(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Mouse3");
+            //KeyPerformed("Mouse3");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1088,7 +1499,11 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMouse4(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Mouse4");
+            //KeyPerformed("Mouse4");
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
@@ -1100,12 +1515,16 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void OnPressMouse5(InputAction.CallbackContext context) {
 
         if (context.performed) {
-            ProcessKey("Mouse5");
-            
+            //KeyPerformed("Mouse5");
+
+        }
+
+        if (context.canceled) {
+            //KeyCanceled("");
         }
 
     }
-    #endregion
 
+    #endregion
 
 }
