@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// 
+/// </summary>
 public class NoteChooser : MonoBehaviour {
 
     ThereminPlayer theremin;
@@ -57,7 +60,7 @@ public class NoteChooser : MonoBehaviour {
     }
 
     /// <summary>
-    /// 
+    /// Called by our dropdown, gets the int that we chose
     /// </summary>
     /// <param name="octave"></param>
     public void SetMaxNoteOctave(int octave) {

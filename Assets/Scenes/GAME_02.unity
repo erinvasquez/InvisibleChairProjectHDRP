@@ -525,10 +525,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -568,8 +568,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1739904698}
   - {fileID: 1200566166}
+  - {fileID: 1739904698}
+  - {fileID: 1262117787}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -604,16 +605,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200566165}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9135287, y: 0.9135287, z: 0.9135287}
   m_Children: []
   m_Father: {fileID: 725818402}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200.94}
+  m_AnchoredPosition: {x: 12.050201, y: 145.9414}
   m_SizeDelta: {x: 1456.1348, y: 401.8847}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200566167
@@ -630,14 +631,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Using the new Unity Input System. We have some actions, MouseX, MouseY,
-    Forward (which counts as W and Up Arrow) Right, etc.
+  m_text: '>: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0341c7837deabda43b28803e127a4621, type: 2}
   m_sharedMaterial: {fileID: 9153086069181209375, guid: 0341c7837deabda43b28803e127a4621,
@@ -724,11 +724,288 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200566165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed70d17954a6437478bbbd93b4063efe, type: 3}
+  m_Script: {fileID: 11500000, guid: dfe7742d62757d647a4bc35aec8ebf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feedbackText: {fileID: 0}
-  text: 
+--- !u!1 &1211968229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1211968232}
+  - component: {fileID: 1211968231}
+  - component: {fileID: 1211968230}
+  m_Layer: 0
+  m_Name: Instrument
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1211968230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211968229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c1abe7bfc866c4eb5f35963f675914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 440
+  volume: 0.2
+  isPlaying: 0
+--- !u!82 &1211968231
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211968229}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2180804234191712645, guid: 707933f95e97c1349ab4429e48bddcfa,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1211968232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211968229}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1262117786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262117787}
+  - component: {fileID: 1262117789}
+  - component: {fileID: 1262117788}
+  m_Layer: 5
+  m_Name: MousePositionText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1262117787
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262117786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 725818402}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 268, y: -193}
+  m_SizeDelta: {x: 500, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1262117788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262117786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 0341c7837deabda43b28803e127a4621, type: 2}
+  m_sharedMaterial: {fileID: 9153086069181209375, guid: 0341c7837deabda43b28803e127a4621,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1262117789
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262117786}
+  m_CullTransparentMesh: 1
 --- !u!1 &1267476734
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,49 +1222,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 21.7, y: 0, z: 0}
---- !u!1 &1541152359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1541152361}
-  - component: {fileID: 1541152360}
-  m_Layer: 0
-  m_Name: feeedback
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1541152360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541152359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe7742d62757d647a4bc35aec8ebf3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1541152361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541152359}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1739904697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,7 +1234,7 @@ GameObject:
   - component: {fileID: 1739904700}
   - component: {fileID: 1739904699}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CurrentInputText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1018,13 +1252,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 725818402}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -416}
-  m_SizeDelta: {x: 434.2574, y: 139.8895}
-  m_Pivot: {x: 0.49999994, y: 0.5}
+  m_AnchoredPosition: {x: -410, y: -367}
+  m_SizeDelta: {x: 500, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1739904699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1557,7 @@ MonoBehaviour:
     m_ActionName: KeyboardAndMouse/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressESC
         m_Mode: 0
@@ -1339,7 +1573,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/ESC[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF1
         m_Mode: 0
@@ -1355,7 +1589,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F1[/Keyboard/f1]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF2
         m_Mode: 0
@@ -1371,7 +1605,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F2[/Keyboard/f2]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF3
         m_Mode: 0
@@ -1387,7 +1621,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F3[/Keyboard/f3]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF4
         m_Mode: 0
@@ -1403,7 +1637,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F4[/Keyboard/f4]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF5
         m_Mode: 0
@@ -1419,7 +1653,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F5[/Keyboard/f5]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF6
         m_Mode: 0
@@ -1435,9 +1669,9 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F6[/Keyboard/f6]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
-        m_MethodName: OnPressF7
+        m_MethodName: OnPressF6
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1451,7 +1685,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F7[/Keyboard/f7]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF8
         m_Mode: 0
@@ -1467,7 +1701,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F8[/Keyboard/f8]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF9
         m_Mode: 0
@@ -1483,7 +1717,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F9[/Keyboard/f9]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF10
         m_Mode: 0
@@ -1499,7 +1733,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F10[/Keyboard/f10]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF11
         m_Mode: 0
@@ -1515,7 +1749,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F11[/Keyboard/f11]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF12
         m_Mode: 0
@@ -1531,7 +1765,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F12[/Keyboard/f12]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressTilde
         m_Mode: 0
@@ -1547,7 +1781,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/`[/Keyboard/backquote]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress1
         m_Mode: 0
@@ -1563,7 +1797,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/1[/Keyboard/1]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress2
         m_Mode: 0
@@ -1579,7 +1813,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/2[/Keyboard/2]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress3
         m_Mode: 0
@@ -1595,7 +1829,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/3[/Keyboard/3]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress4
         m_Mode: 0
@@ -1611,7 +1845,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/4[/Keyboard/4]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress5
         m_Mode: 0
@@ -1627,7 +1861,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/5[/Keyboard/5]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress6
         m_Mode: 0
@@ -1643,7 +1877,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/6[/Keyboard/6]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress7
         m_Mode: 0
@@ -1659,7 +1893,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/7[/Keyboard/7]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress8
         m_Mode: 0
@@ -1675,7 +1909,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/8[/Keyboard/8]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress9
         m_Mode: 0
@@ -1691,7 +1925,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/9[/Keyboard/9]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPress0
         m_Mode: 0
@@ -1707,7 +1941,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/0[/Keyboard/0]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressMinus
         m_Mode: 0
@@ -1723,7 +1957,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/-[/Keyboard/minus]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressEquals
         m_Mode: 0
@@ -1739,7 +1973,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/=[/Keyboard/equals]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressBackspace
         m_Mode: 0
@@ -1755,7 +1989,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Backspace[/Keyboard/backspace]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressTab
         m_Mode: 0
@@ -1771,7 +2005,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/TAB[/Keyboard/tab]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressQ
         m_Mode: 0
@@ -1787,7 +2021,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Q[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressW
         m_Mode: 0
@@ -1803,7 +2037,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/W[/Keyboard/w]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressE
         m_Mode: 0
@@ -1819,7 +2053,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/E[/Keyboard/e]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressR
         m_Mode: 0
@@ -1835,7 +2069,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/R[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressT
         m_Mode: 0
@@ -1851,7 +2085,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/T[/Keyboard/t]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressY
         m_Mode: 0
@@ -1867,7 +2101,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Y[/Keyboard/y]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressU
         m_Mode: 0
@@ -1883,7 +2117,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/U[/Keyboard/u]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressI
         m_Mode: 0
@@ -1899,7 +2133,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/I[/Keyboard/i]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressO
         m_Mode: 0
@@ -1915,7 +2149,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/O[/Keyboard/o]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressP
         m_Mode: 0
@@ -1931,7 +2165,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/P[/Keyboard/p]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressLeftBracket
         m_Mode: 0
@@ -1947,7 +2181,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/[[/Keyboard/leftBracket]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressRightBracket
         m_Mode: 0
@@ -1963,7 +2197,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/][/Keyboard/rightBracket]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressBackslash
         m_Mode: 0
@@ -1979,7 +2213,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/\[/Keyboard/backslash]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressCapsLock
         m_Mode: 0
@@ -1995,7 +2229,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/CapsLock[/Keyboard/capsLock]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressA
         m_Mode: 0
@@ -2011,7 +2245,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/A[/Keyboard/a]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressS
         m_Mode: 0
@@ -2027,7 +2261,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/S[/Keyboard/s]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressD
         m_Mode: 0
@@ -2043,7 +2277,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/D[/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressF
         m_Mode: 0
@@ -2059,7 +2293,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/F[/Keyboard/f]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressG
         m_Mode: 0
@@ -2075,7 +2309,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/G[/Keyboard/g]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressH
         m_Mode: 0
@@ -2091,7 +2325,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/H[/Keyboard/h]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressJ
         m_Mode: 0
@@ -2107,7 +2341,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/J[/Keyboard/j]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressK
         m_Mode: 0
@@ -2123,7 +2357,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/K[/Keyboard/k]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressL
         m_Mode: 0
@@ -2139,7 +2373,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/L[/Keyboard/l]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressSemicolon
         m_Mode: 0
@@ -2155,7 +2389,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/;[/Keyboard/semicolon]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressApostrophe
         m_Mode: 0
@@ -2171,7 +2405,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/'[/Keyboard/quote]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressEnter
         m_Mode: 0
@@ -2187,7 +2421,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Enter[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressLShift
         m_Mode: 0
@@ -2203,7 +2437,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/L Shift[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressZ
         m_Mode: 0
@@ -2219,7 +2453,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Z[/Keyboard/z]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressX
         m_Mode: 0
@@ -2235,7 +2469,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/X[/Keyboard/x]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressC
         m_Mode: 0
@@ -2251,7 +2485,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/C[/Keyboard/c]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressV
         m_Mode: 0
@@ -2267,7 +2501,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/V[/Keyboard/v]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressB
         m_Mode: 0
@@ -2283,7 +2517,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/B[/Keyboard/b]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressN
         m_Mode: 0
@@ -2299,7 +2533,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/N[/Keyboard/n]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressM
         m_Mode: 0
@@ -2315,7 +2549,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/M[/Keyboard/m]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressComma
         m_Mode: 0
@@ -2331,7 +2565,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/,[/Keyboard/comma]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressPeriod
         m_Mode: 0
@@ -2347,7 +2581,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/.[/Keyboard/period]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressForwardslash
         m_Mode: 0
@@ -2363,7 +2597,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST//[/Keyboard/slash]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressRShift
         m_Mode: 0
@@ -2379,9 +2613,9 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/R Shift[/Keyboard/rightShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
-        m_MethodName: OnPressLAlt
+        m_MethodName: OnPressLControl
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2395,7 +2629,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/L Control[/Keyboard/leftCtrl]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressLAlt
         m_Mode: 0
@@ -2411,7 +2645,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/L Alt[/Keyboard/leftAlt]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressSpacebar
         m_Mode: 0
@@ -2427,7 +2661,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/Space[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressRAlt
         m_Mode: 0
@@ -2443,7 +2677,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/R Alt[/Keyboard/rightAlt]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressRControl
         m_Mode: 0
@@ -2459,7 +2693,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/R Control[/Keyboard/rightCtrl]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressUpArrow
         m_Mode: 0
@@ -2475,7 +2709,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/New action
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressLeftArrow
         m_Mode: 0
@@ -2491,7 +2725,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/New action1
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressDownArrow
         m_Mode: 0
@@ -2507,7 +2741,7 @@ MonoBehaviour:
     m_ActionName: KeyboardTEST/New action2
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1541152360}
+      - m_Target: {fileID: 1200566169}
         m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
         m_MethodName: OnPressRightArrow
         m_Mode: 0
@@ -2521,9 +2755,89 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d8f4b2f0-ebf0-4b6c-b24a-3f446148912d
     m_ActionName: KeyboardTEST/New action3
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1200566169}
+        m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
+        m_MethodName: OnPressMouse1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e39f41c-7fe5-49fe-a134-a32425031483
+    m_ActionName: KeyboardMouseTest/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1200566169}
+        m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
+        m_MethodName: OnPressMouse2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0ee19e6e-a53f-4224-b3a6-67147b803d07
+    m_ActionName: KeyboardMouseTest/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1200566169}
+        m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
+        m_MethodName: OnPressMouse3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1bab9207-d0d6-4ba6-ab9d-096d3a6a088f
+    m_ActionName: KeyboardMouseTest/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1200566169}
+        m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
+        m_MethodName: OnPressMouse4
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 841b2aa9-c839-4a6c-84ce-61079437f06e
+    m_ActionName: KeyboardMouseTest/New action1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1200566169}
+        m_TargetAssemblyTypeName: InputKeyboardFeedback, Assembly-CSharp
+        m_MethodName: OnPressMouse5
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 06c6aeee-b397-4c29-a55d-48a79ccf1631
+    m_ActionName: KeyboardMouseTest/New action2
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard and Mouse
-  m_DefaultActionMap: KeyboardTEST
+  m_DefaultActionMap: KeyboardMouseTest
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 2087266456}
 --- !u!20 &2087266456 stripped

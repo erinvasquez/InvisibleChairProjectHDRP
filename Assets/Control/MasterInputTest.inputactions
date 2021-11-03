@@ -168,7 +168,7 @@
             ]
         },
         {
-            "name": "KeyboardTEST",
+            "name": "KeyboardMouseTest",
             "id": "c486dca2-b66f-4ad6-80a3-1d7127d496af",
             "actions": [
                 {
@@ -409,7 +409,7 @@
                     "id": "b279a4ab-398f-4472-933e-ca2569e9f492",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "E",
@@ -513,7 +513,7 @@
                     "id": "b07f3325-c7a1-48de-999c-d09fa7da2336",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "S",
@@ -521,7 +521,7 @@
                     "id": "daa3de7f-e1b5-4360-9010-5e0f63257f8a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "D",
@@ -529,7 +529,7 @@
                     "id": "5563f2a0-77b7-4848-82f0-b9c1fb988c26",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "F",
@@ -768,6 +768,54 @@
                     "type": "Button",
                     "id": "d8f4b2f0-ebf0-4b6c-b24a-3f446148912d",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse1",
+                    "type": "Button",
+                    "id": "5e39f41c-7fe5-49fe-a134-a32425031483",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse2",
+                    "type": "Button",
+                    "id": "0ee19e6e-a53f-4224-b3a6-67147b803d07",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse3",
+                    "type": "Button",
+                    "id": "1bab9207-d0d6-4ba6-ab9d-096d3a6a088f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse4",
+                    "type": "Button",
+                    "id": "841b2aa9-c839-4a6c-84ce-61079437f06e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse5",
+                    "type": "Button",
+                    "id": "06c6aeee-b397-4c29-a55d-48a79ccf1631",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MouseX",
+                    "type": "Value",
+                    "id": "ee2f5e08-67fa-4113-892d-ca2f35c2718c",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 }
@@ -1595,6 +1643,72 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Right Arrow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b47caa8c-0663-4f41-8eeb-eeb367b08b10",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Mouse1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b408a273-3891-4a30-bb30-3c94c7025911",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Mouse2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1304015a-015f-4eb8-9bc5-a66c2e324cd2",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Mouse3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "89ff2eb5-2f2d-4468-8ce3-d2faf4937c92",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Mouse4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4fe364aa-8ff4-42df-bc03-d62ad55a842c",
+                    "path": "<Mouse>/forwardButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Mouse5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54d2ff31-d567-4364-af72-dd4a70605dab",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "MouseX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

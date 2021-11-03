@@ -12,7 +12,7 @@ public class ScrollerText : MonoBehaviour {
     int currentFont = 0;
     float lastTimeFontChanged = 0f;
 
-    bool moving = false;
+    //bool moving = false;
 
     private void Awake() {
         textComponent = GetComponent<TextMeshProUGUI>();

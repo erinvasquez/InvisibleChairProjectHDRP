@@ -27,7 +27,7 @@ public class Oscillator : MonoBehaviour {
     /// 
     /// Kept as a double, since we dont want anything past 1 (2 would be okay, try later) decimals honestly
     /// </summary>
-    [SerializeField]
+    [SerializeField, Range(20,5000)]
     double frequency = 440.0;
 
     /// <summary>
@@ -53,7 +53,9 @@ public class Oscillator : MonoBehaviour {
     /// moves between -1 and 1?
     /// </summary>
     private float gain;
-    public float volume = 0.2f;
+
+    [SerializeField, Range(0f,1f)]
+    float volume = 0.2f;
 
     /// <summary>
     /// The current waveform the oscillator uses
@@ -86,8 +88,10 @@ public class Oscillator : MonoBehaviour {
     /// <summary>
     /// Called when we click and hold,
     /// assures that we have the right frequency and gain(/volume?)
+    /// 
+    /// TO-DO: Clamp our frequency and gain values to different things
     /// </summary>
-    /// <param name="freq"></param>
+    /// <param name="freq">A float value that indicates the pitch in Hz that our oscillator plays</param>
     /// <param name="g"></param>
     public void StartPlay(float freq, float g) {
         frequency = freq;
