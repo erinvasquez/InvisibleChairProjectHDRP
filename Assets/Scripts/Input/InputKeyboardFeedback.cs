@@ -52,7 +52,7 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// An enum list representing the keys the user is currently holding down,
     /// with -1b representing an unpressed key at the end of the array
     /// </summary>
-    public List<KeyboardKeys> myKeys = new List<KeyboardKeys>();
+    public List<KeyboardKeysFromA4> myKeys = new List<KeyboardKeysFromA4>();
 
     /// <summary>
     /// Our Synthesizer component on a Synthesizer gameobject
@@ -144,7 +144,7 @@ public class InputKeyboardFeedback : MonoBehaviour {
         
         // NOTE: Not sure if this should be done when action first started instead, but it's here for now
         //AddToCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
-        myKeys.Add( (KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key) );
+        myKeys.Add( (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key) );
 
         
         Debug.Log(key + " added to " + PrintKeys() + "? ");
@@ -158,7 +158,7 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void KeyCanceled(string key) {
         //RemoveFromCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
         Debug.Log("Canceling " + key + " from " + PrintKeys());
-        myKeys.Remove((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        myKeys.Remove((KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key));
         Debug.Log(PrintKeys());
         //synth.KeyCanceled(key);
 

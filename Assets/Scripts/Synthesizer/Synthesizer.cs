@@ -89,7 +89,7 @@ public class Synthesizer : MonoBehaviour {
     /// <summary>
     /// A list representing keyboard input for the synth, which is the letter keys and some extra ;',./[] in there
     /// </summary>
-    List<KeyboardKeys> myKeys;
+    List<KeyboardKeysFromA4> myKeys;
 
     /// <summary>
     /// Index for the next empty oscillator
@@ -167,7 +167,7 @@ public class Synthesizer : MonoBehaviour {
     /// <param name="keyboardKey"></param>
     public void KeyPerformed(string keyboardKey) {
 
-        KeyboardKeys theKey = (KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), keyboardKey);
+        KeyboardKeysFromA4 theKey = (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), keyboardKey);
 
         TenOscillators[oscIndex].RequestStartPlay(GetETFrequencyFromPianoKey((PianoKeys)theKey));
         oscIndex++;
@@ -176,7 +176,7 @@ public class Synthesizer : MonoBehaviour {
 
     public void KeyCanceled(string key) {
 
-        KeyboardKeys theKey = (KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key);
+        KeyboardKeysFromA4 theKey = (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key);
 
 
         // Find the oscillator playing our key and end it
