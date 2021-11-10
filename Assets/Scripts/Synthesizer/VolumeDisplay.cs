@@ -13,7 +13,7 @@ public class VolumeDisplay : MonoBehaviour {
     }
 
     private void Update() {
-        text.text = "Volume: " + oscillator.GetGain().ToString("0.00") + "%\n"
+        text.text = "Volume: " + oscillator.GetDesiredGain().ToString("0.00") + "%\n"
             + oscillator.GetdB().ToString("0.0") + " dB";
 
     }

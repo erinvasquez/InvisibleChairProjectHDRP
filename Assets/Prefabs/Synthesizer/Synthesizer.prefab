@@ -43,5 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8867d67053f5f409e3439eb6d11c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oscillatorPrefab: {fileID: 3114283228775216153, guid: c50068dea6d59674e998abefc7047876,
-    type: 3}
+  oscillatorPrefab: {fileID: 0}
+  gain: 0.19
+  attackTime: 0.1
+  decayTime: 0.1
+  sustainTime: 0.1
+  releaseTime: 0.1
+  oscIndex: 0
+  OscillatorCount: 10

@@ -727,7 +727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe7742d62757d647a4bc35aec8ebf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentKeys: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  myKeys: 
+  synth: {fileID: 0}
 --- !u!1 &1211968229
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,8 +760,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 440
-  volume: 0.2
-  isPlaying: 0
+  desired_gain: 0.2
+  actual_gain: 0
+  currentWaveform: 0
+  isCurrentlyPlaying: 0
+  shouldBePlaying: 0
 --- !u!82 &1211968231
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3185,6 +3189,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Synthesizer
       objectReference: {fileID: 0}
+    - target: {fileID: 5520213573465854561, guid: 279e895028012d74a84d79eb751581f8,
+        type: 3}
+      propertyPath: oscillatorPrefab
+      value: 
+      objectReference: {fileID: 3114283228775216153, guid: c50068dea6d59674e998abefc7047876,
+        type: 3}
     - target: {fileID: 5520213573465854562, guid: 279e895028012d74a84d79eb751581f8,
         type: 3}
       propertyPath: m_RootOrder

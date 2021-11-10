@@ -80,8 +80,8 @@ public class AutoKeyPlayer : MonoBehaviour {
             //oscillator.StartPlay(currentNote.GetETFrequency(), 1f);
 
             oscillator.SetFrequency(currentNote.GetETFrequency());
-            oscillator.SetVolume(currentVolume);
-            oscillator.StartPlay();
+            oscillator.SetDesiredGain(currentVolume);
+            oscillator.RequestStartPlay();
 
             yield return new WaitForSeconds(waitTime);
         }

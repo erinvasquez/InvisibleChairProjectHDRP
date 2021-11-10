@@ -44,7 +44,7 @@ public class ThereminPlayer : MonoBehaviour {
     /// The "gain" we want to set our oscillator to
     /// Figure out if this should be volume instead
     /// </summary>
-    private float currentVolume;
+    private float currentGain;
     /// <summary>
     /// A Rectangle area on our canvas that defines our instrument's
     /// interaction and "play" area on screen
@@ -83,7 +83,7 @@ public class ThereminPlayer : MonoBehaviour {
 
     private void Update() {
 
-        Color nextColor = new Color(baseColor.r * currentVolume, baseColor.g * currentVolume, baseColor.b * currentVolume);
+        Color nextColor = new Color(baseColor.r * currentGain, baseColor.g * currentGain, baseColor.b * currentGain);
         instrumentMeshRenderer.material.SetColor("_BaseColor", nextColor);
         
         
@@ -94,8 +94,8 @@ public class ThereminPlayer : MonoBehaviour {
 
     private void FixedUpdate() {
         currentFrequency = GetFrequencyFromMouse();
-        currentVolume = GetVolumeFromMouse();
-        oscillator.SetVolume(currentVolume);
+        currentGain = GetVolumeFromMouse();
+        oscillator.SetDesiredGain(currentGain);
 
         
 
@@ -125,17 +125,17 @@ public class ThereminPlayer : MonoBehaviour {
             // If the mouse has been clicked or is still being held down, keep
             switch (mouseClickInput) {
                 case 1f:
-                    oscillator.StartPlay(currentFrequency, currentVolume);
+                    oscillator.RequestStartPlay(currentFrequency/*, currentGain*/);
                     //oscillator.StartPlay();
 
                     break;
                 case 0f:
-                    oscillator.EndPlay();
+                    oscillator.RequestEndPlay();
                     break;
             }
 
         } else {
-            oscillator.EndPlay();
+            oscillator.RequestEndPlay();
         }
 
     }
@@ -160,10 +160,10 @@ public class ThereminPlayer : MonoBehaviour {
 
 
         currentFrequency = GetFrequencyFromMouse();
-        currentVolume = GetVolumeFromMouse();
+        currentGain = GetVolumeFromMouse();
 
         oscillator.SetFrequency(currentFrequency);
-        oscillator.SetVolume(currentVolume);
+        oscillator.SetDesiredGain(currentGain);
 
     }
 

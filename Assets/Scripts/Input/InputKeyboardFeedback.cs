@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.UI;
 
 #region Extension class
 ///<summary>
@@ -37,24 +37,27 @@ public static class InputActionExtensions {
 /// </summary>
 public class InputKeyboardFeedback : MonoBehaviour {
 
-    // A script component on this empty gameobject somewhere, moving its code here
-    //KeyboardFeedBackText feedbackText;
-
     // our text objects
     TextMeshProUGUI feedbackText;
     TextMeshProUGUI currentInputText;
     TextMeshProUGUI mousePosText;
 
-    // Our input action set, currently set to our feedback text actions
-    //InputActionAsset keyboardMouseTestActions;
-    //Button okButton;
-
-    // our scroll input
-    float scroll = 0f;
+    /// <summary>
+    /// Our scroll input
+    /// </summary>
+    private float scroll = 0f;
 
     // our currently held down keys (max 10 considering 10 fingers, although I know you could press more than 10)
-    public KeyboardKeys[] currentKeys = new KeyboardKeys[10];
+    /// <summary>
+    /// An enum list representing the keys the user is currently holding down,
+    /// with -1b representing an unpressed key at the end of the array
+    /// </summary>
+    public List<KeyboardKeys> myKeys = new List<KeyboardKeys>();
 
+    /// <summary>
+    /// Our Synthesizer component on a Synthesizer gameobject
+    /// </summary>
+    public Synthesizer synth;
 
     private void Start() {
 
@@ -62,17 +65,12 @@ public class InputKeyboardFeedback : MonoBehaviour {
         feedbackText = GameObject.Find("FeedbackText").GetComponent<TextMeshProUGUI>();
         currentInputText = GameObject.Find("CurrentInputText").GetComponent<TextMeshProUGUI>();
         mousePosText = GameObject.Find("MousePositionText").GetComponent<TextMeshProUGUI>();
+        synth = GameObject.Find("Synthesizer").GetComponent<Synthesizer>();
 
         // Set some default text
         feedbackText.text = ">: ";
         currentInputText.text = "LAST INPUT: ";
         mousePosText.text = "MOUSE POS: ";
-
-        // "Clear" all keys by marking them empty
-        // Depending on how many keys are being pressed,
-        for (int a = 0; a < currentKeys.Length; a++) {
-            currentKeys[a] = (KeyboardKeys)(-1);
-        }
 
     }
 
@@ -131,6 +129,7 @@ public class InputKeyboardFeedback : MonoBehaviour {
         currentInputText.text = "LAST INPUT: " + text;
     }
 
+    #region Key Handling functions
 
     /// <summary>
     /// Takes a string from our keyboard input and adds it to our input text log when first
@@ -140,110 +139,43 @@ public class InputKeyboardFeedback : MonoBehaviour {
     public void KeyPerformed(string key) {
         AddFeedbackText(key);
         SetLastInputText(key);
-
+        
+        Debug.Log("Performing " + key + " " + PrintKeys());
+        
         // NOTE: Not sure if this should be done when action first started instead, but it's here for now
-        AddToCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        //AddToCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        myKeys.Add( (KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key) );
 
-
+        
+        Debug.Log(key + " added to " + PrintKeys() + "? ");
+        //synth.KeyPerformed(key);
     }
 
+    /// <summary>
+    /// Called when a key action has been "canceled"
+    /// </summary>
+    /// <param name="key"></param>
     public void KeyCanceled(string key) {
-        RemoveFromCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
-    }
-
-    /// <summary>
-    /// Add the currently pressed key to our array of keys in an empty spot
-    /// -1 indicating an empty or unplayed key
-    /// </summary>
-    /// <param name="key"></param>
-    public void AddToCurrentKeys(KeyboardKeys key) {
-
-        // Find the next empty spot on our key array,
-        // (which should be the right end of the array if we've properly
-        // handled shifting empty spaces over to the right)
-        // and put this key on that spot
-        for (int a = 0; a < currentKeys.Length; a++) {
-
-            if (currentKeys[a] == (KeyboardKeys)(-1)) {
-                currentKeys[a] = key;
-                break;
-            }
-
-        }
-
-        Debug.Log("Added key... " + CurrentKeysToString());
+        //RemoveFromCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        Debug.Log("Canceling " + key + " from " + PrintKeys());
+        myKeys.Remove((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        Debug.Log(PrintKeys());
+        //synth.KeyCanceled(key);
 
     }
 
-    /// <summary>
-    /// Find the key we've released and remove it from our current
-    /// key array by replacing it with an empty key (-1) and shifting it over
-    /// to the right
-    /// </summary>
-    /// <param name="key"></param>
-    public void RemoveFromCurrentKeys(KeyboardKeys key) {
-
-        for (int a = 0; a < currentKeys.Length; a++) {
-
-            if (currentKeys[a] == key) {
-                currentKeys[a] = (KeyboardKeys)(-1);
-            }
-
-        }
-
-        // Now recreate the array with empty keys shifted over
-        // cycle through our array and fill non-empty keys into another empty
-        // array, filling the rest with empty keys
-        KeyboardKeys[] tempKeys = new KeyboardKeys[10];
-        int currentTempKey = 0;
-
-        for (int a = 0; a < currentKeys.Length; a++) {
-
-            // Add any non-empty keys to our temp array
-            if (currentKeys[a] != (KeyboardKeys)(-1)) {
-                tempKeys[currentTempKey] = currentKeys[a];
-                currentTempKey++;
-            }
-
-        }
-
-        // Fill the rest with empty keys
-        while (currentTempKey < tempKeys.Length) {
-            tempKeys[currentTempKey] = (KeyboardKeys)(-1);
-            currentTempKey++;
-        }
-
-        // Set temp array to our permanent one
-        currentKeys = tempKeys;
-
-        Debug.Log("Key removed... " + CurrentKeysToString());
-
-    }
-
-    /// <summary>
-    /// "Clears" all keys being pressed by marking them "unpressed"
-    /// with "-1"
-    /// </summary>
-    public void ClearCurrentKeys() {
-
-        for (int a = 0; a < currentKeys.Length; a++) {
-            currentKeys[a] = (KeyboardKeys)(-1);
-        }
-
-        Debug.Log("Current Keys cleared, " + CurrentKeysToString());
-
-    }
-
-    public string CurrentKeysToString() {
+    public String PrintKeys() {
         string result = "[";
 
-        for (int a = 0; a < currentKeys.Length; a++) {
-            result += currentKeys[a].ToString() + " ";
-        }
 
+        for(int a = 0; a < myKeys.Count; a++) {
+            result += myKeys[a].ToString() + " ";
+        }
 
         return result + "]";
     }
+
+    #endregion
 
     ///<summary>
     /// An entire region of hand-written handler functions set up for later use
