@@ -79,14 +79,14 @@ public class Oscillator : MonoBehaviour {
     /// when not playing, and return to desired_gain when playing
     /// </summary>
     [SerializeField, Range(0f, 1f)]
-    public float actual_gain;
+    public float actualGain;
 
-    
+    public float sustainLevel;
 
     /// <summary>
     /// The current waveform the oscillator uses
     /// </summary>
-    public Waveforms currentWaveform = Waveforms.SinWave;
+    public Waveforms currentWaveform = Waveforms.CustomADSRWave;
 
     /// <summary>
     /// Default music note oscillator is set to
@@ -103,17 +103,120 @@ public class Oscillator : MonoBehaviour {
     /// </summary>
     public bool shouldBePlaying = false;
 
+    public float timeKeyPerformed;
+    public float timeKeyCanceled;
+    public float timeSinceKeyPerformed;
+    public float timeSinceKeyCanceled = 0f;
+    public float attackMultiplier, decayMultiplier,  releaseMultiplier;
+
+    /// <summary>
+    /// Time it takes to get from 0 to attack level
+    /// </summary>
+    private float attackTime;
+    /// <summary>
+    /// Time it takes to get from atttack level to sustain level
+    /// </summary>
+    private float decayTime;
+    /// <summary>
+    /// Time it takes to get from sustain level to 0
+    /// </summary>
+    private float releaseTime;
+
+    public bool isAttacking;
+    public bool isDecaying;
+    public bool isSustaining;
+    public bool isReleasing;
+
+
 
     private void Start() {
-
-        // Get our frequency array calculated
-        //currentWaveform; = Waveforms.SinWave;
         currentPitch = new MusicNote(SharpNotes.D, 4); // I like D4 as our default note, just cause
         frequency = currentPitch.GetETFrequency();
 
-        //amplitude = 0f;
+        isAttacking = false;
+        isDecaying = false;
+        isSustaining = false;
+        isReleasing = false;
 
-        //Debug.Log("Starting frequency: " + currentPitch.noteName.ToString() + currentPitch.octave + " " + currentPitch.frequency + "Hz");
+    }
+
+    /// <summary>
+    /// Handle timing variables for key performed or canceled
+    /// </summary>
+    private void Update() {
+
+        if (isAttacking) {
+             
+        } else if (isDecaying) {
+
+        } else if (isSustaining) {
+
+        } else if (isReleasing) {
+
+        } else {
+            // We're not playing this oscillator, I think
+
+            // Debug.Log("");
+        }
+
+
+
+        // Update the time since our key was last performed, if we're playing the key
+        // If we're not playing our key, do we need to know when it was last performed?
+        timeSinceKeyPerformed = Time.realtimeSinceStartup - timeKeyPerformed;
+
+        
+        // Update the time since our key was last canceled, if we're NOT playing this oscillator
+        timeSinceKeyCanceled = Time.realtimeSinceStartup - timeKeyCanceled;
+
+        // Handle our key timing (there has to be a better place for this)
+        if (shouldBePlaying && !isCurrentlyPlaying) {
+            timeKeyPerformed = Time.realtimeSinceStartup;
+        } else if (shouldBePlaying && isCurrentlyPlaying) {
+            timeKeyCanceled = Time.realtimeSinceStartup; // just to keep it updated
+
+        } else if (!shouldBePlaying && isCurrentlyPlaying) {
+
+            timeKeyCanceled = Time.realtimeSinceStartup;
+
+        }
+
+        // Handle our attack envelope variables
+        /*
+         * We want our attack envelope to make our sound reach full volume after a given
+         * "attack time"
+         * 
+         */
+        if (timeSinceKeyPerformed < attackTime) {
+            attackMultiplier = Mathf.Lerp(0f, 1f, timeSinceKeyPerformed / attackTime);
+
+            //timeElapsed += Time.deltaTime;
+
+        } else {
+            attackMultiplier = 1f;
+        }
+
+        // Handle our decay envelope variable
+        // Happens after key performed + attack time
+        /*
+         * Delay Envelope will make our sound go from attack level to sustain level
+         */
+        if (timeSinceKeyCanceled > timeSinceKeyPerformed && 
+            timeKeyPerformed + attackTime < timeKeyPerformed + attackTime + decayTime) {
+            decayMultiplier = Mathf.Lerp(1, sustainLevel,
+                (timeSinceKeyPerformed + attackTime) / (attackTime + decayTime));
+        } else {
+            decayMultiplier = 1f;
+        }
+
+        // Handle our release envelope variable
+        if (timeSinceKeyCanceled > releaseTime) {
+            releaseMultiplier = Mathf.Lerp(1, 0f, timeSinceKeyCanceled / releaseTime);
+        } else {
+            releaseMultiplier = 1f;
+        }
+
+
 
     }
 
@@ -125,7 +228,7 @@ public class Oscillator : MonoBehaviour {
 
         shouldBePlaying = true;
 
-        Debug.Log("Requesting start play");
+        //Debug.Log("Requesting start play");
 
     }
 
@@ -143,7 +246,7 @@ public class Oscillator : MonoBehaviour {
 
         shouldBePlaying = true;
 
-        Debug.Log("Requesting start play");
+        //Debug.Log("Requesting start play");
 
     }
 
@@ -157,7 +260,7 @@ public class Oscillator : MonoBehaviour {
 
         shouldBePlaying = true;
 
-        Debug.Log("Requesting start play");
+        //Debug.Log("Requesting start play");
 
     }
 
@@ -172,7 +275,13 @@ public class Oscillator : MonoBehaviour {
 
         shouldBePlaying = false;
 
-        Debug.Log("Requesting end play");
+        //Debug.Log("Requesting end play");
+
+    }
+
+    public void RequestTogglePlay() {
+
+        shouldBePlaying = !shouldBePlaying;
 
     }
 
@@ -217,7 +326,11 @@ public class Oscillator : MonoBehaviour {
     /// </summary>
     /// <param name="g"></param>
     public void SetActualGain(float g) {
-        actual_gain = g;
+        actualGain = g;
+    }
+
+    public void SetSustainGain(float g) {
+        sustainLevel = g;
     }
 
     /// <summary>
@@ -225,7 +338,7 @@ public class Oscillator : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public float GetdB() {
-        return 20f * Mathf.Log10((float) actual_gain);
+        return 20f * Mathf.Log10((float) actualGain);
     }
 
     /// <summary>
@@ -252,6 +365,35 @@ public class Oscillator : MonoBehaviour {
     public Waveforms GetWaveform() {
         return currentWaveform;
     }
+
+    public void SetAttackTime(float time) {
+        attackTime = time;
+    }
+
+    public float GetAttackTime() {
+        return attackTime;
+    }
+
+    public void SetDecayTime(float time) {
+        decayTime = time;
+    }
+
+    public float GetDecayTime() {
+        return decayTime;
+    }
+
+    public void SetReleaseTime(float time) {
+        releaseTime = time;
+    }
+
+    public float GetReleaseTime() {
+        return releaseTime;
+    }
+
+    public void SetTimeKeyPerformed(float time) {
+        timeKeyPerformed = time;
+    }
+
     #endregion
 
     /// <summary>
@@ -270,9 +412,11 @@ public class Oscillator : MonoBehaviour {
 
         // full volume or nothing, that's what we're doing
         if (shouldBePlaying && !isCurrentlyPlaying) {
+            //SetTimeKeyPerformed(Time.realtimeSinceStartup);
 
             SetActualGain(desired_gain);
             isCurrentlyPlaying = true;
+
 
         } else if (shouldBePlaying && isCurrentlyPlaying) {
 
@@ -289,10 +433,13 @@ public class Oscillator : MonoBehaviour {
 
         }
 
+
+
         // how much to increment the phase,
         // Increment phase just enough to move at the rate of our sampling frequency,
         // frequency/sampling frequency * 2pi
         phase_increment = PhaseIncrement(frequency);
+        
 
 
         for (int a = 0; a < data.Length; a += channels) {
@@ -306,7 +453,8 @@ public class Oscillator : MonoBehaviour {
                 Waveforms.TriangleWave => GetTriangleWaveformData(),
                 Waveforms.SawtoothWave => GetSawWaveformData(),
                 Waveforms.HarshSawtoothWave => GetHarshSawWaveformData(),
-                _ => 0,
+                Waveforms.CustomADSRWave => GetCustomWaveFormData(),
+                _ => throw new System.NotImplementedException()
             };
 
             // some testing done here
@@ -387,7 +535,15 @@ public class Oscillator : MonoBehaviour {
         // and      phase       = sin(t * i), where t is angular freq and i is unit of time
         // sample = gain * sin(phase)
 
-        return actual_gain * Mathf.Sin((float) phase);
+        return actualGain * Mathf.Sin((float) phase);
+    }
+
+    float AttackEnvelope() {
+        float result = GetSinWaveformData();
+
+        result *= 2f;
+
+        return result;
     }
 
     /// <summary>
@@ -398,10 +554,10 @@ public class Oscillator : MonoBehaviour {
     /// <returns></returns>
     float GetSquareWaveformData() {
 
-        if (actual_gain * GetSinWaveformData() >= 0 * actual_gain) {
-            return actual_gain * 0.5f;
+        if (actualGain * GetSinWaveformData() >= 0 * actualGain) {
+            return actualGain * 0.5f;
         } else {
-            return -actual_gain * 0.5f;
+            return -actualGain * 0.5f;
         }
 
     }
@@ -413,7 +569,7 @@ public class Oscillator : MonoBehaviour {
     /// <returns></returns>
     float GetTriangleWaveformData() {
 
-        return actual_gain * Mathf.PingPong((float) phase, 1.0f);
+        return actualGain * Mathf.PingPong((float) phase, 1.0f);
 
     }
 
@@ -447,6 +603,18 @@ public class Oscillator : MonoBehaviour {
         // y= 2A/pi * (f * pi mod(1.0/f) - pi/2)
 
         return (2f / Mathf.PI) * ((float) frequency * (float) Mathf.PI * ((float) phase % (1f / (float) frequency) - ((float) Mathf.PI / 2f)));
+
+    }
+
+    /// <summary>
+    /// Allows for control of overall signal volume by using a multiplier
+    /// </summary>
+    /// <returns></returns>
+    float GetCustomWaveFormData() {
+
+        
+
+        return attackMultiplier * decayMultiplier * releaseMultiplier * actualGain * Mathf.Sin((float) phase);
 
     }
 

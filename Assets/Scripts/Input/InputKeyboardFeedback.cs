@@ -85,8 +85,13 @@ public class InputKeyboardFeedback : MonoBehaviour {
         // In the future, replace "ProcessKey(...)" with whatever function handles input later on
         if (scroll < 0f) {
             //KeyPerformed("ScrollDown");
+            synth.DecrementFrequencyOffset();
+
         } else if (scroll > 0f) {
             //KeyPerformed("ScrollUp");
+            synth.IncrementFrequencyOffset();
+
+
         }
 
         mousePosText.text = "MOUSE POS: " + Mouse.current.position.ReadValue();
@@ -140,10 +145,7 @@ public class InputKeyboardFeedback : MonoBehaviour {
         AddFeedbackText(key);
         SetLastInputText(key);
         
-        Debug.Log("Performing " + key + " " + PrintKeys());
-        
-        // NOTE: Not sure if this should be done when action first started instead, but it's here for now
-        //AddToCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
+        //Debug.Log("Performing " + key + " " + PrintKeys());
         myKeys.Add( (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key) );
 
         
@@ -156,10 +158,9 @@ public class InputKeyboardFeedback : MonoBehaviour {
     /// </summary>
     /// <param name="key"></param>
     public void KeyCanceled(string key) {
-        //RemoveFromCurrentKeys((KeyboardKeys)Enum.Parse(typeof(KeyboardKeys), key));
-        Debug.Log("Canceling " + key + " from " + PrintKeys());
+        //Debug.Log("Canceling " + key + " from " + PrintKeys());
         myKeys.Remove((KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key));
-        Debug.Log(PrintKeys());
+        //Debug.Log(PrintKeys());
         //synth.KeyCanceled(key);
 
     }
@@ -195,6 +196,8 @@ public class InputKeyboardFeedback : MonoBehaviour {
         if (context.canceled) {
             //KeyCanceled("");
         }
+
+
 
     }
 

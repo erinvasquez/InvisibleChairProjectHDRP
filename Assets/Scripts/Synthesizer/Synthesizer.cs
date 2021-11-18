@@ -51,10 +51,16 @@ public class Synthesizer : MonoBehaviour {
     private float gain = 0.19f;
 
     /// <summary>
+    /// 
+    /// </summary>
+    [SerializeField, Range(0f, 1f)]
+    private float sustainLevel = 0.15f;
+
+    /// <summary>
     /// The amount of time it takes for our oscillator to reach
     /// the desired gain
     /// </summary>
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Range(0f, 10f)]
     public float attackTime = 0.1f;
 
     /// <summary>
@@ -62,17 +68,8 @@ public class Synthesizer : MonoBehaviour {
     /// from initial attack to a "SAT sustain level" (i guess our regular gain);
     /// as in go to sustain level gain immediately or after some time
     /// </summary>
-    [SerializeField, Range(0f, 1f)]
-    public float decayTime = 0.1f;
-
-    /// <summary>
-    /// Controls the level os sound that's held until the key is released.
-    /// No sustain creates plucks and percussive noises, while peak sustain
-    /// should give you pad sounds. TODO: Modulating this paramter can create
-    /// some interesting sound textures.
-    /// </summary>
-    [SerializeField, Range(0f, 1f)]
-    public float sustainTime = 0.1f;
+    [SerializeField, Range(0f, 10f)]
+    public float decayTime = 1f;
 
     /// <summary>
     /// Controls time it takes the initial amplitude of the sound to decay
@@ -81,8 +78,8 @@ public class Synthesizer : MonoBehaviour {
     /// higher values leave the sound playing for a time. Infinite releases
     /// are also an option, find out how to make that
     /// </summary>
-    [SerializeField, Range(0f, 1f)]
-    public float releaseTime = 0.1f;
+    [SerializeField, Range(0f, 10f)]
+    public float releaseTime = 1f;
 
     //Time.realtimeSinceStartup is a useful tool
 
@@ -92,13 +89,31 @@ public class Synthesizer : MonoBehaviour {
     List<KeyboardKeysFromA4> myKeys;
 
     /// <summary>
-    /// Index for the next empty oscillator
+    /// How many half steps up or down we want our key to play, normally with Z being A0.
+    /// 88 Key range, considering that's how long typical keyboards are
     /// </summary>
-    public int oscIndex = 0;
+    [SerializeField, Range(-88, 88)]
+    public int keyOffset = 0;
 
-    public int OscillatorCount = 10;
+    [SerializeField, Range(-440f, 440f)]
+    public float frequencyOffset = 0f;
 
-    private void Start() {
+    /// <summary>
+    /// We have 10 fingers, so the max oscillators we want is probably 10
+    /// I might be able to optimize this later on and use a single oscillator to output all 10
+    /// finger's signals, but that'll come later
+    /// </summary>
+    private readonly int OscillatorCount = 10;
+
+    /// <summary>
+    /// The current waveform the oscillator uses
+    /// </summary>
+    public Waveforms currentWaveform = Waveforms.CustomADSRWave;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void Start() {
 
         feedback = GameObject.Find("FeedbackText").GetComponent<InputKeyboardFeedback>();
         myKeys = feedback.myKeys;
@@ -113,8 +128,14 @@ public class Synthesizer : MonoBehaviour {
 
         }
 
+
+
+
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void Update() {
 
         // Play all the keys in myKeys, then turn off all other oscillators
@@ -126,8 +147,17 @@ public class Synthesizer : MonoBehaviour {
             if (keyIndex < myKeys.Count) {
                 // Play the next available key and go to the next oscillator and key.
 
+                
                 TenOscillators[a].SetDesiredGain(gain);
-                TenOscillators[a].RequestStartPlay(GetETFrequencyFromPianoKey((PianoKeys)myKeys[a]));
+                TenOscillators[a].SetSustainGain(sustainLevel);
+                TenOscillators[a].SetWaveform(currentWaveform);
+                TenOscillators[a].SetAttackTime(attackTime);
+                TenOscillators[a].SetDecayTime(decayTime);
+                TenOscillators[a].SetReleaseTime(releaseTime);
+
+
+                TenOscillators[a].SetFrequency(GetETFrequencyFromPianoKey((PianoKeys)myKeys[a] + keyOffset) + frequencyOffset);
+                TenOscillators[a].RequestStartPlay(GetETFrequencyFromPianoKey((PianoKeys) myKeys[a] + keyOffset) + frequencyOffset);
 
                 keyIndex++;
 
@@ -136,61 +166,34 @@ public class Synthesizer : MonoBehaviour {
                 TenOscillators[a].RequestEndPlay();
             }
 
-
-            /*
-            // The key isn't empty, and isn't currently playing
-            if (myKeys[a] != (KeyboardKeys) (-1) && !TenOscillators[a].isCurrentlyPlaying) {
-                // Set an oscillator the play this key
-                TenOscillators[a].SetDesiredGain(gain);
-                TenOscillators[a].RequestStartPlay( GetETFrequencyFromPianoKey((PianoKeys) myKeys[a]) );
-
-            } else if (myKeys[a] != (KeyboardKeys)(-1) && TenOscillators[a].isCurrentlyPlaying) {
-                // The key isn't empty, and the oscillator is playing
-
-                //TenOscillators[a].RequestStartPlay(GetETFrequencyFromPianoKey((PianoKeys)myKeys[a]));
-
-            } else if (myKeys[a] == (KeyboardKeys)(-1)) {
-                // The key is empty
-
-                Debug.Log("The key is empty");
-                TenOscillators[a].RequestEndPlay();
-            }
-            */
-
         }
 
     }
 
     /// <summary>
-    /// Add an oscillator to play this key
+    /// 
     /// </summary>
-    /// <param name="keyboardKey"></param>
-    public void KeyPerformed(string keyboardKey) {
-
-        KeyboardKeysFromA4 theKey = (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), keyboardKey);
-
-        TenOscillators[oscIndex].RequestStartPlay(GetETFrequencyFromPianoKey((PianoKeys)theKey));
-        oscIndex++;
-
+    public void IncrementFrequencyOffset() {
+        //Debug.Log("incrementing offset");
+        frequencyOffset += .5f;
     }
 
-    public void KeyCanceled(string key) {
+    /// <summary>
+    /// 
+    /// </summary>
+    public void DecrementFrequencyOffset() {
+        //Debug.Log("Decrementing offset");
+        frequencyOffset -= .5f;
+    }
 
-        KeyboardKeysFromA4 theKey = (KeyboardKeysFromA4)Enum.Parse(typeof(KeyboardKeysFromA4), key);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="offset"></param>
+    public void AddToFrequencyOffset(float offset) {
 
-        // Find the oscillator playing our key and end it
-        for (int a = 0; a < TenOscillators.Count; a++) {
-
-            if ((double)TenOscillators[a].currentPitch.equalTemperamentfrequency == (double)GetETFrequencyFromPianoKey((PianoKeys)theKey)) {
-
-                TenOscillators[a].RequestEndPlay();
-
-            }
-
-        }
-
-        oscIndex--;
+        frequencyOffset += offset;
 
     }
 

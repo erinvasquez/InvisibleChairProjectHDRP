@@ -3,5 +3,6 @@
     SquareWave,
     TriangleWave,
     SawtoothWave,
-    HarshSawtoothWave
+    HarshSawtoothWave,
+    CustomADSRWave
 };
