@@ -10,7 +10,7 @@ public class SphereLight : VisualizerUnit {
     int intensitySource;
 
     private void Start() {
-        audioMeasure = GameObject.Find("NewAudioData").GetComponent<AudioMeasureCS>();
+        //audioMeasure = GameObject.Find("NewAudioData").GetComponent<AudioMeasureCS>();
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class SphereLight : VisualizerUnit {
         }
 
         // Do our visualizing
-        Visualize();
+        //Visualize();
 
     }
 

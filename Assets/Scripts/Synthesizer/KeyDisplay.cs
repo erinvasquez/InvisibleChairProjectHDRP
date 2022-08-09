@@ -34,16 +34,113 @@ public class KeyDisplay : MonoBehaviour {
 
     List<GameObject> displayKeys = new List<GameObject>();
 
-    public GameObject keyPrefab;
-
-    private Canvas myCanvas;
+    GameObject EscapeCanvas;
+    GameObject F1Canvas;
+    GameObject F2Canvas;
+    GameObject F3Canvas;
+    GameObject F4Canvas;
+    GameObject F5Canvas;
+    GameObject F6Canvas;
+    GameObject F7Canvas;
+    GameObject F8Canvas;
+    GameObject F9Canvas;
+    GameObject F10Canvas;
+    GameObject F11Canvas;
+    GameObject F12Canvas;
+    GameObject F13Canvas;
+    GameObject F14Canvas;
+    GameObject BackquoteCanvas;
+    GameObject Alpha1Canvas;
+    GameObject Alpha2Canvas;
+    GameObject Alpha3Canvas;
+    GameObject Alpha4Canvas;
+    GameObject Alpha5Canvas;
+    GameObject Alpha6Canvas;
+    GameObject Alpha7Canvas;
+    GameObject Alpha8Canvas;
+    GameObject Alpha9Canvas;
+    GameObject MinusCanvas;
+    GameObject EqualCanvas;
+    GameObject BackspaceCanvas;
+    GameObject TabCanvas;
+    GameObject QCanvas;
+    GameObject WCanvas;
+    GameObject ECanvas;
+    GameObject RCanvas;
+    GameObject TCanvas;
+    GameObject YCanvas;
+    GameObject UCanvas;
+    GameObject ICanvas;
+    GameObject OCanvas;
+    GameObject PCanvas;
+    GameObject LeftBracketCanvas;
+    GameObject RightBracketCanvas;
+    GameObject BackslashCanvas;
+    GameObject CapsLockCanvas;
+    GameObject ACanvas;
+    GameObject SCanvas;
+    GameObject DCanvas;
+    GameObject FCanvas;
+    GameObject GCanvas;
+    GameObject HCanvas;
+    GameObject JCanvas;
+    GameObject KCanvas;
+    GameObject LCanvas;
+    GameObject SemicolonCanvas;
+    GameObject QuoteCanvas;
+    GameObject EnterCanvas;
+    GameObject LeftShiftCanvas;
+    GameObject ZCanvas;
+    GameObject XCanvas;
+    GameObject CCanvas;
+    GameObject VCanvas;
+    GameObject BCanvas;
+    GameObject NCanvas;
+    GameObject MCanvas;
+    GameObject CommaCanvas;
+    GameObject PeriodCanvas;
+    GameObject SlashCanvas;
+    GameObject RightShiftCanvas;
+    GameObject LeftControlCanvas;
+    GameObject LeftAltCanvas;
+    GameObject SpaceCanvas;
+    GameObject RightAltCanvas;
+    GameObject RightControlCanvas;
+    GameObject PrintScreenCanvas;
+    GameObject ScrollLockCanvas;
+    GameObject PauseCanvas;
+    GameObject InsertCanvas;
+    GameObject HomeCanvas;
+    GameObject PageUpCanvas;
+    GameObject DeleteCanvas;
+    GameObject EndCanvas;
+    GameObject PageDownCanvas;
+    GameObject UpArrowCanvas;
+    GameObject LeftArrowCanvas;
+    GameObject DownArrowCanvas;
+    GameObject RightArrowCanvas;
+    GameObject NumLockCanvas;
+    GameObject NumpadDivideCanvas;
+    GameObject NumpadMultiplyCanvas;
+    GameObject NumpadMinusCanvas;
+    GameObject Numpad7Canvas;
+    GameObject Numpad8Canvas;
+    GameObject Numpad9Canvas;
+    GameObject Numpad4Canvas;
+    GameObject Numpad5Canvas;
+    GameObject Numpad6Canvas;
+    GameObject Numpad1Canvas;
+    GameObject Numpad2Canvas;
+    GameObject Numpad3Canvas;
+    GameObject Numpad0Canvas;
+    GameObject NumpadPeriodCanvas;
+    GameObject NumpadPlusCanvas;
+    GameObject NumpadEnterCanvas;
 
 
 
 
     private void Start() {
-
-        myCanvas = GetComponentInChildren<Canvas>();
 
         Debug.Log(Keyboard.KeyCount);
 
@@ -52,80 +149,7 @@ public class KeyDisplay : MonoBehaviour {
     }
 
     /// <summary>
-    /// Instantiate our keyDisplay object, and set the keys they appear as
-    /// 
-    /// 8 - Backspace
-    /// 9 - Tab
-    /// 13 - Return
-    /// 19 - Pause
-    /// 27 - Escape
-    /// 32 - Space
-    /// 39 - Quote '
-    /// 44 - Comma ,
-    /// 45 - Minus -
-    /// 46 - Period .
-    /// 47 - Slash /
-    /// 48 - Aplha0 0
-    /// 49 - Alpha1 1
-    /// ...
-    /// 57 - Alpha9 9
-    /// 59 - Semicolon ;
-    /// 61 - Equals =
-    /// 91 - LeftBracket [
-    /// 92 - BackSlash \
-    /// 93 - RightBracket ]
-    /// 96 - Backquote `
-    /// 97 - A
-    /// 98 - B
-    /// 99 - C
-    /// ...
-    /// 122 - Z
-    /// 127 - Delete
-    /// 256 - Keypad0 0
-    /// 257 - Keypad1 1
-    /// ...
-    /// 265 - Keypad9 9
-    /// 266 - KeypadPeriod .
-    /// 267 - KeypadDivide /
-    /// 268 - KeypadMultiply *
-    /// 269 - KeypadMinus -
-    /// 270 - KeypadPlus +
-    /// 271 - KeypadEnter -
-    /// 273 - UpArrow
-    /// 274 - DownArrow
-    /// 275 - RightArrow
-    /// 276 - LeftArrow
-    /// 277 - Insert
-    /// 278 - Home
-    /// 279 - End
-    /// 280 - PageUp
-    /// 281 - PageDown
-    /// 282 - F1
-    /// 283 - F2
-    /// ...
-    /// 293 - F12
-    /// 300 - NumLock
-    /// 301 - CapsLock
-    /// 302 - ScrollLock
-    /// 303 - RightShift
-    /// 304 - LeftShift
-    /// 305 - RightControl
-    /// 306 - LeftControl
-    /// 307 - RightAlt
-    /// 308 - LeftAlt
-    /// 316 - Print
-    /// 323 - Mouse0
-    /// 324 - Mouse1
-    /// 325 - Mouse2
-    /// 326 - Mouse3
-    /// 327 - Mouse4
-    /// 328 - Mouse5
-    /// 329 - Mouse6
-    /// JoystickButton0 - 330
-    /// ...
-    /// Joystick1Button0 - 350
-    /// ...
-    /// Joystick8Button19 - 509
+    /// Instantiate our variables, like our keys
     /// </summary>
     void InstantiateKeys() {
 
@@ -133,7 +157,112 @@ public class KeyDisplay : MonoBehaviour {
 
 
 
-        Debug.Log("Key for space is " + space + "," + Keyboard.current["#(space)"] + Keyboard.current[Key.Space]);
+        Debug.Log("Key for space is " + space + ", " + Keyboard.current["#(space)"] + ", " + Keyboard.current[Key.Space]);
+
+
+        // Start finding our canvases
+        EscapeCanvas = GameObject.Find("Escape Canvas");
+        F1Canvas = GameObject.Find("F1 Canvas");
+        F2Canvas = GameObject.Find("F2 Canvas");
+        F3Canvas = GameObject.Find("F3 Canvas");
+        F4Canvas = GameObject.Find("F4 Canvas");
+        F5Canvas = GameObject.Find("F5 Canvas");
+        F6Canvas = GameObject.Find("F6 Canvas");
+        F7Canvas = GameObject.Find("F7 Canvas");
+        F8Canvas = GameObject.Find("F8 Canvas");
+        F9Canvas = GameObject.Find("F9 Canvas");
+        F10Canvas = GameObject.Find("F10 Canvas");
+        F11Canvas = GameObject.Find("F11 Canvas");
+        F12Canvas = GameObject.Find("F12 Canvas");
+        F13Canvas = GameObject.Find("F13 Canvas");
+        F14Canvas = GameObject.Find("F14 Canvas");
+        BackquoteCanvas = GameObject.Find("Backquote Canvas");
+        Alpha1Canvas = GameObject.Find("Alpha1 Canvas");
+        Alpha2Canvas = GameObject.Find("Alpha2 Canvas");
+        Alpha3Canvas = GameObject.Find("Alpha3 Canvas");
+        Alpha4Canvas = GameObject.Find("Alpha4 Canvas");
+        Alpha5Canvas = GameObject.Find("Alpha5 Canvas");
+        Alpha6Canvas = GameObject.Find("Alpha6 Canvas");
+        Alpha7Canvas = GameObject.Find("Alpha7 Canvas");
+        Alpha8Canvas = GameObject.Find("Alpha8 Canvas");
+        Alpha9Canvas = GameObject.Find("Alpha9 Canvas");
+        MinusCanvas = GameObject.Find("Minus Canvas");
+        EqualCanvas = GameObject.Find("Equal Canvas");
+        BackspaceCanvas = GameObject.Find("Backspace Canvas");
+        TabCanvas = GameObject.Find("Tab Canvas");
+        QCanvas = GameObject.Find("Q Canvas");
+        WCanvas = GameObject.Find("W Canvas");
+        ECanvas = GameObject.Find("E Canvas");
+        RCanvas = GameObject.Find("R Canvas");
+        TCanvas = GameObject.Find("T Canvas");
+        YCanvas = GameObject.Find("Y Canvas");
+        UCanvas = GameObject.Find("U Canvas");
+        ICanvas = GameObject.Find("I Canvas");
+        OCanvas = GameObject.Find("O Canvas");
+        PCanvas = GameObject.Find("P Canvas");
+        LeftBracketCanvas = GameObject.Find("LeftBracket Canvas");
+        RightBracketCanvas = GameObject.Find("RightBracket Canvas");
+        BackslashCanvas = GameObject.Find("Backslash Canvas");
+        CapsLockCanvas = GameObject.Find("CapsLock Canvas");
+        ACanvas = GameObject.Find("A Canvas");
+        SCanvas = GameObject.Find("S Canvas");
+        DCanvas = GameObject.Find("D Canvas");
+        FCanvas = GameObject.Find("F Canvas");
+        GCanvas = GameObject.Find("G Canvas");
+        HCanvas = GameObject.Find("H Canvas");
+        JCanvas = GameObject.Find("J Canvas");
+        KCanvas = GameObject.Find("K Canvas");
+        LCanvas = GameObject.Find("L Canvas");
+        SemicolonCanvas = GameObject.Find("Semicolon Canvas");
+        QuoteCanvas = GameObject.Find("Quote Canvas");
+        EnterCanvas = GameObject.Find("Enter Canvas");
+        LeftShiftCanvas = GameObject.Find("LeftShift Canvas");
+        ZCanvas = GameObject.Find("Z Canvas");
+        XCanvas = GameObject.Find("X Canvas");
+        CCanvas = GameObject.Find("C Canvas");
+        VCanvas = GameObject.Find("V Canvas");
+        BCanvas = GameObject.Find("B Canvas");
+        NCanvas = GameObject.Find("N Canvas");
+        MCanvas = GameObject.Find("M Canvas");
+        CommaCanvas = GameObject.Find("Comma Canvas");
+        PeriodCanvas = GameObject.Find("Period Canvas");
+        SlashCanvas = GameObject.Find("Slash Canvas");
+        RightShiftCanvas = GameObject.Find("RightShift Canvas");
+        LeftControlCanvas = GameObject.Find("LeftControl Canvas");
+        LeftAltCanvas = GameObject.Find("LeftAlt Canvas");
+        SpaceCanvas = GameObject.Find("Space Canvas");
+        RightAltCanvas = GameObject.Find("RightAlt Canvas");
+        RightControlCanvas = GameObject.Find("RightControl Canvas");
+        PrintScreenCanvas = GameObject.Find("PrintScreen Canvas");
+        ScrollLockCanvas = GameObject.Find("ScrollLock Canvas");
+        PauseCanvas = GameObject.Find("Pause Canvas");
+        InsertCanvas = GameObject.Find("Insert Canvas");
+        HomeCanvas = GameObject.Find("Home Canvas");
+        PageUpCanvas = GameObject.Find("PageUp Canvas");
+        DeleteCanvas = GameObject.Find("Delete Canvas");
+        EndCanvas = GameObject.Find("End Canvas");
+        PageDownCanvas = GameObject.Find("PageDown Canvas");
+        UpArrowCanvas = GameObject.Find("UpArrow Canvas");
+        LeftArrowCanvas = GameObject.Find("LeftArrow Canvas");
+        DownArrowCanvas = GameObject.Find("DownArrow Canvas");
+        RightArrowCanvas = GameObject.Find("RightArrow Canvas");
+        NumLockCanvas = GameObject.Find("NumLock Canvas");
+        NumpadDivideCanvas = GameObject.Find("NumpadDivide Canvas");
+        NumpadMultiplyCanvas = GameObject.Find("NumpadMultiply Canvas");
+        NumpadMinusCanvas = GameObject.Find("NumpadMinus Canvas");
+        Numpad7Canvas = GameObject.Find("Numpad7 Canvas");
+        Numpad8Canvas = GameObject.Find("Numpad8 Canvas");
+        Numpad9Canvas = GameObject.Find("Numpad9 Canvas");
+        Numpad4Canvas = GameObject.Find("Numpad4 Canvas");
+        Numpad5Canvas = GameObject.Find("Numpad5 Canvas");
+        Numpad6Canvas = GameObject.Find("Numpad6 Canvas");
+        Numpad1Canvas = GameObject.Find("Numpad1 Canvas");
+        Numpad2Canvas = GameObject.Find("Numpad2 Canvas");
+        Numpad3Canvas = GameObject.Find("Numpad3 Canvas");
+        Numpad0Canvas = GameObject.Find("Numpad0 Canvas");
+        NumpadPeriodCanvas = GameObject.Find("NumpadPeriod Canvas");
+        NumpadPlusCanvas = GameObject.Find("NumpadPlus Canvas");
+        NumpadEnterCanvas = GameObject.Find("NumpadEnter Canvas");
 
 
 
@@ -191,7 +320,7 @@ public class KeyDisplay : MonoBehaviour {
 
     public void OnPressEnter(InputAction.CallbackContext context) {
 
-        if(context.performed) {
+        if (context.performed) {
             KeyPerformed(KeyCode.Return);
         } else if (context.canceled) {
             KeyCanceled(KeyCode.Return);
@@ -231,7 +360,7 @@ public class KeyDisplay : MonoBehaviour {
 
     public void OnPressQuote(InputAction.CallbackContext context) {
 
-        if(context.performed) {
+        if (context.performed) {
             KeyPerformed(KeyCode.Quote);
         } else if (context.canceled) {
             KeyCanceled(KeyCode.Quote);
@@ -1177,7 +1306,7 @@ public class KeyDisplay : MonoBehaviour {
 
     }
 
-    
+
 
     public void OnPressF15(InputAction.CallbackContext context) {
 
@@ -1352,7 +1481,7 @@ public class KeyDisplay : MonoBehaviour {
 
         if (context.performed) {
             KeyPerformed(KeyCode.Mouse5);
-        } else  if (context.canceled) {
+        } else if (context.canceled) {
             KeyCanceled(KeyCode.Mouse5);
         }
 

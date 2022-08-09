@@ -43,18 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d6859b47e5f9f4f993c194e4cfe56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeSize:
-    x: 50
-    z: 50
   cellPrefab: {fileID: 5537445740252830753, guid: 41d478ea3fc978545aac3628222fde31,
     type: 3}
   passagePrefab: {fileID: 3035018592949888792, guid: 4c7a0e8e0ca8a034ba663e3fb70c6ca0,
     type: 3}
   wallPrefabs:
   - {fileID: 3537349753883839565, guid: 014c0bfb4043ca14f94f734216f3e881, type: 3}
+  - {fileID: 5992308591896758055, guid: 9d39828372f7acb4c90a2624a80a332e, type: 3}
+  - {fileID: 1406980621619153533, guid: 669c4a682957d9a48819743a900f2a4d, type: 3}
+  - {fileID: 432948391132945268, guid: e765e9f344cc5b144948328a51c95791, type: 3}
   doorPrefab: {fileID: 6128793525992377175, guid: f3b585644e298d84aa4be4358137a231,
     type: 3}
-  doorProbability: 0
-  generationStepDelay: 0.01
   mazeGenerated: 0
   stepsTaken: 0

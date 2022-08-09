@@ -24,7 +24,7 @@ public class VisualizerSpawner : MonoBehaviour {
     public GameObject clockPrefab;
 
     [Header("Highway Lights")]
-    public bool useHwyLight = true;
+    public bool useHwyLight = false;
     [Range(1, 16)]
     public int hwyLightsPerBeat = 1;
     int hwyLightIndex = 0; // Current HwyLight
@@ -33,7 +33,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
 
     [Header("Sphere Light")]
-    public bool useSphere = true;
+    public bool useSphere = false;
     public Vector3 sphereLightPosition = new Vector3(-15f, 5f, 20f);
     [Range(1, 1000)]
     public int sphereIntensityMultiplier = 1000;
@@ -51,12 +51,12 @@ public class VisualizerSpawner : MonoBehaviour {
     /// Editor value for maze X size
     /// </summary>
     [Range(1, 100)]
-    public int mazeX = 20;
+    public int mazeX = 40;
     /// <summary>
     /// Editor value for maze Z size
     /// </summary>
     [Range(1, 100)]
-    public int mazeZ = 20;
+    public int mazeZ = 40;
     /// <summary>
     /// Actually IntVector2 that we use to generate our maze
     /// </summary>
@@ -68,21 +68,21 @@ public class VisualizerSpawner : MonoBehaviour {
     /// <summary>
     /// 
     /// </summary>
-    public Vector3 mazeEndPosition = new Vector3(0f, 10f, 200f);
+    public Vector3 mazeEndPosition = new Vector3(0f, 10f, 0f);
     /// <summary>
     /// Default maze rotation
     /// </summary>
-    public Vector3 mazeStartRotation = new Vector3(30f, 0f, 0f);
+    public Vector3 mazeStartRotation = new Vector3(90f, 0f, 0f);
     /// <summary>
     /// Maze regeneration rate
     /// </summary>
     [Range(1, 128)]
-    public int mazeRegenerationRate = 32;
+    public int mazeRegenerationRate = 4;
     /// <summary>
     /// Number of Mazes per Beat
     /// </summary>
     [Range(1, 16)]
-    public int mazesPerBeat = 1;
+    public int mazesPerBeat = 4;
     /// <summary>
     /// Last time in seconds we sent a maze
     /// </summary>
@@ -92,7 +92,7 @@ public class VisualizerSpawner : MonoBehaviour {
 
 
     [Header("Clock")]
-    public bool UseClock = true;
+    public bool UseClock = false;
     GameObject clock;
     public Vector3 ClockPosition = new Vector3(0f, 10f, 100f);
 
@@ -120,6 +120,28 @@ public class VisualizerSpawner : MonoBehaviour {
     /// </summary>
     private void Awake() {
         instance = this;
+
+        // Set our default stuff
+
+        // Sender and receiver
+        sender = transform.GetChild(0);
+
+        if (sender.name != "Sender") {
+            sender = transform.GetChild(1);
+            receiver = transform.GetChild(0);
+        }
+
+        receiver = transform.GetChild(1);
+
+        // Prefabs
+        //hwyLightPrefab = 
+
+
+
+
+
+
+
     }
 
     /// <summary>

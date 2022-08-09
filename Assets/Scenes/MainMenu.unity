@@ -353,9 +353,28 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
         type: 3}
-      propertyPath: useMaze
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: clockPrefab
+      value: 
+      objectReference: {fileID: 9214143865582023474, guid: 3bbf258da898702429a2641564ffa5f3,
+        type: 3}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: vMazePrefab
+      value: 
+      objectReference: {fileID: 635934200550363531, guid: 69cb0630b057a0e4b951fd94a22483d5,
+        type: 3}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: sphereLightPrefab
+      value: 
+      objectReference: {fileID: 648306759544189889, guid: bd9d01a631377a94bb3b3b47c85d8306,
+        type: 3}
+    - target: {fileID: 820435176932308352, guid: 08da954a2ec07534ba4cb1b090bec8dc,
+        type: 3}
+      propertyPath: vMazeManagerPrefab
+      value: 
+      objectReference: {fileID: 3749070689823556158, guid: faf87e5dcc2bfec42968766795919849,
+        type: 3}
     - target: {fileID: 820435176932308358, guid: 08da954a2ec07534ba4cb1b090bec8dc,
         type: 3}
       propertyPath: m_Name
@@ -2739,7 +2758,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 15
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2934,6 +2953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
